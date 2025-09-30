@@ -1,0 +1,9 @@
+# Build Folders 
+bin/ 
+obj/ 
+Debug/ 
+Release/ 
+# Visual Studio temporary files 
+.vs/ 
+*.user 
+*.suo 
