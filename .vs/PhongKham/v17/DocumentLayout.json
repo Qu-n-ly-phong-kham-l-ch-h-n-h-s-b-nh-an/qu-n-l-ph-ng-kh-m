@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\duyen\\source\\repos\\PhongKham\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B018571E-60D2-40B8-9EBB-404F51EB26E5}|PhongKham\\PhongKham.API.csproj|c:\\users\\duyen\\source\\repos\\phongkham\\phongkham\\controllers\\specialtiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B018571E-60D2-40B8-9EBB-404F51EB26E5}|PhongKham\\PhongKham.API.csproj|solutionrelative:phongkham\\controllers\\specialtiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B018571E-60D2-40B8-9EBB-404F51EB26E5}|PhongKham\\PhongKham.API.csproj|c:\\users\\duyen\\source\\repos\\phongkham\\phongkham\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B018571E-60D2-40B8-9EBB-404F51EB26E5}|PhongKham\\PhongKham.API.csproj|solutionrelative:phongkham\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7770A21E-C85A-4402-88B1-B71E4E0CDEFA}|PhongKham.BLL\\PhongKham.BLL.csproj|c:\\users\\duyen\\source\\repos\\phongkham\\phongkham.bll\\service\\specialtyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7770A21E-C85A-4402-88B1-B71E4E0CDEFA}|PhongKham.BLL\\PhongKham.BLL.csproj|solutionrelative:phongkham.bll\\service\\specialtyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\duyen\\source\\repos\\PhongKham\\PhongKham\\Program.cs",
+              "RelativeDocumentMoniker": "PhongKham\\Program.cs",
+              "ToolTip": "C:\\Users\\duyen\\source\\repos\\PhongKham\\PhongKham\\Program.cs",
+              "RelativeToolTip": "PhongKham\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T04:20:35.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SpecialtiesController.cs",
+              "DocumentMoniker": "C:\\Users\\duyen\\source\\repos\\PhongKham\\PhongKham\\Controllers\\SpecialtiesController.cs",
+              "RelativeDocumentMoniker": "PhongKham\\Controllers\\SpecialtiesController.cs",
+              "ToolTip": "C:\\Users\\duyen\\source\\repos\\PhongKham\\PhongKham\\Controllers\\SpecialtiesController.cs",
+              "RelativeToolTip": "PhongKham\\Controllers\\SpecialtiesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T04:16:44.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SpecialtyService.cs",
+              "DocumentMoniker": "C:\\Users\\duyen\\source\\repos\\PhongKham\\PhongKham.BLL\\Service\\SpecialtyService.cs",
+              "RelativeDocumentMoniker": "PhongKham.BLL\\Service\\SpecialtyService.cs",
+              "ToolTip": "C:\\Users\\duyen\\source\\repos\\PhongKham\\PhongKham.BLL\\Service\\SpecialtyService.cs",
+              "RelativeToolTip": "PhongKham.BLL\\Service\\SpecialtyService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T04:16:13.223Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\bin\Debug\net8.0\PhongKham.DAL.deps.json
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\bin\Debug\net8.0\PhongKham.DAL.runtimeconfig.json
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\bin\Debug\net8.0\PhongKham.DAL.dll
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\bin\Debug\net8.0\PhongKham.DAL.pdb
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\obj\Debug\net8.0\PhongKham.DAL.csproj.AssemblyReference.cache
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\obj\Debug\net8.0\PhongKham.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\obj\Debug\net8.0\PhongKham.DAL.AssemblyInfoInputs.cache
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\obj\Debug\net8.0\PhongKham.DAL.AssemblyInfo.cs
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\obj\Debug\net8.0\PhongKham.DAL.csproj.CoreCompileInputs.cache
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\obj\Debug\net8.0\PhongKham.DAL.dll
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\obj\Debug\net8.0\refint\PhongKham.DAL.dll
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\obj\Debug\net8.0\PhongKham.DAL.pdb
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\obj\Debug\net8.0\PhongKham.DAL.genruntimeconfig.cache
+C:\Users\duyen\source\repos\PhongKham\PhongKham.DAL\obj\Debug\net8.0\ref\PhongKham.DAL.dll

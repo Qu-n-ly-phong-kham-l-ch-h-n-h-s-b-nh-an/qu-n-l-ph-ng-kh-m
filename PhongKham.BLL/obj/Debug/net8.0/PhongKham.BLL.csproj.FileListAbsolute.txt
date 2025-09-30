@@ -1,0 +1,15 @@
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\bin\Debug\net8.0\PhongKham.BLL.deps.json
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\bin\Debug\net8.0\PhongKham.BLL.dll
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\bin\Debug\net8.0\PhongKham.BLL.pdb
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKham.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKham.BLL.AssemblyInfoInputs.cache
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKham.BLL.AssemblyInfo.cs
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKham.BLL.csproj.CoreCompileInputs.cache
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKham.BLL.dll
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\refint\PhongKham.BLL.dll
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKham.BLL.pdb
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\ref\PhongKham.BLL.dll
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\bin\Debug\net8.0\PhongKham.DAL.dll
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\bin\Debug\net8.0\PhongKham.DAL.pdb
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKham.BLL.csproj.AssemblyReference.cache
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKha.511AA6A8.Up2Date
