@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PhongKham.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b7426f5d76fbcbaaec17375c86b6588d411369b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4d82a174290128a324e3074c8b331814af60e10d")]
 [assembly: System.Reflection.AssemblyProductAttribute("PhongKham.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PhongKham.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

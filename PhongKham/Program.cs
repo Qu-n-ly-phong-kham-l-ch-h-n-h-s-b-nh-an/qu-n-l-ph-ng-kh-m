@@ -15,7 +15,15 @@ builder.Services.AddDbContext<PhongKhamDbContext>(options =>
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<DoctorService>();
 builder.Services.AddScoped<SpecialtyService>();
-
+builder.Services.AddScoped<DrugService>();
+builder.Services.AddScoped<AppointmentService>();
+builder.Services.AddScoped<EncounterService>();
+builder.Services.AddScoped<DiagnosisService>();
+builder.Services.AddScoped<AuditLogService>();
+builder.Services.AddScoped<DrugStockService>();
+builder.Services.AddScoped<InvoiceService>();
+builder.Services.AddScoped<PatientService>();
+builder.Services.AddScoped<PrescriptionService>();
 
 
 // Swagger

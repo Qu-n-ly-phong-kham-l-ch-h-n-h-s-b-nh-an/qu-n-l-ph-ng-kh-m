@@ -13,3 +13,4 @@ C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\bin\Debug\net8.0\PhongKham.D
 C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\bin\Debug\net8.0\PhongKham.DAL.pdb
 C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKham.BLL.csproj.AssemblyReference.cache
 C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKha.511AA6A8.Up2Date
+C:\Users\duyen\source\repos\PhongKham\PhongKham.BLL\obj\Debug\net8.0\PhongKham.BLL.sourcelink.json
