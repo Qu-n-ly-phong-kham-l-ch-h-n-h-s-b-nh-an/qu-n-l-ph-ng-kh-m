@@ -145,3 +145,15 @@ CREATE TABLE AuditLogs (
     AccessTime DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
 );
+
+-- 1️⃣ Xóa constraint cũ
+ALTER TABLE Accounts DROP CONSTRAINT CK__Accounts__Role__59FA5E80;
+-- (Tên constraint có thể khác, nên bạn có thể chạy sp_helpconstraint trước:
+-- EXEC sp_helpconstraint 'Accounts'; )
+
+-- 2️⃣ Tạo lại constraint chuẩn khớp với backend
+ALTER TABLE Accounts
+ADD CONSTRAINT CK_Accounts_Role
+CHECK (Role IN ('Admin', 'Doctor', 'Receptionist', 'Pharmacist', 'Patient'));
+
+SELECT * FROM Doctors;
