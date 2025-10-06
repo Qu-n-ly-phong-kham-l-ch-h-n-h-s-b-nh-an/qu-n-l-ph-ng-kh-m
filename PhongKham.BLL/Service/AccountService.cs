@@ -28,6 +28,12 @@ namespace PhongKham.BLL.Service
             return _context.Accounts.FirstOrDefault(a => a.AccountId == id);
         }
 
+        public Account? GetByUsername(string username)
+        {
+            return _context.Accounts.FirstOrDefault(a => a.Username == username);
+        }
+
+
         // Tạo mới
         public void Create(Account account)
         {
