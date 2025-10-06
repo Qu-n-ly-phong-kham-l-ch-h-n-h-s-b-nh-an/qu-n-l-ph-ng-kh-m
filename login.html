@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Đăng nhập</h2>
+
+        <div class="roles">
+            <div class="role-box" onclick="showLoginForm('doctor')">
+                <p>Bác sĩ</p>
+            </div>
+
+            <div class="role-box" onclick="showLoginForm('pharmacist')">
+                <p>Dược sĩ</p>
+            </div>
+
+            <div class="role-box" onclick="redirectPatient()">
+                <p>Bệnh nhân</p>
+            </div>
+
+            <div class="role-box" onclick="showLoginForm('reception')">
+                <p>Lễ tân</p>
+            </div>
+        </div>
+
+        <!-- Form đăng nhập chung -->
+        <form class="login-form" id="loginForm">
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Đăng nhập</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
