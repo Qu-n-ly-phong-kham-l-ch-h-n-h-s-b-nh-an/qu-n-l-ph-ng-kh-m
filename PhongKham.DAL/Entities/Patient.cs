@@ -34,6 +34,12 @@ public partial class Patient
 
     public string? MedicalHistory { get; set; }
 
+    // 🔗 Liên kết tới tài khoản (nếu có)
+    public int? AccountId { get; set; }
+
+    [ForeignKey("AccountId")]
+    public virtual Account? Account { get; set; }
+
     [InverseProperty("Patient")]
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 

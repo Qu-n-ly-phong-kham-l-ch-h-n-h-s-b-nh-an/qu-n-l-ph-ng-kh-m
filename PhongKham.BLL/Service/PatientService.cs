@@ -28,6 +28,13 @@ namespace PhongKham.BLL.Service
             return _context.Patients.FirstOrDefault(p => p.PatientId == id);
         }
 
+        //tìm hồ sơ theo tài khoản
+        public Patient? GetByAccountId(int accountId)
+        {
+            return _context.Patients.FirstOrDefault(p => p.AccountId == accountId);
+        }
+
+
         // Tạo mới bệnh nhân
         public void Create(Patient patient)
         {

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PhongKham.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace PhongKham.BLL.Service
 {
@@ -16,33 +14,41 @@ namespace PhongKham.BLL.Service
             _context = context;
         }
 
-        // Lấy tất cả Encounter
+        // ✅ Lấy tất cả Encounter có include dữ liệu liên quan
         public IEnumerable<Encounter> GetAll()
         {
-            return _context.Encounters.ToList();
+            return _context.Encounters
+                .Include(e => e.Doctor)
+                .Include(e => e.Appointment)
+                    .ThenInclude(a => a.Patient)
+                .ToList();
         }
 
-        // Lấy Encounter theo ID
+        // ✅ Lấy theo ID
         public Encounter? GetById(int id)
         {
-            return _context.Encounters.FirstOrDefault(e => e.EncounterId == id);
+            return _context.Encounters
+                .Include(e => e.Doctor)
+                .Include(e => e.Appointment)
+                    .ThenInclude(a => a.Patient)
+                .FirstOrDefault(e => e.EncounterId == id);
         }
 
-        // Tạo mới Encounter
+        // ✅ Tạo mới Encounter
         public void Create(Encounter encounter)
         {
             _context.Encounters.Add(encounter);
             _context.SaveChanges();
         }
 
-        // Cập nhật Encounter
+        // ✅ Cập nhật Encounter
         public void Update(Encounter encounter)
         {
             _context.Encounters.Update(encounter);
             _context.SaveChanges();
         }
 
-        // Xóa Encounter
+        // ✅ Xóa Encounter
         public void Delete(int id)
         {
             var encounter = _context.Encounters.FirstOrDefault(e => e.EncounterId == id);

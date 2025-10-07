@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhongKham.BLL.Service;
 using PhongKham.DAL.Entities;
+using PhongKham.API.Models.DTOs;
 
 namespace PhongKham.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize] // ✅ Bắt buộc phải đăng nhập
     public class DiagnosesController : ControllerBase
     {
         private readonly DiagnosisService _diagnosisService;
@@ -15,45 +18,72 @@ namespace PhongKham.API.Controllers
             _diagnosisService = diagnosisService;
         }
 
-        // GET: api/diagnoses
+        // ======================== 1️⃣ ADMIN & BÁC SĨ XEM TẤT CẢ ========================
+        [Authorize(Roles = "Admin,Doctor")]
         [HttpGet]
-        public IActionResult GetAll()
+        public ActionResult<IEnumerable<DiagnosisResponseDTO>> GetAll()
         {
-            return Ok(_diagnosisService.GetAll());
+            var list = _diagnosisService.GetAll()
+                .Select(d => new DiagnosisResponseDTO
+                {
+                    DiagnosisId = d.DiagnosisId,
+                    EncounterId = d.EncounterId,
+                    Description = d.Description,
+                    HasResultFile = d.ResultFile != null
+                });
+            return Ok(list);
         }
 
-        // GET: api/diagnoses/5
+        // ======================== 2️⃣ XEM CHI TIẾT CHẨN ĐOÁN ========================
+        [Authorize(Roles = "Admin,Doctor,Receptionist")]
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public ActionResult<DiagnosisResponseDTO> GetById(int id)
         {
-            var diag = _diagnosisService.GetById(id);
-            if (diag == null) return NotFound();
-            return Ok(diag);
+            var d = _diagnosisService.GetById(id);
+            if (d == null)
+                return NotFound("Không tìm thấy chẩn đoán.");
+
+            var dto = new DiagnosisResponseDTO
+            {
+                DiagnosisId = d.DiagnosisId,
+                EncounterId = d.EncounterId,
+                Description = d.Description,
+                HasResultFile = d.ResultFile != null
+            };
+
+            return Ok(dto);
         }
 
-        // POST: api/diagnoses
+        // ======================== 3️⃣ BÁC SĨ THÊM CHẨN ĐOÁN ========================
+        [Authorize(Roles = "Doctor,Admin")]
         [HttpPost]
-        public IActionResult Create(Diagnosis diagnosis)
+        public IActionResult Create([FromBody] DiagnosisRequestDTO dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var diagnosis = new Diagnosis
+            {
+                EncounterId = dto.EncounterId,
+                Description = dto.Description,
+                ResultFile = dto.ResultFile
+            };
+
             _diagnosisService.Create(diagnosis);
-            return Ok(diagnosis);
+            return Ok(new { message = "Thêm chẩn đoán thành công!", diagnosisId = diagnosis.DiagnosisId });
         }
 
-        // PUT: api/diagnoses/5
+        // ======================== 4️⃣ BÁC SĨ CẬP NHẬT ========================
+        [Authorize(Roles = "Doctor,Admin")]
         [HttpPut("{id}")]
-        public IActionResult Update(int id, Diagnosis diagnosis)
+        public IActionResult Update(int id, [FromBody] DiagnosisRequestDTO dto)
         {
-            if (id != diagnosis.DiagnosisId) return BadRequest();
-            _diagnosisService.Update(diagnosis);
-            return Ok(diagnosis);
-        }
+            var existing = _diagnosisService.GetById(id);
+            if (existing == null)
+                return NotFound("Không tìm thấy chẩn đoán.");
 
-        // DELETE: api/diagnoses/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
             _diagnosisService.Delete(id);
-            return NoContent();
+            return Ok(new { message = "Xóa chẩn đoán thành công!" });
         }
     }
 }

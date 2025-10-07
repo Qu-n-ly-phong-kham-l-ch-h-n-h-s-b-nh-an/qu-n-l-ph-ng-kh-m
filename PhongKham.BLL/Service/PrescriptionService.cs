@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using PhongKham.DAL.Entities;
 
 namespace PhongKham.BLL.Service
@@ -16,17 +12,19 @@ namespace PhongKham.BLL.Service
             _context = context;
         }
 
-        // Lấy tất cả đơn thuốc
+        // Lấy tất cả đơn thuốc (có tên thuốc)
         public IEnumerable<Prescription> GetAll()
         {
             return _context.Prescriptions
+                .Include(p => p.Drug) // nạp tên thuốc
                 .ToList();
         }
 
-        // Lấy đơn thuốc theo ID
+        // Lấy đơn thuốc theo ID (có tên thuốc)
         public Prescription? GetById(int id)
         {
             return _context.Prescriptions
+                .Include(p => p.Drug)
                 .FirstOrDefault(p => p.PrescriptionId == id);
         }
 
@@ -48,8 +46,7 @@ namespace PhongKham.BLL.Service
         // Xóa đơn thuốc
         public void Delete(int id)
         {
-            var prescription = _context.Prescriptions
-                .FirstOrDefault(p => p.PrescriptionId == id);
+            var prescription = _context.Prescriptions.FirstOrDefault(p => p.PrescriptionId == id);
             if (prescription != null)
             {
                 _context.Prescriptions.Remove(prescription);

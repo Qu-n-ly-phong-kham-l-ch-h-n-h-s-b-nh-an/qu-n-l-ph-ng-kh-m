@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhongKham.BLL.Service;
 using PhongKham.DAL.Entities;
 
@@ -7,29 +7,27 @@ namespace PhongKham.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // ✅ Bắt buộc có token
+    [Authorize]
     public class PatientsController : ControllerBase
     {
         private readonly PatientService _patientService;
+        private readonly AccountService _accountService;
 
-        public PatientsController(PatientService patientService)
+        public PatientsController(PatientService patientService, AccountService accountService)
         {
             _patientService = patientService;
+            _accountService = accountService;
         }
 
-        // ==================== GET ALL ====================
-        // ✅ Admin, Doctor, Lễ tân có thể xem danh sách bệnh nhân
+        // ==================== LẤY DANH SÁCH ====================
         [Authorize(Roles = "Admin,Doctor,Receptionist")]
         [HttpGet]
         public IActionResult GetAll()
         {
-            var list = _patientService.GetAll();
-            return Ok(list);
+            return Ok(_patientService.GetAll());
         }
 
-        // ==================== GET BY ID ====================
-        // ✅ Admin, Doctor, Patient có thể xem hồ sơ
-        // (Tạm thời chưa kiểm tra đúng người vì chưa có liên kết Account)
+        // ==================== LẤY CHI TIẾT ====================
         [Authorize(Roles = "Admin,Doctor,Patient")]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
@@ -37,12 +35,10 @@ namespace PhongKham.API.Controllers
             var patient = _patientService.GetById(id);
             if (patient == null)
                 return NotFound("Không tìm thấy bệnh nhân");
-
             return Ok(patient);
         }
 
-        // ==================== CREATE ====================
-        // ✅ Lễ tân được phép thêm bệnh nhân mới
+        // ==================== THÊM MỚI ====================
         [Authorize(Roles = "Admin,Receptionist")]
         [HttpPost]
         public IActionResult Create([FromBody] Patient patient)
@@ -54,8 +50,7 @@ namespace PhongKham.API.Controllers
             return Ok(new { message = "Thêm bệnh nhân thành công", patient });
         }
 
-        // ==================== UPDATE ====================
-        // ✅ Admin hoặc Lễ tân được phép sửa thông tin
+        // ==================== CẬP NHẬT ====================
         [Authorize(Roles = "Admin,Receptionist")]
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Patient patient)
@@ -67,14 +62,33 @@ namespace PhongKham.API.Controllers
             return Ok(new { message = "Cập nhật thành công", patient });
         }
 
-        // ==================== DELETE ====================
-        // ✅ Chỉ Admin được phép xóa hồ sơ
+        // ==================== XÓA ====================
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _patientService.Delete(id);
             return NoContent();
+        }
+
+        // ==================== BỆNH NHÂN XEM HỒ SƠ CỦA MÌNH ====================
+        [Authorize(Roles = "Patient")]
+        [HttpGet("me")]
+        public IActionResult GetMyProfile()
+        {
+            var username = User.Identity?.Name;
+            if (string.IsNullOrEmpty(username))
+                return Unauthorized();
+
+            var account = _accountService.GetByUsername(username);
+            if (account == null)
+                return NotFound("Không tìm thấy tài khoản.");
+
+            var patient = _patientService.GetByAccountId(account.AccountId);
+            if (patient == null)
+                return NotFound("Không tìm thấy hồ sơ bệnh nhân.");
+
+            return Ok(patient);
         }
     }
 }
