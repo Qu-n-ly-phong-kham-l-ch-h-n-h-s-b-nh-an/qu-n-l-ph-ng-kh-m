@@ -133,27 +133,28 @@ CREATE TABLE Accounts (
     Role NVARCHAR(50) CHECK (Role IN (N'Admin',N'Lễ tân',N'Bác sĩ',N'Dược sĩ',N'Bệnh nhân'))
 );
 
--- ===============================
--- Bảng AuditLogs (ghi lại truy cập hồ sơ / hành động)
--- ===============================
-CREATE TABLE AuditLogs (
-    LogID INT IDENTITY(1,1) PRIMARY KEY,
-    AccountID INT,
-    Action NVARCHAR(200),
-    TableName NVARCHAR(100),
-    RecordID INT,
-    AccessTime DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
-);
-
 -- 1️⃣ Xóa constraint cũ
 ALTER TABLE Accounts DROP CONSTRAINT CK__Accounts__Role__59FA5E80;
 -- (Tên constraint có thể khác, nên bạn có thể chạy sp_helpconstraint trước:
 -- EXEC sp_helpconstraint 'Accounts'; )
 
--- 2️⃣ Tạo lại constraint chuẩn khớp với backend
+-- 2️⃣ Tạo lại constraint chuẩn khớp với backend00
 ALTER TABLE Accounts
 ADD CONSTRAINT CK_Accounts_Role
 CHECK (Role IN ('Admin', 'Doctor', 'Receptionist', 'Pharmacist', 'Patient'));
 
+ALTER TABLE Patients
+ADD AccountID INT NULL,
+CONSTRAINT FK_Patients_Accounts FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID);
+
+SELECT * FROM Accounts;
+SELECT * FROM Patients;
 SELECT * FROM Doctors;
+SELECT * FROM Appointments;
+SELECT * FROM Diagnoses;
+SELECT * FROM Prescriptions;
+SELECT * FROM Invoices;
+SELECT * FROM Drugs
+SELECT * FROM Encounters
+SELECT * FROM Specialties
+ SELECT * FROM Drug_Stocks
