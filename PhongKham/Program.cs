@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OfficeOpenXml;
 using PhongKham.BLL.Service;
 using PhongKham.DAL.Entities;
 using System.Text;
@@ -29,7 +30,10 @@ builder.Services.AddScoped<DrugStockService>();
 builder.Services.AddScoped<InvoiceService>();
 builder.Services.AddScoped<PatientService>();
 builder.Services.AddScoped<PrescriptionService>();
+builder.Services.AddScoped<ReportService>();
+builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TokenService>();
+
 
 // ===============================
 // 2️⃣ Cấu hình Swagger (chuẩn OpenAPI 3.0.1)

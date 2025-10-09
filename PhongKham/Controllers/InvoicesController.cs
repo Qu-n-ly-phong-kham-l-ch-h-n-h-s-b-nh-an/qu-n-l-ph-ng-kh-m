@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PhongKham.API.Models.DTOs;
 using PhongKham.BLL.Service;
 using PhongKham.DAL.Entities;
-using PhongKham.API.Models.DTOs;
+using System;
 using System.Linq;
 
 namespace PhongKham.API.Controllers
@@ -112,6 +113,18 @@ namespace PhongKham.API.Controllers
 
             _service.Delete(id);
             return Ok(new { message = "Xóa hóa đơn thành công!" });
+        }
+
+        // ================== 6️⃣ XUẤT EXCEL ==================
+        [Authorize(Roles = "Admin,Receptionist")]
+        [HttpGet("export")]
+        public IActionResult ExportToExcel()
+        {
+            var file = _service.ExportInvoicesToExcel();
+            string fileName = $"HoaDon_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
+            return File(file,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileName);
         }
     }
 }
