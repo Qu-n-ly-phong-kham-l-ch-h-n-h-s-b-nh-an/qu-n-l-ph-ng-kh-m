@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PhongKham.API.Models.DTOs;
 using PhongKham.BLL.Service;
 using PhongKham.DAL.Entities;
 
@@ -19,59 +20,107 @@ namespace PhongKham.API.Controllers
             _accountService = accountService;
         }
 
-        // ==================== LẤY DANH SÁCH ====================
+        // ==================== 1️⃣ LẤY DANH SÁCH ====================
         [Authorize(Roles = "Admin,Doctor,Receptionist")]
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_patientService.GetAll());
+            var list = _patientService.GetAll()
+                .Select(p => new PatientDTO
+                {
+                    PatientId = p.PatientId,
+                    FullName = p.FullName,
+                    Dob = p.Dob,
+                    Gender = p.Gender,
+                    Phone = p.Phone,
+                    Email = p.Email,
+                    Address = p.Address,
+                    MedicalHistory = p.MedicalHistory,
+                    AccountId = p.AccountId
+                });
+
+            return Ok(list);
         }
 
-        // ==================== LẤY CHI TIẾT ====================
+        // ==================== 2️⃣ XEM CHI TIẾT ====================
         [Authorize(Roles = "Admin,Doctor,Patient")]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var patient = _patientService.GetById(id);
-            if (patient == null)
-                return NotFound("Không tìm thấy bệnh nhân");
-            return Ok(patient);
+            var p = _patientService.GetById(id);
+            if (p == null)
+                return NotFound("Không tìm thấy bệnh nhân.");
+
+            var dto = new PatientDTO
+            {
+                PatientId = p.PatientId,
+                FullName = p.FullName,
+                Dob = p.Dob,
+                Gender = p.Gender,
+                Phone = p.Phone,
+                Email = p.Email,
+                Address = p.Address,
+                MedicalHistory = p.MedicalHistory,
+                AccountId = p.AccountId
+            };
+
+            return Ok(dto);
         }
 
-        // ==================== THÊM MỚI ====================
+        // ==================== 3️⃣ ADMIN / LỄ TÂN THÊM BỆNH NHÂN ====================
         [Authorize(Roles = "Admin,Receptionist")]
         [HttpPost]
-        public IActionResult Create([FromBody] Patient patient)
+        public IActionResult Create([FromBody] PatientDTO dto)
         {
-            if (patient == null)
-                return BadRequest("Dữ liệu không hợp lệ");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+            var patient = new Patient
+            {
+                FullName = dto.FullName!,
+                Dob = dto.Dob ?? DateTime.Now, // nếu chưa nhập, mặc định ngày hiện tại
+                Gender = dto.Gender,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                Address = dto.Address,
+                MedicalHistory = dto.MedicalHistory,
+                AccountId = dto.AccountId
+            };
             _patientService.Create(patient);
-            return Ok(new { message = "Thêm bệnh nhân thành công", patient });
+            return Ok(new { message = "Thêm bệnh nhân thành công!", patientId = patient.PatientId });
         }
 
-        // ==================== CẬP NHẬT ====================
+        // ==================== 4️⃣ CẬP NHẬT ====================
         [Authorize(Roles = "Admin,Receptionist")]
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Patient patient)
+        public IActionResult Update(int id, [FromBody] PatientDTO dto)
         {
-            if (id != patient.PatientId)
-                return BadRequest("ID không khớp");
+            var existing = _patientService.GetById(id);
+            if (existing == null)
+                return NotFound("Không tìm thấy bệnh nhân.");
 
-            _patientService.Update(patient);
-            return Ok(new { message = "Cập nhật thành công", patient });
+            existing.FullName = dto.FullName!;
+            existing.Dob = dto.Dob;
+            existing.Gender = dto.Gender;
+            existing.Phone = dto.Phone;
+            existing.Email = dto.Email;
+            existing.Address = dto.Address;
+            existing.MedicalHistory = dto.MedicalHistory;
+
+            _patientService.Update(existing);
+            return Ok(new { message = "Cập nhật bệnh nhân thành công!" });
         }
 
-        // ==================== XÓA ====================
+        // ==================== 5️⃣ XÓA ====================
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _patientService.Delete(id);
-            return NoContent();
+            return Ok(new { message = "Xóa bệnh nhân thành công!" });
         }
 
-        // ==================== BỆNH NHÂN XEM HỒ SƠ CỦA MÌNH ====================
+        // ==================== 6️⃣ BỆNH NHÂN XEM HỒ SƠ CỦA MÌNH ====================
         [Authorize(Roles = "Patient")]
         [HttpGet("me")]
         public IActionResult GetMyProfile()
@@ -88,7 +137,20 @@ namespace PhongKham.API.Controllers
             if (patient == null)
                 return NotFound("Không tìm thấy hồ sơ bệnh nhân.");
 
-            return Ok(patient);
+            var dto = new PatientDTO
+            {
+                PatientId = patient.PatientId,
+                FullName = patient.FullName,
+                Dob = patient.Dob,
+                Gender = patient.Gender,
+                Phone = patient.Phone,
+                Email = patient.Email,
+                Address = patient.Address,
+                MedicalHistory = patient.MedicalHistory,
+                AccountId = patient.AccountId
+            };
+
+            return Ok(dto);
         }
     }
 }

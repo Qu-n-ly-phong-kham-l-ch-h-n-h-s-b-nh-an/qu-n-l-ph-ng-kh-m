@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using PhongKham.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PhongKham.DAL.Entities;
 
 namespace PhongKham.BLL.Service
 {
@@ -16,40 +15,59 @@ namespace PhongKham.BLL.Service
             _context = context;
         }
 
-        // Lấy tất cả hóa đơn
+        // ✅ Lấy tất cả hóa đơn (kèm thông tin bệnh nhân và lần khám)
         public IEnumerable<Invoice> GetAll()
         {
-            return _context.Invoices.ToList();
+            return _context.Invoices
+                .Include(i => i.Patient)
+                .Include(i => i.Encounter)
+                    .ThenInclude(e => e.Doctor)
+                .AsNoTracking()
+                .ToList();
         }
 
-        // Lấy 1 hóa đơn theo ID
+        // ✅ Lấy theo ID
         public Invoice? GetById(int id)
         {
-            return _context.Invoices.FirstOrDefault(i => i.InvoiceId == id);
+            return _context.Invoices
+                .Include(i => i.Patient)
+                .Include(i => i.Encounter)
+                    .ThenInclude(e => e.Doctor)
+                .FirstOrDefault(i => i.InvoiceId == id);
         }
 
-        // Tạo mới hóa đơn
-        public void Create(Invoice invoice)
+        // ✅ Tạo mới hóa đơn (tự tính tiền thuốc + phí khám)
+        public void Create(Invoice inv)
         {
-            // Thiết lập mặc định nếu cần
-            if (invoice.PaymentDate == null)
-                invoice.PaymentDate = DateTime.Now;
+            const decimal consultationFee = 200000m; // phí khám
+            decimal total = consultationFee;
 
-            if (string.IsNullOrEmpty(invoice.Status))
-                invoice.Status = "Chưa thanh toán";
+            var prescriptions = _context.Prescriptions
+                .Include(p => p.Drug)
+                .Where(p => p.EncounterId == inv.EncounterId)
+                .ToList();
 
-            _context.Invoices.Add(invoice);
+            foreach (var item in prescriptions)
+            {
+                total += (item.Drug.Price ?? 0) * (item.Quantity ?? 0);
+            }
+
+            inv.TotalAmount = total;
+            inv.Status ??= "Chưa thanh toán";
+            inv.PaymentDate ??= DateTime.Now;
+
+            _context.Invoices.Add(inv);
             _context.SaveChanges();
         }
 
-        // Cập nhật hóa đơn
+        // ✅ Cập nhật hóa đơn
         public void Update(Invoice invoice)
         {
             _context.Invoices.Update(invoice);
             _context.SaveChanges();
         }
 
-        // Xóa hóa đơn
+        // ✅ Xóa hóa đơn
         public void Delete(int id)
         {
             var inv = _context.Invoices.FirstOrDefault(i => i.InvoiceId == id);

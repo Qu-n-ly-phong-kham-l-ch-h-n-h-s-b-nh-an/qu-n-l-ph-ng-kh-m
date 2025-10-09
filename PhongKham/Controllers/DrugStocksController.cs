@@ -18,25 +18,25 @@ namespace PhongKham.API.Controllers
             _drugStockService = drugStockService;
         }
 
-        // ===================== GET ALL =====================
+        // ✅ GET ALL
         [Authorize(Roles = "Admin,Pharmacist")]
         [HttpGet]
         public IActionResult GetAll()
         {
             var list = _drugStockService.GetAll()
-                .Select(ds => new DrugStockResponseDTO
+                .Select(ds => new DrugStockDTO
                 {
                     StockId = ds.StockId,
                     DrugId = ds.DrugId,
                     DrugName = ds.Drug?.DrugName,
-                    QuantityAvailable = ds.QuantityAvailable,
+                    QuantityAvailable = ds.QuantityAvailable ?? 0,
                     LastUpdated = ds.LastUpdated
                 });
 
             return Ok(list);
         }
 
-        // ===================== GET BY ID =====================
+        // ✅ GET BY ID
         [Authorize(Roles = "Admin,Pharmacist")]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
@@ -44,61 +44,75 @@ namespace PhongKham.API.Controllers
             var ds = _drugStockService.GetById(id);
             if (ds == null) return NotFound("Không tìm thấy bản ghi tồn kho.");
 
-            var dto = new DrugStockResponseDTO
+            var dto = new DrugStockDTO
             {
                 StockId = ds.StockId,
                 DrugId = ds.DrugId,
                 DrugName = ds.Drug?.DrugName,
-                QuantityAvailable = ds.QuantityAvailable,
+                QuantityAvailable = ds.QuantityAvailable ?? 0,
                 LastUpdated = ds.LastUpdated
             };
 
             return Ok(dto);
         }
 
-        // ===================== CREATE =====================
+        // ✅ CREATE
         [Authorize(Roles = "Admin,Pharmacist")]
         [HttpPost]
-        public IActionResult Create([FromBody] DrugStockRequestDTO dto)
+        public IActionResult Create([FromBody] DrugStockDTO dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var stock = new DrugStock
+            try
             {
-                DrugId = dto.DrugId,
-                QuantityAvailable = dto.QuantityAvailable,
-                LastUpdated = DateTime.Now
-            };
+                var stock = new DrugStock
+                {
+                    DrugId = dto.DrugId,
+                    QuantityAvailable = dto.QuantityAvailable,
+                    LastUpdated = DateTime.Now
+                };
 
-            _drugStockService.Create(stock);
-            return Ok(new { message = "Thêm tồn kho thành công", stock.StockId });
+                _drugStockService.Create(stock);
+                return Ok(new { message = "✅ Thêm tồn kho thành công!", stock.StockId });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
-        // ===================== UPDATE =====================
+        // ✅ UPDATE
         [Authorize(Roles = "Admin,Pharmacist")]
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] DrugStockRequestDTO dto)
+        public IActionResult Update(int id, [FromBody] DrugStockDTO dto)
         {
             var existing = _drugStockService.GetById(id);
             if (existing == null)
                 return NotFound("Không tìm thấy bản ghi tồn kho để cập nhật.");
 
             existing.QuantityAvailable = dto.QuantityAvailable;
-            existing.LastUpdated = DateTime.Now;
             existing.DrugId = dto.DrugId;
+            existing.LastUpdated = DateTime.Now;
 
             _drugStockService.Update(existing);
-            return Ok(new { message = "Cập nhật tồn kho thành công" });
+            return Ok(new { message = "✅ Cập nhật tồn kho thành công!" });
         }
 
-        // ===================== DELETE =====================
+        // ✅ DELETE
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _drugStockService.Delete(id);
-            return NoContent();
+            try
+            {
+                _drugStockService.Delete(id);
+                return Ok(new { message = "🗑️ Xóa bản ghi tồn kho thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

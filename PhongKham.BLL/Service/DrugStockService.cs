@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using PhongKham.DAL.Entities;
 
 namespace PhongKham.BLL.Service
@@ -16,45 +12,57 @@ namespace PhongKham.BLL.Service
             _context = context;
         }
 
-        // Lấy tất cả tồn kho thuốc
+        // ✅ Lấy tất cả tồn kho thuốc (có thông tin thuốc)
         public IEnumerable<DrugStock> GetAll()
         {
             return _context.DrugStocks
-                           .OrderByDescending(ds => ds.LastUpdated)
-                           .ToList();
+                .Include(ds => ds.Drug)
+                .OrderByDescending(ds => ds.LastUpdated)
+                .ToList();
         }
 
-        // Lấy tồn kho theo ID
+        // ✅ Lấy theo ID
         public DrugStock? GetById(int id)
         {
-            return _context.DrugStocks.FirstOrDefault(ds => ds.StockId == id);
+            return _context.DrugStocks
+                .Include(ds => ds.Drug)
+                .FirstOrDefault(ds => ds.StockId == id);
         }
 
-        // Tạo mới
+        // ✅ Tạo mới (kèm kiểm tra thuốc tồn tại)
         public void Create(DrugStock stock)
         {
+            var drugExists = _context.Drugs.Any(d => d.DrugId == stock.DrugId);
+            if (!drugExists)
+                throw new Exception("❌ Thuốc không tồn tại trong danh mục.");
+
             stock.LastUpdated = DateTime.Now;
             _context.DrugStocks.Add(stock);
             _context.SaveChanges();
+
+            Console.WriteLine($"✅ Thêm mới tồn kho cho thuốc ID {stock.DrugId}");
         }
 
-        // Cập nhật
+        // ✅ Cập nhật (có cảnh báo số lượng thấp)
         public void Update(DrugStock stock)
         {
-            stock.LastUpdated = DateTime.Now;
             _context.DrugStocks.Update(stock);
+            stock.LastUpdated = DateTime.Now;
             _context.SaveChanges();
+
+            if (stock.QuantityAvailable < 10)
+                Console.WriteLine($"⚠️ Cảnh báo: Thuốc {stock.Drug?.DrugName ?? stock.DrugId.ToString()} sắp hết!");
         }
 
-        // Xóa
+        // ✅ Xóa tồn kho
         public void Delete(int id)
         {
             var stock = _context.DrugStocks.FirstOrDefault(ds => ds.StockId == id);
-            if (stock != null)
-            {
-                _context.DrugStocks.Remove(stock);
-                _context.SaveChanges();
-            }
+            if (stock == null)
+                throw new Exception("Không tìm thấy bản ghi tồn kho để xóa.");
+
+            _context.DrugStocks.Remove(stock);
+            _context.SaveChanges();
         }
     }
 }

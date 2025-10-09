@@ -8,7 +8,7 @@ namespace PhongKham.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // Yêu cầu phải đăng nhập
+    [Authorize]
     public class DoctorsController : ControllerBase
     {
         private readonly DoctorService _doctorService;
@@ -18,69 +18,78 @@ namespace PhongKham.API.Controllers
             _doctorService = doctorService;
         }
 
-        // ======================== 1️⃣ ADMIN & LỄ TÂN XEM DANH SÁCH BÁC SĨ ========================
-        [Authorize(Roles = "Admin,Receptionist")]
+        // ✅ GET ALL
+        [Authorize(Roles = "Admin,Receptionist,Doctor")]
         [HttpGet]
-        public ActionResult<IEnumerable<DoctorResponseDTO>> GetDoctors()
+        public IActionResult GetAll()
         {
-            var doctors = _doctorService.GetAll()
-                .Select(d => new DoctorResponseDTO
+            var list = _doctorService.GetAll()
+                .Select(d => new DoctorDTO
                 {
                     DoctorId = d.DoctorId,
                     FullName = d.FullName,
+                    SpecialtyId = d.SpecialtyId,
                     SpecialtyName = d.Specialty?.SpecialtyName,
                     Phone = d.Phone,
                     Email = d.Email
                 });
 
-            return Ok(doctors);
+            return Ok(list);
         }
 
-        // ======================== 2️⃣ XEM CHI TIẾT BÁC SĨ ========================
+        // ✅ GET BY ID
         [Authorize(Roles = "Admin,Receptionist,Doctor")]
         [HttpGet("{id}")]
-        public ActionResult<DoctorResponseDTO> GetDoctor(int id)
+        public IActionResult GetById(int id)
         {
-            var doctor = _doctorService.GetById(id);
-            if (doctor == null)
+            var d = _doctorService.GetById(id);
+            if (d == null)
                 return NotFound("Không tìm thấy bác sĩ.");
 
-            var dto = new DoctorResponseDTO
+            var dto = new DoctorDTO
             {
-                DoctorId = doctor.DoctorId,
-                FullName = doctor.FullName,
-                SpecialtyName = doctor.Specialty?.SpecialtyName,
-                Phone = doctor.Phone,
-                Email = doctor.Email
+                DoctorId = d.DoctorId,
+                FullName = d.FullName,
+                SpecialtyId = d.SpecialtyId,
+                SpecialtyName = d.Specialty?.SpecialtyName,
+                Phone = d.Phone,
+                Email = d.Email
             };
 
             return Ok(dto);
         }
 
-        // ======================== 3️⃣ ADMIN THÊM BÁC SĨ MỚI ========================
+        // ✅ CREATE
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult CreateDoctor([FromBody] DoctorRequestDTO dto)
+        public IActionResult Create([FromBody] DoctorDTO dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var doctor = new Doctor
+            try
             {
-                FullName = dto.FullName,
-                SpecialtyId = dto.SpecialtyId,
-                Phone = dto.Phone,
-                Email = dto.Email
-            };
+                var doctor = new Doctor
+                {
+                    FullName = dto.FullName,
+                    SpecialtyId = dto.SpecialtyId,
+                    Phone = dto.Phone,
+                    Email = dto.Email
+                };
 
-            _doctorService.Create(doctor);
-            return Ok(new { message = "Thêm bác sĩ thành công!", doctorId = doctor.DoctorId });
+                _doctorService.Create(doctor);
+                return Ok(new { message = "✅ Thêm bác sĩ thành công!", doctorId = doctor.DoctorId });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
-        // ======================== 4️⃣ ADMIN CẬP NHẬT THÔNG TIN ========================
+        // ✅ UPDATE
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public IActionResult UpdateDoctor(int id, [FromBody] DoctorRequestDTO dto)
+        public IActionResult Update(int id, [FromBody] DoctorDTO dto)
         {
             var existing = _doctorService.GetById(id);
             if (existing == null)
@@ -92,20 +101,23 @@ namespace PhongKham.API.Controllers
             existing.Email = dto.Email;
 
             _doctorService.Update(existing);
-            return Ok(new { message = "Cập nhật bác sĩ thành công!" });
+            return Ok(new { message = "✏️ Cập nhật thông tin bác sĩ thành công!" });
         }
 
-        // ======================== 5️⃣ ADMIN XÓA BÁC SĨ ========================
+        // ✅ DELETE
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public IActionResult DeleteDoctor(int id)
+        public IActionResult Delete(int id)
         {
-            var doctor = _doctorService.GetById(id);
-            if (doctor == null)
-                return NotFound("Không tìm thấy bác sĩ.");
-
-            _doctorService.Delete(id);
-            return Ok(new { message = "Xóa bác sĩ thành công!" });
+            try
+            {
+                _doctorService.Delete(id);
+                return Ok(new { message = "🗑️ Xóa bác sĩ thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

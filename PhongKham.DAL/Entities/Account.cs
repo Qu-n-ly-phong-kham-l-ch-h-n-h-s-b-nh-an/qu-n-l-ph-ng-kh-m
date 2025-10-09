@@ -24,6 +24,4 @@ public partial class Account
     [StringLength(50)]
     public string? Role { get; set; }
 
-    [InverseProperty("Account")]
-    public virtual ICollection<AuditLog> AuditLogs { get; set; } = new List<AuditLog>();
 }

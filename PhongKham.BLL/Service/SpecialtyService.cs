@@ -1,55 +1,63 @@
-﻿using System;
+﻿using PhongKham.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PhongKham.DAL.Entities;
 
 namespace PhongKham.BLL.Service
 {
     public class SpecialtyService
     {
-        // Giả lập DB bằng bộ nhớ
-        private static List<Specialty> _specialties = new List<Specialty>
-        {
-            new Specialty { SpecialtyId = 1, SpecialtyName = "Nội khoa" },
-            new Specialty { SpecialtyId = 2, SpecialtyName = "Ngoại khoa" },
-            new Specialty { SpecialtyId = 3, SpecialtyName = "Nhi khoa" }
-        };
+        private readonly PhongKhamDbContext _context;
 
-        public List<Specialty> GetAll()
+        public SpecialtyService(PhongKhamDbContext context)
         {
-            return _specialties;
+            _context = context;
         }
 
+        // ✅ Lấy tất cả chuyên khoa
+        public IEnumerable<Specialty> GetAll()
+        {
+            return _context.Specialties.OrderBy(s => s.SpecialtyName).ToList();
+        }
+
+        // ✅ Lấy theo ID
         public Specialty? GetById(int id)
         {
-            return _specialties.FirstOrDefault(s => s.SpecialtyId == id);
+            return _context.Specialties.FirstOrDefault(s => s.SpecialtyId == id);
         }
 
-        public void Add(Specialty specialty)
+        // ✅ Thêm chuyên khoa (kiểm tra trùng)
+        public void Create(Specialty specialty)
         {
-            specialty.SpecialtyId = _specialties.Any() ? _specialties.Max(s => s.SpecialtyId) + 1 : 1;
-            _specialties.Add(specialty);
+            if (_context.Specialties.Any(s => s.SpecialtyName == specialty.SpecialtyName))
+                throw new Exception("Tên chuyên khoa đã tồn tại.");
+
+            _context.Specialties.Add(specialty);
+            _context.SaveChanges();
+
+            Console.WriteLine($"✅ Đã thêm chuyên khoa mới: {specialty.SpecialtyName}");
         }
 
+        // ✅ Cập nhật
         public void Update(Specialty specialty)
         {
-            var existing = _specialties.FirstOrDefault(s => s.SpecialtyId == specialty.SpecialtyId);
-            if (existing != null)
-            {
-                existing.SpecialtyName = specialty.SpecialtyName;
-            }
+            _context.Specialties.Update(specialty);
+            _context.SaveChanges();
+
+            Console.WriteLine($"✏️ Đã cập nhật chuyên khoa: {specialty.SpecialtyName}");
         }
 
+        // ✅ Xóa
         public void Delete(int id)
         {
-            var specialty = _specialties.FirstOrDefault(s => s.SpecialtyId == id);
-            if (specialty != null)
-            {
-                _specialties.Remove(specialty);
-            }
+            var s = _context.Specialties.FirstOrDefault(s => s.SpecialtyId == id);
+            if (s == null)
+                throw new Exception("Không tìm thấy chuyên khoa để xóa.");
+
+            _context.Specialties.Remove(s);
+            _context.SaveChanges();
+
+            Console.WriteLine($"🗑️ Đã xóa chuyên khoa: {s.SpecialtyName}");
         }
     }
 }
-

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhongKham.BLL.Service;
 using PhongKham.DAL.Entities;
 using PhongKham.API.Models.DTOs;
+using System.Linq;
 
 namespace PhongKham.API.Controllers
 {
@@ -21,21 +22,17 @@ namespace PhongKham.API.Controllers
             _patientService = patientService;
         }
 
-        // ======================== 1️⃣ BỆNH NHÂN ĐẶT LỊCH ========================
+        // 🧾 Bệnh nhân đặt lịch
         [AllowAnonymous]
         [HttpPost("book")]
-        public IActionResult BookAppointment([FromBody] AppointmentRequestDTO dto)
+        public IActionResult Book([FromBody] AppointmentRequestDTO dto)
         {
-            if (dto == null)
-                return BadRequest("Thông tin lịch hẹn không hợp lệ.");
+            if (dto == null) return BadRequest("Thông tin lịch hẹn không hợp lệ.");
 
             var doctor = _doctorService.GetById(dto.DoctorId);
             var patient = _patientService.GetById(dto.PatientId);
-
-            if (doctor == null)
-                return NotFound("Không tìm thấy bác sĩ.");
-            if (patient == null)
-                return NotFound("Không tìm thấy bệnh nhân.");
+            if (doctor == null || patient == null)
+                return NotFound("Không tìm thấy bác sĩ hoặc bệnh nhân.");
 
             var appointment = new Appointment
             {
@@ -46,22 +43,15 @@ namespace PhongKham.API.Controllers
             };
 
             _appointmentService.Create(appointment);
-
-            return Ok(new
-            {
-                message = "Đặt lịch thành công! Vui lòng chờ xác nhận.",
-                appointmentId = appointment.AppointmentId
-            });
+            return Ok(new { message = "Đặt lịch thành công, vui lòng chờ xác nhận.", appointmentId = appointment.AppointmentId });
         }
 
-        // ======================== 2️⃣ ADMIN & LỄ TÂN XEM TẤT CẢ ========================
+        // 📋 Lễ tân / Admin xem toàn bộ lịch
         [Authorize(Roles = "Admin,Receptionist")]
         [HttpGet]
         public IActionResult GetAll()
         {
-            var list = _appointmentService.GetAll();
-
-            var result = list.Select(a => new AppointmentResponseDTO
+            var data = _appointmentService.GetAll().Select(a => new AppointmentResponseDTO
             {
                 AppointmentId = a.AppointmentId,
                 DoctorName = a.Doctor?.FullName,
@@ -69,17 +59,15 @@ namespace PhongKham.API.Controllers
                 AppointmentDate = a.AppointmentDate,
                 Status = a.Status
             });
-
-            return Ok(result);
+            return Ok(data);
         }
 
-        // ======================== 3️⃣ BÁC SĨ XEM LỊCH CỦA MÌNH ========================
+        // 🧑‍⚕️ Bác sĩ xem lịch của mình
         [Authorize(Roles = "Doctor")]
-        [HttpGet("by-doctor/{doctorId}")]
+        [HttpGet("doctor/{doctorId}")]
         public IActionResult GetByDoctor(int doctorId)
         {
-            var list = _appointmentService
-                .GetAll()
+            var list = _appointmentService.GetAll()
                 .Where(a => a.DoctorId == doctorId)
                 .Select(a => new AppointmentResponseDTO
                 {
@@ -89,47 +77,46 @@ namespace PhongKham.API.Controllers
                     AppointmentDate = a.AppointmentDate,
                     Status = a.Status
                 });
-
             return Ok(list);
         }
 
-        // ======================== 4️⃣ ADMIN & LỄ TÂN XÁC NHẬN LỊCH ========================
+        // ✅ Duyệt lịch (tự động tạo Encounter)
         [Authorize(Roles = "Admin,Receptionist")]
-        [HttpPut("{id}/confirm")]
-        public IActionResult Confirm(int id)
+        [HttpPut("{id}/approve")]
+        public IActionResult Approve(int id)
         {
-            var appointment = _appointmentService.GetById(id);
-            if (appointment == null) return NotFound("Không tìm thấy lịch hẹn.");
-
-            appointment.Status = "Đã xác nhận";
-            _appointmentService.Update(appointment);
-
-            return Ok(new { message = "Đã xác nhận lịch hẹn.", appointment });
+            try
+            {
+                _appointmentService.Approve(id);
+                return Ok(new { message = "Đã duyệt lịch hẹn và tạo lần khám tự động." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
-        // ======================== 5️⃣ ADMIN & LỄ TÂN HỦY LỊCH ========================
+        // ❌ Hủy lịch
         [Authorize(Roles = "Admin,Receptionist")]
         [HttpPut("{id}/cancel")]
         public IActionResult Cancel(int id)
         {
-            var appointment = _appointmentService.GetById(id);
-            if (appointment == null) return NotFound("Không tìm thấy lịch hẹn.");
-
-            appointment.Status = "Đã hủy";
-            _appointmentService.Update(appointment);
-
-            return Ok(new { message = "Đã hủy lịch hẹn.", appointment });
+            try
+            {
+                _appointmentService.Cancel(id);
+                return Ok(new { message = "Đã hủy lịch hẹn." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
-        // ======================== 6️⃣ ADMIN XÓA LỊCH ========================
+        // 🧹 Xóa lịch (Admin)
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var appointment = _appointmentService.GetById(id);
-            if (appointment == null)
-                return NotFound("Không tìm thấy lịch hẹn để xóa.");
-
             _appointmentService.Delete(id);
             return Ok(new { message = "Đã xóa lịch hẹn." });
         }

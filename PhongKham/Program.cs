@@ -25,7 +25,6 @@ builder.Services.AddScoped<DrugService>();
 builder.Services.AddScoped<AppointmentService>();
 builder.Services.AddScoped<EncounterService>();
 builder.Services.AddScoped<DiagnosisService>();
-builder.Services.AddScoped<AuditLogService>();
 builder.Services.AddScoped<DrugStockService>();
 builder.Services.AddScoped<InvoiceService>();
 builder.Services.AddScoped<PatientService>();

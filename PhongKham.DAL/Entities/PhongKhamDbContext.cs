@@ -19,7 +19,6 @@ public partial class PhongKhamDbContext : DbContext
 
     public virtual DbSet<Appointment> Appointments { get; set; }
 
-    public virtual DbSet<AuditLog> AuditLogs { get; set; }
 
     public virtual DbSet<Diagnosis> Diagnoses { get; set; }
 
@@ -65,14 +64,6 @@ public partial class PhongKhamDbContext : DbContext
                 .HasConstraintName("FK__Appointme__Patie__3F466844");
         });
 
-        modelBuilder.Entity<AuditLog>(entity =>
-        {
-            entity.HasKey(e => e.LogId).HasName("PK__AuditLog__5E5499A8AC26A6E6");
-
-            entity.Property(e => e.AccessTime).HasDefaultValueSql("(getdate())");
-
-            entity.HasOne(d => d.Account).WithMany(p => p.AuditLogs).HasConstraintName("FK__AuditLogs__Accou__5DCAEF64");
-        });
 
         modelBuilder.Entity<Diagnosis>(entity =>
         {

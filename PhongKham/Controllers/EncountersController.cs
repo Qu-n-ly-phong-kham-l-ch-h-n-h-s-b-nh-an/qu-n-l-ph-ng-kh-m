@@ -8,43 +8,42 @@ namespace PhongKham.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // ✅ yêu cầu đăng nhập
+    [Authorize] // Yêu cầu đăng nhập
     public class EncountersController : ControllerBase
     {
-        private readonly EncounterService _encounterService;
+        private readonly EncounterService _service;
 
-        public EncountersController(EncounterService encounterService)
+        public EncountersController(EncounterService service)
         {
-            _encounterService = encounterService;
+            _service = service;
         }
 
-        // ======================== 1️⃣ ADMIN, BÁC SĨ, LỄ TÂN XEM DANH SÁCH ========================
+        // ================== 1️⃣ LẤY DANH SÁCH ==================
         [Authorize(Roles = "Admin,Doctor,Receptionist")]
         [HttpGet]
-        public ActionResult<IEnumerable<EncounterResponseDTO>> GetAll()
+        public IActionResult GetAll()
         {
-            var list = _encounterService.GetAll()
-                .Select(e => new EncounterResponseDTO
+            var data = _service.GetAll()
+                .Select(e => new EncountersDTO
                 {
                     EncounterId = e.EncounterId,
-                    DoctorName = e.Doctor?.FullName ?? "(Không có bác sĩ)",
-                    PatientName = e.Appointment?.Patient?.FullName ?? "(Không có bệnh nhân)",
+                    DoctorName = e.Doctor?.FullName,
+                    PatientName = e.Appointment?.Patient?.FullName,
                     AppointmentDate = e.Appointment?.AppointmentDate ?? DateTime.MinValue,
                     Notes = e.Notes
                 });
-
-            return Ok(list);
+            return Ok(data);
         }
 
-        // ======================== 2️⃣ XEM CHI TIẾT ========================
+        // ================== 2️⃣ LẤY THEO ID ==================
         [Authorize(Roles = "Admin,Doctor,Receptionist")]
         [HttpGet("{id}")]
-        public ActionResult<EncounterResponseDTO> GetById(int id)
+        public IActionResult GetById(int id)
         {
-            var e = _encounterService.GetById(id);
+            var e = _service.GetById(id);
             if (e == null) return NotFound("Không tìm thấy lần khám.");
 
-            var dto = new EncounterResponseDTO
+            var dto = new EncountersDTO
             {
                 EncounterId = e.EncounterId,
                 DoctorName = e.Doctor?.FullName,
@@ -52,55 +51,78 @@ namespace PhongKham.API.Controllers
                 AppointmentDate = e.Appointment?.AppointmentDate ?? DateTime.MinValue,
                 Notes = e.Notes
             };
-
             return Ok(dto);
         }
 
-        // ======================== 3️⃣ TẠO MỚI (CHỈ BÁC SĨ HOẶC LỄ TÂN) ========================
+        // ================== 3️⃣ TẠO MỚI LẦN KHÁM ==================
         [Authorize(Roles = "Admin,Doctor,Receptionist")]
         [HttpPost]
-        public IActionResult Create([FromBody] EncounterRequestDTO dto)
+        public IActionResult Create([FromBody] EncountersDTO dto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            var encounter = new Encounter
+            try
             {
-                AppointmentId = dto.AppointmentId,
-                DoctorId = dto.DoctorId,
-                Notes = dto.Notes
-            };
-
-            _encounterService.Create(encounter);
-            return Ok(new { message = "Thêm lần khám thành công!", encounterId = encounter.EncounterId });
+                var encounter = new Encounter
+                {
+                    AppointmentId = dto.AppointmentId,
+                    DoctorId = dto.DoctorId,
+                    Notes = dto.Notes
+                };
+                _service.Create(encounter);
+                return Ok(new { message = "Thêm lần khám thành công!", encounter.EncounterId });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // ======================== 4️⃣ CẬP NHẬT (BÁC SĨ HOẶC ADMIN) ========================
+        // ================== 4️⃣ THÊM CHẨN ĐOÁN ==================
         [Authorize(Roles = "Admin,Doctor")]
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] EncounterRequestDTO dto)
+        [HttpPost("{encounterId}/diagnosis")]
+        public IActionResult AddDiagnosis(int encounterId, [FromBody] DiagnosisDTO dto)
         {
-            var existing = _encounterService.GetById(id);
-            if (existing == null) return NotFound("Không tìm thấy lần khám.");
-
-            existing.AppointmentId = dto.AppointmentId;
-            existing.DoctorId = dto.DoctorId;
-            existing.Notes = dto.Notes;
-
-            _encounterService.Update(existing);
-            return Ok(new { message = "Cập nhật lần khám thành công!" });
+            try
+            {
+                _service.AddDiagnosis(encounterId, dto.Description);
+                return Ok(new { message = "Đã thêm chẩn đoán." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // ======================== 5️⃣ XÓA (CHỈ ADMIN) ========================
-        [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        // ================== 5️⃣ THÊM ĐƠN THUỐC ==================
+        [Authorize(Roles = "Admin,Doctor,Pharmacist")]
+        [HttpPost("{encounterId}/prescription")]
+        public IActionResult AddPrescription(int encounterId, [FromBody] PrescriptionDTO dto)
         {
-            var encounter = _encounterService.GetById(id);
-            if (encounter == null)
-                return NotFound("Không tìm thấy lần khám.");
-
-            _encounterService.Delete(id);
-            return Ok(new { message = "Xóa lần khám thành công!" });
+            try
+            {
+                _service.AddPrescription(encounterId, dto.DrugId, dto.Quantity, dto.Usage);
+                return Ok(new { message = "Đã kê thuốc thành công." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+        // ================== 6️⃣ HOÀN TẤT KHÁM (TẠO HÓA ĐƠN) ==================
+        [Authorize(Roles = "Admin,Doctor")]
+        [HttpPut("{id}/complete")]
+        public IActionResult Complete(int id)
+        {
+            try
+            {
+                _service.CompleteEncounter(id);
+                return Ok(new { message = "Hoàn tất lần khám và đã tạo hóa đơn." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

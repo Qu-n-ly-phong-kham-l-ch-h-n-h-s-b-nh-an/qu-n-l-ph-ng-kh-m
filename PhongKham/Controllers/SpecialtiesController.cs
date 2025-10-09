@@ -8,7 +8,7 @@ namespace PhongKham.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // yêu cầu đăng nhập
+    [Authorize] // bắt buộc đăng nhập
     public class SpecialtiesController : ControllerBase
     {
         private readonly SpecialtyService _specialtyService;
@@ -18,60 +18,60 @@ namespace PhongKham.API.Controllers
             _specialtyService = specialtyService;
         }
 
-        // ======================== 1️⃣ ADMIN & LỄ TÂN XEM DANH SÁCH CHUYÊN KHOA ========================
-        [Authorize(Roles = "Admin,Receptionist")]
+        // ✅ GET ALL
+        [Authorize(Roles = "Admin,Receptionist,Doctor")]
         [HttpGet]
-        public ActionResult<IEnumerable<SpecialtyResponseDTO>> GetAll()
+        public IActionResult GetAll()
         {
-            var specialties = _specialtyService.GetAll()
-                .Select(s => new SpecialtyResponseDTO
+            var list = _specialtyService.GetAll()
+                .Select(s => new SpecialtyDTO
                 {
                     SpecialtyId = s.SpecialtyId,
                     SpecialtyName = s.SpecialtyName
                 });
 
-            return Ok(specialties);
+            return Ok(list);
         }
 
-        // ======================== 2️⃣ XEM CHI TIẾT CHUYÊN KHOA ========================
+        // ✅ GET BY ID
         [Authorize(Roles = "Admin,Receptionist,Doctor")]
         [HttpGet("{id}")]
-        public ActionResult<SpecialtyResponseDTO> GetById(int id)
+        public IActionResult GetById(int id)
         {
             var s = _specialtyService.GetById(id);
-            if (s == null)
-                return NotFound("Không tìm thấy chuyên khoa.");
+            if (s == null) return NotFound("Không tìm thấy chuyên khoa.");
 
-            var dto = new SpecialtyResponseDTO
+            return Ok(new SpecialtyDTO
             {
                 SpecialtyId = s.SpecialtyId,
                 SpecialtyName = s.SpecialtyName
-            };
-
-            return Ok(dto);
+            });
         }
 
-        // ======================== 3️⃣ ADMIN THÊM CHUYÊN KHOA ========================
+        // ✅ CREATE
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult Create([FromBody] SpecialtyRequestDTO dto)
+        public IActionResult Create([FromBody] SpecialtyDTO dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var specialty = new Specialty
+            try
             {
-                SpecialtyName = dto.SpecialtyName
-            };
-
-            _specialtyService.Add(specialty);
-            return Ok(new { message = "Thêm chuyên khoa thành công!", specialtyId = specialty.SpecialtyId });
+                var s = new Specialty { SpecialtyName = dto.SpecialtyName };
+                _specialtyService.Create(s);
+                return Ok(new { message = "✅ Thêm chuyên khoa thành công!", s.SpecialtyId });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
-        // ======================== 4️⃣ ADMIN CẬP NHẬT ========================
+        // ✅ UPDATE
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] SpecialtyRequestDTO dto)
+        public IActionResult Update(int id, [FromBody] SpecialtyDTO dto)
         {
             var existing = _specialtyService.GetById(id);
             if (existing == null)
@@ -79,20 +79,24 @@ namespace PhongKham.API.Controllers
 
             existing.SpecialtyName = dto.SpecialtyName;
             _specialtyService.Update(existing);
-            return Ok(new { message = "Cập nhật chuyên khoa thành công!" });
+
+            return Ok(new { message = "✏️ Cập nhật chuyên khoa thành công!" });
         }
 
-        // ======================== 5️⃣ ADMIN XÓA ========================
+        // ✅ DELETE
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var specialty = _specialtyService.GetById(id);
-            if (specialty == null)
-                return NotFound("Không tìm thấy chuyên khoa.");
-
-            _specialtyService.Delete(id);
-            return Ok(new { message = "Xóa chuyên khoa thành công!" });
+            try
+            {
+                _specialtyService.Delete(id);
+                return Ok(new { message = "🗑️ Xóa chuyên khoa thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

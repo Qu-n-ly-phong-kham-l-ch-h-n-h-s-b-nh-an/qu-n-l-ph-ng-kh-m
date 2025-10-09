@@ -16,7 +16,7 @@ public partial class Patient
     public string FullName { get; set; } = null!;
 
     [Column("DOB")]
-    public DateOnly? Dob { get; set; }
+    public DateTime? Dob { get; set; }
 
     [StringLength(10)]
     public string? Gender { get; set; }
