@@ -119,5 +119,32 @@ namespace PhongKham.API.Controllers
             _prescriptionService.Delete(id);
             return Ok(new { message = "Xóa đơn thuốc thành công!" });
         }
+
+        // ======================== 🔍 SEARCH + FILTER ========================
+        [Authorize(Roles = "Admin,Doctor,Pharmacist")]
+        [HttpGet("filter")]
+        public IActionResult Filter(
+            string? keyword,
+            string? drugName,
+            string? patientName,
+            string? sortBy = "id",
+            bool descending = false,
+            int page = 1,
+            int pageSize = 10)
+        {
+            var list = _prescriptionService.GetFiltered(keyword, drugName, patientName, sortBy, descending, page, pageSize)
+                .Select(p => new PrescriptionDTO
+                {
+                    PrescriptionId = p.PrescriptionId,
+                    EncounterId = p.EncounterId,
+                    DrugId = p.DrugId,
+                    DrugName = p.Drug?.DrugName ?? "(Không rõ)",
+                    Quantity = p.Quantity ?? 0,
+                    Usage = p.Usage
+                });
+
+            return Ok(list);
+        }
+
     }
 }

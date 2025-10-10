@@ -19,7 +19,6 @@ public partial class PhongKhamDbContext : DbContext
 
     public virtual DbSet<Appointment> Appointments { get; set; }
 
-
     public virtual DbSet<Diagnosis> Diagnoses { get; set; }
 
     public virtual DbSet<Doctor> Doctors { get; set; }

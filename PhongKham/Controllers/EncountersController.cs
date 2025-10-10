@@ -124,5 +124,33 @@ namespace PhongKham.API.Controllers
             }
         }
 
+        // ================== 🔍 TÌM KIẾM, LỌC, SẮP XẾP, PHÂN TRANG ==================
+        [Authorize(Roles = "Admin,Doctor,Receptionist")]
+        [HttpGet("search")]
+        public IActionResult Search(
+            string? keyword,
+            string? doctorName,
+            string? patientName,
+            DateTime? fromDate,
+            DateTime? toDate,
+            string? sortBy = "date",
+            bool ascending = false,
+            int page = 1,
+            int pageSize = 10)
+        {
+            var data = _service.Search(keyword, doctorName, patientName, fromDate, toDate, sortBy, ascending, page, pageSize)
+                .Select(e => new EncountersDTO
+                {
+                    EncounterId = e.EncounterId,
+                    DoctorName = e.Doctor?.FullName,
+                    PatientName = e.Appointment?.Patient?.FullName,
+                    AppointmentDate = e.Appointment?.AppointmentDate ?? DateTime.MinValue,
+                    Notes = e.Notes
+                });
+
+            return Ok(data);
+        }
+
+
     }
 }

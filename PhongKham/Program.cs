@@ -34,7 +34,6 @@ builder.Services.AddScoped<ReportService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TokenService>();
 
-
 // ===============================
 // 2️⃣ Cấu hình Swagger (chuẩn OpenAPI 3.0.1)
 // ===============================

@@ -126,5 +126,32 @@ namespace PhongKham.API.Controllers
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 fileName);
         }
+
+        // ================== 6️⃣ TÌM KIẾM - LỌC - SẮP XẾP - PHÂN TRANG ==================
+        [Authorize(Roles = "Admin,Receptionist")]
+        [HttpGet("search")]
+        public IActionResult Search(
+            string? keyword,
+            string? status,
+            string? sortBy = "date",
+            bool isDescending = true,
+            int page = 1,
+            int pageSize = 10)
+        {
+            var data = _service.Search(keyword, status, sortBy, isDescending, page, pageSize)
+                .Select(i => new InvoiceDTO
+                {
+                    InvoiceId = i.InvoiceId,
+                    PatientName = i.Patient?.FullName,
+                    EncounterId = i.EncounterId,
+                    TotalAmount = i.TotalAmount ?? 0,
+                    PaymentDate = i.PaymentDate,
+                    PaymentMethod = i.PaymentMethod,
+                    Status = i.Status
+                });
+
+            return Ok(data);
+        }
+
     }
 }

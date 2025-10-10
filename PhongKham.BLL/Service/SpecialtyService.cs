@@ -34,8 +34,6 @@ namespace PhongKham.BLL.Service
 
             _context.Specialties.Add(specialty);
             _context.SaveChanges();
-
-            Console.WriteLine($"✅ Đã thêm chuyên khoa mới: {specialty.SpecialtyName}");
         }
 
         // ✅ Cập nhật
@@ -43,8 +41,6 @@ namespace PhongKham.BLL.Service
         {
             _context.Specialties.Update(specialty);
             _context.SaveChanges();
-
-            Console.WriteLine($"✏️ Đã cập nhật chuyên khoa: {specialty.SpecialtyName}");
         }
 
         // ✅ Xóa
@@ -56,8 +52,36 @@ namespace PhongKham.BLL.Service
 
             _context.Specialties.Remove(s);
             _context.SaveChanges();
+        }
 
-            Console.WriteLine($"🗑️ Đã xóa chuyên khoa: {s.SpecialtyName}");
+        // ✅ Tìm kiếm, lọc, sắp xếp, phân trang
+        public IEnumerable<Specialty> GetFiltered(
+            string? keyword,
+            string? sortBy = "name",
+            bool descending = false,
+            int page = 1,
+            int pageSize = 10)
+        {
+            var query = _context.Specialties.AsQueryable();
+
+            // 🔍 Tìm kiếm theo tên
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(s => s.SpecialtyName.Contains(keyword));
+
+            // ⏫ Sắp xếp
+            switch (sortBy?.ToLower())
+            {
+                case "id":
+                    query = descending ? query.OrderByDescending(s => s.SpecialtyId) : query.OrderBy(s => s.SpecialtyId);
+                    break;
+                case "name":
+                default:
+                    query = descending ? query.OrderByDescending(s => s.SpecialtyName) : query.OrderBy(s => s.SpecialtyName);
+                    break;
+            }
+
+            // 📄 Phân trang
+            return query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }

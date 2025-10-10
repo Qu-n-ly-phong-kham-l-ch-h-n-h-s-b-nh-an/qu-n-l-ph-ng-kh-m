@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using PhongKham.BLL.Service;
 using PhongKham.DAL.Entities;
 using PhongKham.API.Models.DTOs;
+using System;
+using System.Linq;
 
 namespace PhongKham.API.Controllers
 {
@@ -18,7 +20,7 @@ namespace PhongKham.API.Controllers
             _doctorService = doctorService;
         }
 
-        // ✅ GET ALL
+        // GET ALL
         [Authorize(Roles = "Admin,Receptionist,Doctor")]
         [HttpGet]
         public IActionResult GetAll()
@@ -37,14 +39,13 @@ namespace PhongKham.API.Controllers
             return Ok(list);
         }
 
-        // ✅ GET BY ID
+        // GET BY ID
         [Authorize(Roles = "Admin,Receptionist,Doctor")]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var d = _doctorService.GetById(id);
-            if (d == null)
-                return NotFound("Không tìm thấy bác sĩ.");
+            if (d == null) return NotFound("Không tìm thấy bác sĩ.");
 
             var dto = new DoctorDTO
             {
@@ -59,13 +60,12 @@ namespace PhongKham.API.Controllers
             return Ok(dto);
         }
 
-        // ✅ CREATE
+        // CREATE
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create([FromBody] DoctorDTO dto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             try
             {
@@ -86,14 +86,13 @@ namespace PhongKham.API.Controllers
             }
         }
 
-        // ✅ UPDATE
+        // UPDATE
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] DoctorDTO dto)
         {
             var existing = _doctorService.GetById(id);
-            if (existing == null)
-                return NotFound("Không tìm thấy bác sĩ.");
+            if (existing == null) return NotFound("Không tìm thấy bác sĩ.");
 
             existing.FullName = dto.FullName;
             existing.SpecialtyId = dto.SpecialtyId;
@@ -104,7 +103,7 @@ namespace PhongKham.API.Controllers
             return Ok(new { message = "✏️ Cập nhật thông tin bác sĩ thành công!" });
         }
 
-        // ✅ DELETE
+        // DELETE
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
@@ -118,6 +117,54 @@ namespace PhongKham.API.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+
+        // FILTER (POST body)
+        [Authorize(Roles = "Admin,Receptionist")]
+        [HttpPost("filter")]
+        public IActionResult GetFilteredDoctors([FromBody] DoctorService.DoctorFilterRequest request)
+        {
+            var result = _doctorService.GetFilteredDoctors(request);
+
+            // Map Doctor -> DoctorDTO for the response
+            var dtoList = result.Data.Select(d => new DoctorDTO
+            {
+                DoctorId = d.DoctorId,
+                FullName = d.FullName,
+                SpecialtyId = d.SpecialtyId,
+                SpecialtyName = d.Specialty?.SpecialtyName,
+                Phone = d.Phone,
+                Email = d.Email
+            }).ToList();
+
+            return Ok(new
+            {
+                totalRecords = result.TotalRecords,
+                totalPages = result.TotalPages,
+                data = dtoList
+            });
+        }
+
+        // EXPORT -> CSV/Excel download (GET with optional query filters)
+        [Authorize(Roles = "Admin,Receptionist")]
+        [HttpGet("export")]
+        public IActionResult ExportToExcel([FromQuery] string? keyword, [FromQuery] int? specialtyId, [FromQuery] string? sortBy, [FromQuery] bool isDescending = false)
+        {
+            var req = new DoctorService.DoctorFilterRequest
+            {
+                Keyword = keyword,
+                SpecialtyId = specialtyId,
+                SortBy = sortBy,
+                IsDescending = isDescending,
+                PageNumber = 1,
+                PageSize = int.MaxValue // lấy hết
+            };
+
+            var file = _doctorService.ExportDoctorsToExcel(req);
+            string fileName = $"DanhSachBacSi_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
+            return File(file,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileName);
         }
     }
 }

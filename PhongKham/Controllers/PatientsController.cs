@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 using PhongKham.API.Models.DTOs;
 using PhongKham.BLL.Service;
 using PhongKham.DAL.Entities;
+using System.Drawing;
 
 namespace PhongKham.API.Controllers
 {
@@ -152,5 +154,86 @@ namespace PhongKham.API.Controllers
 
             return Ok(dto);
         }
+
+        // ==================== LẤY DANH SÁCH CÓ PHÂN TRANG ====================
+        [Authorize(Roles = "Admin,Doctor,Receptionist")]
+        [HttpGet("paged")]
+        public IActionResult GetPaged(
+            string? keyword,
+            string? sortBy = "PatientId",
+            string? order = "asc",
+            int page = 1,
+            int pageSize = 10)
+        {
+            var result = _patientService.GetPaged(keyword, sortBy, order, page, pageSize);
+            return Ok(result);
+        }
+
+        // ==================== 7️⃣ XUẤT DANH SÁCH BỆNH NHÂN RA EXCEL ====================
+        [Authorize(Roles = "Admin,Receptionist")]
+        [HttpGet("export")]
+        public IActionResult ExportToExcel(string? keyword = null)
+        {
+            var list = _patientService.GetAll();
+
+            // 🔍 Lọc nếu có keyword
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                list = list.Where(p =>
+                    p.FullName.Contains(keyword) ||
+                    p.Phone.Contains(keyword) ||
+                    p.Email.Contains(keyword));
+            }
+
+            // ⚙️ Cấu hình EPPlus
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using var package = new ExcelPackage();
+            var ws = package.Workbook.Worksheets.Add("Danh sách bệnh nhân");
+
+            // 📋 Tiêu đề cột
+            ws.Cells["A1"].Value = "Mã BN";
+            ws.Cells["B1"].Value = "Họ và tên";
+            ws.Cells["C1"].Value = "Ngày sinh";
+            ws.Cells["D1"].Value = "Giới tính";
+            ws.Cells["E1"].Value = "SĐT";
+            ws.Cells["F1"].Value = "Email";
+            ws.Cells["G1"].Value = "Địa chỉ";
+            ws.Cells["H1"].Value = "Tiền sử bệnh";
+
+            using (var range = ws.Cells["A1:H1"])
+            {
+                range.Style.Font.Bold = true;
+                range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                range.Style.Fill.BackgroundColor.SetColor(Color.LightBlue);
+                range.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            }
+
+            // 🧾 Dữ liệu
+            int row = 2;
+            foreach (var p in list)
+            {
+                ws.Cells[row, 1].Value = p.PatientId;
+                ws.Cells[row, 2].Value = p.FullName;
+                ws.Cells[row, 3].Value = p.Dob?.ToString("dd/MM/yyyy");
+                ws.Cells[row, 4].Value = p.Gender;
+                ws.Cells[row, 5].Value = p.Phone;
+                ws.Cells[row, 6].Value = p.Email;
+                ws.Cells[row, 7].Value = p.Address;
+                ws.Cells[row, 8].Value = p.MedicalHistory;
+                row++;
+            }
+
+            ws.Cells.AutoFitColumns();
+
+            // 📦 Xuất file
+            var stream = new MemoryStream(package.GetAsByteArray());
+            string fileName = $"DanhSachBenhNhan_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+
+            return File(stream,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileName);
+        }
+
+
     }
 }

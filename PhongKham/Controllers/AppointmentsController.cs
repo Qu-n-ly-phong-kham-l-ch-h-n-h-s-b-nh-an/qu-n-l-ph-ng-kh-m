@@ -62,6 +62,15 @@ namespace PhongKham.API.Controllers
             return Ok(data);
         }
 
+        // 🔍 Tìm kiếm / Lọc / Phân trang
+        [Authorize(Roles = "Admin,Receptionist")]
+        [HttpGet("filter")]
+        public IActionResult Filter([FromQuery] string? keyword, [FromQuery] string? status, [FromQuery] string? sortBy, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var result = _appointmentService.Filter(keyword, status, sortBy, page, pageSize);
+            return Ok(result);
+        }
+
         // 🧑‍⚕️ Bác sĩ xem lịch của mình
         [Authorize(Roles = "Doctor")]
         [HttpGet("doctor/{doctorId}")]
@@ -80,7 +89,7 @@ namespace PhongKham.API.Controllers
             return Ok(list);
         }
 
-        // ✅ Duyệt lịch (tự động tạo Encounter)
+        // ✅ Duyệt lịch
         [Authorize(Roles = "Admin,Receptionist")]
         [HttpPut("{id}/approve")]
         public IActionResult Approve(int id)

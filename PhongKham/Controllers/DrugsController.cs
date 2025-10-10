@@ -18,12 +18,19 @@ namespace PhongKham.API.Controllers
             _drugService = drugService;
         }
 
-        // ======================== 1️⃣ GET ALL ========================
-        [Authorize(Roles = "Admin,Pharmacist")]
+        // ✅ GET ALL (Tìm kiếm / Lọc / Sắp xếp / Phân trang)
+        [Authorize(Roles = "Admin,Pharmacist,Doctor")]
         [HttpGet]
-        public ActionResult<IEnumerable<DrugDTO>> GetAll()
+        public ActionResult<IEnumerable<DrugDTO>> GetAll(
+            [FromQuery] string? keyword,
+            [FromQuery] decimal? minPrice,
+            [FromQuery] decimal? maxPrice,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool desc = false,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
         {
-            var drugs = _drugService.GetAll()
+            var drugs = _drugService.GetAll(keyword, minPrice, maxPrice, sortBy, desc, page, pageSize)
                 .Select(d => new DrugDTO
                 {
                     DrugId = d.DrugId,
@@ -35,7 +42,7 @@ namespace PhongKham.API.Controllers
             return Ok(drugs);
         }
 
-        // ======================== 2️⃣ GET BY ID ========================
+        // ✅ GET BY ID
         [Authorize(Roles = "Admin,Pharmacist,Doctor")]
         [HttpGet("{id}")]
         public ActionResult<DrugDTO> GetById(int id)
@@ -44,18 +51,16 @@ namespace PhongKham.API.Controllers
             if (d == null)
                 return NotFound("Không tìm thấy thuốc.");
 
-            var dto = new DrugDTO
+            return Ok(new DrugDTO
             {
                 DrugId = d.DrugId,
                 DrugName = d.DrugName,
                 Unit = d.Unit,
                 Price = d.Price
-            };
-
-            return Ok(dto);
+            });
         }
 
-        // ======================== 3️⃣ CREATE ========================
+        // ✅ CREATE
         [Authorize(Roles = "Admin,Pharmacist")]
         [HttpPost]
         public IActionResult Create([FromBody] DrugDTO dto)
@@ -63,15 +68,14 @@ namespace PhongKham.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var drug = new Drug
-            {
-                DrugName = dto.DrugName,
-                Unit = dto.Unit,
-                Price = dto.Price
-            };
-
             try
             {
+                var drug = new Drug
+                {
+                    DrugName = dto.DrugName,
+                    Unit = dto.Unit,
+                    Price = dto.Price
+                };
                 _drugService.Create(drug);
                 return Ok(new { message = "Thêm thuốc thành công!", drugId = drug.DrugId });
             }
@@ -81,7 +85,7 @@ namespace PhongKham.API.Controllers
             }
         }
 
-        // ======================== 4️⃣ UPDATE ========================
+        // ✅ UPDATE
         [Authorize(Roles = "Admin,Pharmacist")]
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] DrugDTO dto)
@@ -97,17 +101,20 @@ namespace PhongKham.API.Controllers
             return Ok(new { message = "Cập nhật thuốc thành công!" });
         }
 
-        // ======================== 5️⃣ DELETE ========================
+        // ✅ DELETE
         [Authorize(Roles = "Admin,Pharmacist")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var drug = _drugService.GetById(id);
-            if (drug == null)
-                return NotFound("Không tìm thấy thuốc.");
-
-            _drugService.Delete(id);
-            return Ok(new { message = "Xóa thuốc thành công!" });
+            try
+            {
+                _drugService.Delete(id);
+                return Ok(new { message = "Xóa thuốc thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

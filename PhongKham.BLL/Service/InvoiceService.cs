@@ -137,5 +137,57 @@ namespace PhongKham.BLL.Service
                 return package.GetAsByteArray();
             }
         }
+        // ✅ Tìm kiếm, lọc, sắp xếp, phân trang hóa đơn
+        public IEnumerable<Invoice> Search(
+            string? keyword,
+            string? status,
+            string? sortBy,
+            bool isDescending,
+            int page = 1,
+            int pageSize = 10)
+        {
+            var query = _context.Invoices
+                .Include(i => i.Patient)
+                .Include(i => i.Encounter)
+                    .ThenInclude(e => e.Doctor)
+                .AsQueryable();
+
+            // 🔍 Tìm kiếm theo tên bệnh nhân hoặc mã hóa đơn
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(i =>
+                    i.InvoiceId.ToString().Contains(keyword) ||
+                    i.Patient.FullName.Contains(keyword));
+            }
+
+            // 🧾 Lọc theo trạng thái
+            if (!string.IsNullOrEmpty(status))
+            {
+                query = query.Where(i => i.Status == status);
+            }
+
+            // ↕️ Sắp xếp
+            query = sortBy switch
+            {
+                "amount" => isDescending
+                    ? query.OrderByDescending(i => i.TotalAmount)
+                    : query.OrderBy(i => i.TotalAmount),
+
+                "date" => isDescending
+                    ? query.OrderByDescending(i => i.PaymentDate)
+                    : query.OrderBy(i => i.PaymentDate),
+
+                _ => query.OrderBy(i => i.InvoiceId)
+            };
+
+            // 🔢 Phân trang
+            return query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .AsNoTracking()
+                .ToList();
+        }
+
+
     }
 }

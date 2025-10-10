@@ -114,5 +114,22 @@ namespace PhongKham.API.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        [Authorize(Roles = "Admin,Pharmacist")]
+        [HttpGet("search")]
+        public IActionResult Search(string? keyword, int? minQty, int? maxQty, int page = 1, int pageSize = 10)
+        {
+            var list = _drugStockService.Search(keyword, minQty, maxQty, page, pageSize)
+                .Select(ds => new DrugStockDTO
+                {
+                    StockId = ds.StockId,
+                    DrugName = ds.Drug?.DrugName,
+                    QuantityAvailable = ds.QuantityAvailable ?? 0,
+                    LastUpdated = ds.LastUpdated
+                });
+
+            return Ok(list);
+        }
+
     }
 }

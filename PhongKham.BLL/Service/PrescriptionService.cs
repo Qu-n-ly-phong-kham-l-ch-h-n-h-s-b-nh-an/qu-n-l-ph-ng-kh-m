@@ -70,5 +70,67 @@ namespace PhongKham.BLL.Service
                 _context.SaveChanges();
             }
         }
+
+        // ✅ Tìm kiếm, lọc, sắp xếp, phân trang
+        public IEnumerable<Prescription> GetFiltered(
+            string? keyword,
+            string? drugName,
+            string? patientName,
+            string? sortBy,
+            bool descending = false,
+            int page = 1,
+            int pageSize = 10)
+        {
+            var query = _context.Prescriptions
+                .Include(p => p.Drug)
+                .Include(p => p.Encounter)
+                .ThenInclude(e => e.Appointment)
+                .ThenInclude(a => a.Patient)
+                .AsQueryable();
+
+            // 🔍 Tìm kiếm theo từ khóa (DrugName, Usage, PatientName)
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(p =>
+                    (p.Drug != null && p.Drug.DrugName.Contains(keyword)) ||
+                    (p.Usage != null && p.Usage.Contains(keyword)) ||
+                    (p.Encounter != null && p.Encounter.Appointment.Patient.FullName.Contains(keyword))
+                );
+            }
+
+            // 🎯 Lọc theo tên thuốc
+            if (!string.IsNullOrEmpty(drugName))
+                query = query.Where(p => p.Drug != null && p.Drug.DrugName.Contains(drugName));
+
+            // 🎯 Lọc theo tên bệnh nhân
+            if (!string.IsNullOrEmpty(patientName))
+                query = query.Where(p => p.Encounter.Appointment.Patient.FullName.Contains(patientName));
+
+            // ⏫ Sắp xếp
+            switch (sortBy?.ToLower())
+            {
+                case "drug":
+                    query = descending ? query.OrderByDescending(p => p.Drug.DrugName) : query.OrderBy(p => p.Drug.DrugName);
+                    break;
+                case "patient":
+                    query = descending ? query.OrderByDescending(p => p.Encounter.Appointment.Patient.FullName)
+                                       : query.OrderBy(p => p.Encounter.Appointment.Patient.FullName);
+                    break;
+                case "quantity":
+                    query = descending ? query.OrderByDescending(p => p.Quantity) : query.OrderBy(p => p.Quantity);
+                    break;
+                default:
+                    query = query.OrderBy(p => p.PrescriptionId);
+                    break;
+            }
+
+            // 📄 Phân trang
+            return query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
+
     }
 }

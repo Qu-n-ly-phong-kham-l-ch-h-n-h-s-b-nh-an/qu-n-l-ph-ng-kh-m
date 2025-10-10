@@ -62,5 +62,66 @@ namespace PhongKham.BLL.Service
                 _context.SaveChanges();
             }
         }
+
+        // ✅ Lấy danh sách có tìm kiếm + sắp xếp + phân trang
+        public object GetPaged(string? keyword, string? sortBy, string? order, int page, int pageSize)
+        {
+            var query = _context.Patients.AsQueryable();
+
+            // 🔍 Tìm kiếm
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(p =>
+                    p.FullName.Contains(keyword) ||
+                    p.Phone.Contains(keyword) ||
+                    p.Email.Contains(keyword));
+            }
+
+            // 🔄 Sắp xếp
+            sortBy = sortBy?.ToLower();
+            order = order?.ToLower();
+
+            switch (sortBy)
+            {
+                case "fullname":
+                    query = (order == "desc") ? query.OrderByDescending(p => p.FullName) : query.OrderBy(p => p.FullName);
+                    break;
+                case "dob":
+                    query = (order == "desc") ? query.OrderByDescending(p => p.Dob) : query.OrderBy(p => p.Dob);
+                    break;
+                default:
+                    query = (order == "desc") ? query.OrderByDescending(p => p.PatientId) : query.OrderBy(p => p.PatientId);
+                    break;
+            }
+
+            // 📄 Tổng số bản ghi
+            int totalRecords = query.Count();
+
+            // ⏩ Phân trang
+            var data = query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(p => new
+                {
+                    p.PatientId,
+                    p.FullName,
+                    p.Dob,
+                    p.Gender,
+                    p.Phone,
+                    p.Email,
+                    p.Address
+                })
+                .ToList();
+
+            // 📦 Kết quả trả về
+            return new
+            {
+                totalRecords,
+                page,
+                pageSize,
+                data
+            };
+        }
+
     }
 }

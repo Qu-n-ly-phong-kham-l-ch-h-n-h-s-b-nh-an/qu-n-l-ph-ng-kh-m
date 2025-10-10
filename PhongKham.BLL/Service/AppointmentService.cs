@@ -3,9 +3,6 @@ using PhongKham.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace PhongKham.BLL.Service
 {
@@ -18,7 +15,7 @@ namespace PhongKham.BLL.Service
             _context = context;
         }
 
-        // Lấy tất cả lịch hẹn
+        // 📋 Lấy tất cả lịch hẹn
         public IEnumerable<Appointment> GetAll()
         {
             return _context.Appointments
@@ -28,24 +25,63 @@ namespace PhongKham.BLL.Service
                 .ToList();
         }
 
-        // Lấy lịch hẹn theo ID
-        public Appointment? GetById(int id)
+        // 🔍 Lọc, tìm kiếm, phân trang, sắp xếp
+        public object Filter(string? keyword, string? status, string? sortBy, int page = 1, int pageSize = 10)
         {
-            return _context.Appointments
+            var query = _context.Appointments
                 .Include(a => a.Patient)
                 .Include(a => a.Doctor)
-                .FirstOrDefault(a => a.AppointmentId == id);
+                .AsQueryable();
+
+            // 🔎 Tìm kiếm theo tên bệnh nhân hoặc bác sĩ
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(a =>
+                    (a.Patient.FullName != null && a.Patient.FullName.Contains(keyword)) ||
+                    (a.Doctor.FullName != null && a.Doctor.FullName.Contains(keyword)));
+            }
+
+            // ⚙️ Lọc theo trạng thái
+            if (!string.IsNullOrEmpty(status))
+            {
+                query = query.Where(a => a.Status == status);
+            }
+
+            // ↕️ Sắp xếp
+            query = sortBy switch
+            {
+                "date" => query.OrderByDescending(a => a.AppointmentDate),
+                "doctor" => query.OrderBy(a => a.Doctor.FullName),
+                _ => query.OrderByDescending(a => a.AppointmentId)
+            };
+
+            // 📄 Phân trang
+            var totalRecords = query.Count();
+            var data = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            return new
+            {
+                TotalRecords = totalRecords,
+                Page = page,
+                PageSize = pageSize,
+                Data = data.Select(a => new
+                {
+                    a.AppointmentId,
+                    DoctorName = a.Doctor?.FullName,
+                    PatientName = a.Patient?.FullName,
+                    a.AppointmentDate,
+                    a.Status
+                })
+            };
         }
 
-        // Đặt lịch mới (Bệnh nhân hoặc lễ tân)
+        // 📅 Đặt lịch mới
         public void Create(Appointment appt)
         {
-            // Kiểm tra trùng lịch bác sĩ
             bool conflict = _context.Appointments.Any(a =>
                 a.DoctorId == appt.DoctorId &&
                 a.AppointmentDate == appt.AppointmentDate &&
-                a.Status != "Đã hủy"
-            );
+                a.Status != "Đã hủy");
 
             if (conflict)
                 throw new Exception("❌ Bác sĩ đã có lịch hẹn tại thời điểm này!");
@@ -53,22 +89,18 @@ namespace PhongKham.BLL.Service
             appt.Status ??= "Chờ xác nhận";
             _context.Appointments.Add(appt);
             _context.SaveChanges();
-
-            Console.WriteLine($"📅 Đặt lịch thành công ({appt.AppointmentDate}) – mô phỏng gửi email xác nhận.");
         }
 
-        // ✅ Xác nhận lịch hẹn và tạo Encounter tương ứng
+        // ✅ Duyệt lịch (tự tạo Encounter)
         public void Approve(int id)
         {
             var appt = _context.Appointments.Include(a => a.Patient).FirstOrDefault(a => a.AppointmentId == id);
             if (appt == null) throw new Exception("Không tìm thấy lịch hẹn.");
-
             if (appt.Status == "Đã hủy") throw new Exception("Không thể duyệt lịch đã hủy.");
 
             appt.Status = "Đã xác nhận";
             _context.SaveChanges();
 
-            // 🔄 Tạo Encounter tự động
             var encounter = new Encounter
             {
                 AppointmentId = appt.AppointmentId,
@@ -78,30 +110,18 @@ namespace PhongKham.BLL.Service
 
             _context.Encounters.Add(encounter);
             _context.SaveChanges();
-
-            Console.WriteLine($"✅ Đã tạo Encounter #{encounter.EncounterId} cho Appointment #{id}");
         }
 
-        // ✅ Hoàn tất lịch hẹn sau khi khám
+        // ✅ Hoàn tất
         public void Complete(int id)
         {
             var appt = _context.Appointments.Find(id);
             if (appt == null) throw new Exception("Không tìm thấy lịch hẹn.");
-
             appt.Status = "Đã hoàn tất";
             _context.SaveChanges();
-
-            Console.WriteLine($"🏁 Lịch hẹn #{id} đã được đánh dấu hoàn tất.");
         }
 
-        // Cập nhật lịch hẹn
-        public void Update(Appointment appointment)
-        {
-            _context.Appointments.Update(appointment);
-            _context.SaveChanges();
-        }
-
-        // Hủy lịch hẹn
+        // ❌ Hủy
         public void Cancel(int id)
         {
             var appointment = _context.Appointments.FirstOrDefault(a => a.AppointmentId == id);
@@ -112,7 +132,7 @@ namespace PhongKham.BLL.Service
             _context.SaveChanges();
         }
 
-        // Xóa lịch hẹn
+        // 🧹 Xóa
         public void Delete(int id)
         {
             var appointment = _context.Appointments.FirstOrDefault(a => a.AppointmentId == id);

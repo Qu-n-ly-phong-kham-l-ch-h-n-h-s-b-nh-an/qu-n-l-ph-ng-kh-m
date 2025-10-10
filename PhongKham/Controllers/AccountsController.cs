@@ -11,12 +11,14 @@ namespace PhongKham.API.Controllers
     {
         private readonly AccountService _accountService;
         private readonly TokenService _tokenService;
+        private readonly AuditLogService _auditService;
 
         // ✅ Constructor duy nhất (đã gộp 2 cái thành 1)
-        public AccountsController(AccountService accountService, TokenService tokenService)
+        public AccountsController(AccountService accountService, TokenService tokenService , AuditLogService auditService)
         {
             _accountService = accountService;
             _tokenService = tokenService;
+            _auditService = auditService;
         }
 
         // ======================= CRUD CƠ BẢN =======================

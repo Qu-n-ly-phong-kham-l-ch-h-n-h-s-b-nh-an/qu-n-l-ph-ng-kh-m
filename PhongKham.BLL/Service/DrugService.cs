@@ -14,10 +14,43 @@ namespace PhongKham.BLL.Service
             _context = context;
         }
 
-        // ✅ Lấy tất cả thuốc
-        public IEnumerable<Drug> GetAll()
+        // ✅ Lấy tất cả + Tìm kiếm + Lọc + Sắp xếp + Phân trang
+        public IEnumerable<Drug> GetAll(
+            string? keyword = null,         // tìm kiếm theo tên thuốc
+            decimal? minPrice = null,       // lọc theo giá tối thiểu
+            decimal? maxPrice = null,       // lọc theo giá tối đa
+            string? sortBy = null,          // sắp xếp theo "name" hoặc "price"
+            bool desc = false,              // sắp xếp giảm dần
+            int page = 1,                   // trang hiện tại
+            int pageSize = 10               // số dòng mỗi trang
+        )
         {
-            return _context.Drugs.ToList();
+            var query = _context.Drugs.AsQueryable();
+
+            // 🔍 Tìm kiếm theo tên
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(d => d.DrugName.Contains(keyword));
+
+            // 💰 Lọc theo khoảng giá
+            if (minPrice.HasValue)
+                query = query.Where(d => d.Price >= minPrice.Value);
+            if (maxPrice.HasValue)
+                query = query.Where(d => d.Price <= maxPrice.Value);
+
+            // 🔃 Sắp xếp
+            query = sortBy switch
+            {
+                "name" => desc ? query.OrderByDescending(d => d.DrugName)
+                               : query.OrderBy(d => d.DrugName),
+                "price" => desc ? query.OrderByDescending(d => d.Price)
+                                : query.OrderBy(d => d.Price),
+                _ => query.OrderBy(d => d.DrugId)
+            };
+
+            // 📄 Phân trang
+            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return query.ToList();
         }
 
         // ✅ Lấy thuốc theo ID
@@ -29,12 +62,10 @@ namespace PhongKham.BLL.Service
         // ✅ Tạo mới thuốc
         public void Create(Drug drug)
         {
-            // Kiểm tra trùng tên (case-insensitive)
             bool exists = _context.Drugs
                 .Any(d => d.DrugName.ToLower() == drug.DrugName.ToLower());
-
             if (exists)
-                throw new Exception($"Thuốc '{drug.DrugName}' đã tồn tại trong danh mục!");
+                throw new Exception($"Thuốc '{drug.DrugName}' đã tồn tại!");
 
             _context.Drugs.Add(drug);
             _context.SaveChanges();
@@ -47,17 +78,14 @@ namespace PhongKham.BLL.Service
             if (existing == null)
                 throw new Exception("Không tìm thấy thuốc để cập nhật.");
 
-            // Kiểm tra trùng tên (ngoại trừ bản thân)
             bool nameExists = _context.Drugs
                 .Any(d => d.DrugId != drug.DrugId && d.DrugName.ToLower() == drug.DrugName.ToLower());
-
             if (nameExists)
                 throw new Exception($"Tên thuốc '{drug.DrugName}' đã tồn tại.");
 
             existing.DrugName = drug.DrugName;
             existing.Unit = drug.Unit;
             existing.Price = drug.Price;
-
             _context.SaveChanges();
         }
 
@@ -68,7 +96,6 @@ namespace PhongKham.BLL.Service
             if (drug == null)
                 throw new Exception("Không tìm thấy thuốc để xóa.");
 
-            // Kiểm tra thuốc có đang nằm trong đơn thuốc nào không
             bool inPrescription = _context.Prescriptions.Any(p => p.DrugId == id);
             if (inPrescription)
                 throw new Exception("Không thể xóa thuốc vì đang được kê trong đơn thuốc.");

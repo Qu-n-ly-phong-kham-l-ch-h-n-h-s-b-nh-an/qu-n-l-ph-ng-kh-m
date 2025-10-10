@@ -98,5 +98,27 @@ namespace PhongKham.API.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        // ✅ SEARCH + FILTER
+        [Authorize(Roles = "Admin,Receptionist,Doctor")]
+        [HttpGet("filter")]
+        public IActionResult Filter(
+            string? keyword,
+            string? sortBy = "name",
+            bool descending = false,
+            int page = 1,
+            int pageSize = 10)
+        {
+            var list = _specialtyService.GetFiltered(keyword, sortBy, descending, page, pageSize)
+                .Select(s => new SpecialtyDTO
+                {
+                    SpecialtyId = s.SpecialtyId,
+                    SpecialtyName = s.SpecialtyName
+                });
+
+            return Ok(list);
+        }
+
+
     }
 }

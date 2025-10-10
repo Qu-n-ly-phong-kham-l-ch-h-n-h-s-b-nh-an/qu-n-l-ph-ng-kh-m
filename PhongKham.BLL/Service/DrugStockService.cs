@@ -64,5 +64,26 @@ namespace PhongKham.BLL.Service
             _context.DrugStocks.Remove(stock);
             _context.SaveChanges();
         }
+
+        public IEnumerable<DrugStock> Search(string? keyword, int? minQty, int? maxQty, int page = 1, int pageSize = 10)
+        {
+            var query = _context.DrugStocks.Include(ds => ds.Drug).AsQueryable();
+
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(ds => ds.Drug.DrugName.Contains(keyword));
+
+            if (minQty.HasValue)
+                query = query.Where(ds => ds.QuantityAvailable >= minQty.Value);
+
+            if (maxQty.HasValue)
+                query = query.Where(ds => ds.QuantityAvailable <= maxQty.Value);
+
+            return query
+                .OrderByDescending(ds => ds.LastUpdated)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
     }
 }
