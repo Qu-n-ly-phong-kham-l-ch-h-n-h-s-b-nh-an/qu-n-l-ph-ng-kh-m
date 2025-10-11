@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng thông tin Dược sĩ - Phòng Khám XYZ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .modal-overlay { transition: opacity 0.3s ease; }
+        .modal-content { transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-20">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-green-600">DƯỢC SĨ - PHÒNG KHÁM XYZ</h1>
+            <div>
+                <span class="text-gray-700 mr-4">Chào mừng, Minh Tuấn!</span>
+                <button id="logout-button" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm font-medium">Đăng xuất</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Cột 1: Chờ Kê Đơn -->
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-3">Bệnh Nhân Chờ Kê Đơn</h2>
+                <div id="waiting-list" class="space-y-4 max-h-[70vh] overflow-y-auto">
+                    <div id="no-waiting" class="text-center text-gray-500 py-10">
+                        <p>Không có bệnh nhân nào chờ kê đơn.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột 2: Đã Kê Đơn -->
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-3">Đơn Thuốc Đã Hoàn Thành</h2>
+                <div id="completed-list" class="space-y-4 max-h-[70vh] overflow-y-auto">
+                    <div id="no-completed" class="text-center text-gray-500 py-10">
+                        <p>Chưa có đơn thuốc nào được hoàn thành.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Prescription Modal -->
+    <div id="prescription-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 modal-overlay opacity-0 z-30">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-4xl modal-content transform scale-95">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4 border-b pb-3">
+                    <h2 class="text-2xl font-bold text-gray-800">Tạo Đơn Thuốc</h2>
+                    <button id="close-prescription-modal" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+                </div>
+                <!-- Patient Info -->
+                <div id="patient-info-container" class="mb-4 bg-gray-50 p-3 rounded-lg"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Bảng thuốc có sẵn -->
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Danh sách thuốc trong kho</h3>
+                        <!-- CẢI TIẾN: Thêm ô tìm kiếm -->
+                        <input type="text" id="medicine-search-input" placeholder="Tìm kiếm thuốc..." class="w-full px-3 py-2 border rounded-lg mb-2">
+                        <div class="max-h-60 overflow-y-auto border rounded-lg">
+                             <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50 sticky top-0">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Tên thuốc</th>
+                                        <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">SL</th>
+                                        <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="available-medicines-list" class="bg-white divide-y divide-gray-200">
+                                   <!-- Dữ liệu thuốc có sẵn sẽ được render ở đây -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Bảng đơn thuốc hiện tại -->
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Đơn thuốc hiện tại</h3>
+                        <div class="max-h-60 overflow-y-auto border rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50 sticky top-0">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Tên thuốc</th>
+                                        <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase">SL</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Thành tiền</th>
+                                        <!-- CẢI TIẾN: Thêm cột Xóa -->
+                                        <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="prescription-table-body" class="bg-white divide-y divide-gray-200">
+                                   <!-- Thuốc được thêm vào đơn sẽ hiện ở đây -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-right mt-2 font-bold text-xl">Tổng: <span id="prescription-total">0</span> VNĐ</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="px-6 pb-6 bg-gray-50 rounded-b-xl flex justify-end">
+                <button id="save-prescription-btn" class="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700">Lưu Đơn Thuốc</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- STATE MANAGEMENT ---
+    let state = {
+        currentPrescription: [],
+        currentAppointmentId: null,
+    };
+
+    // --- DOM Elements ---
+    const waitingListContainer = document.getElementById('waiting-list');
+    const completedListContainer = document.getElementById('completed-list');
+    const noWaitingMsg = document.getElementById('no-waiting');
+    const noCompletedMsg = document.getElementById('no-completed');
+    const modal = document.getElementById('prescription-modal');
+    const closeModalBtn = document.getElementById('close-prescription-modal');
+    const savePrescriptionBtn = document.getElementById('save-prescription-btn');
+    const prescriptionTableBody = document.getElementById('prescription-table-body');
+    const prescriptionTotalEl = document.getElementById('prescription-total');
+    const patientInfoContainer = document.getElementById('patient-info-container');
+    const availableMedicinesList = document.getElementById('available-medicines-list');
+    const medicineSearchInput = document.getElementById('medicine-search-input');
+    
+    // --- DATA SIMULATION ---
+    const getAppointments = () => JSON.parse(localStorage.getItem('clinic_appointments')) || [];
+    const saveAppointments = (data) => localStorage.setItem('clinic_appointments', JSON.stringify(data));
+    const getMedicines = () => JSON.parse(localStorage.getItem('clinic_medicines')) || {};
+    const saveMedicines = (data) => localStorage.setItem('clinic_medicines', JSON.stringify(data));
+
+    function seedInitialData() {
+        if (localStorage.getItem('pharmacist_data_seeded_v2')) return;
+        const initialMedicines = { 
+            'Paracetamol 500mg': { stock: 200, price: 1000 }, 
+            'Amoxicillin 250mg': { stock: 150, price: 2500 }, 
+            'Berberin': { stock: 300, price: 500 }, 
+            'Vitamin C': { stock: 180, price: 1500 },
+            'Oresol': { stock: 100, price: 3000 },
+            'Salbutamol 2mg': { stock: 80, price: 1200 }
+        };
+        saveMedicines(initialMedicines);
+        
+        let appointments = getAppointments();
+        const initialAppointments = [
+            { id: 'appt_3', patientUsername: 'benhnhan_b', patientFullname: 'Trần Thị B', specialty: 'Da liễu', doctor: 'Dr. Đặng Văn G', date: '2025-10-11', time: '10:00', reason: 'Nổi mẩn đỏ.', status: 'approved', doctorNotes: "Dị ứng thời tiết.", services: [ { name: 'Khám và tư vấn', price: 150000 }, { name: 'Vitamin C', price: 15000 } ], files: [], prescription: [ { name: 'Vitamin C', quantity: 10, price: 1500, subtotal: 15000 } ], invoice: { total: 165000, paymentStatus: 'unpaid' } },
+            { id: 'appt_4', patientUsername: 'benhnhan_c', patientFullname: 'Lê Thị C', specialty: 'Khám tổng quát', doctor: 'Dr. Lê Văn C', date: '2025-10-12', time: '11:00', reason: 'Đau bụng.', status: 'approved', doctorNotes: "Rối loạn tiêu hóa, cần men vi sinh và thuốc trị tiêu chảy.", services: [ { name: 'Khám và tư vấn', price: 150000 } ], files: [], prescription: null, invoice: null },
+            { id: 'appt_5', patientUsername: 'benhnhan_d', patientFullname: 'Phạm Văn D', specialty: 'Khám tổng quát', doctor: 'Dr. Trần Thị B', date: '2025-10-11', time: '14:00', reason: 'Tiêu chảy cấp.', status: 'approved', doctorNotes: "Nhiễm khuẩn đường ruột, kê Berberin và Oresol.", services: [ { name: 'Khám và tư vấn', price: 150000 } ], files: [], prescription: null, invoice: null }
+        ];
+
+        initialAppointments.forEach(appt => {
+            if (!appointments.some(a => a.id === appt.id)) appointments.push(appt);
+        });
+
+        const appt2Index = appointments.findIndex(a => a.id === 'appt_2');
+        if (appt2Index !== -1 && !appointments[appt2Index].prescription) {
+            appointments[appt2Index].doctorNotes = "Viêm họng nhẹ, sốt. Cần thuốc hạ sốt và kháng sinh liều thấp.";
+            appointments[appt2Index].prescription = null; 
+            appointments[appt2Index].services = appointments[appt2Index].services || [{ name: 'Khám và tư vấn', price: 150000 }];
+        }
+        
+        saveAppointments(appointments);
+        localStorage.setItem('pharmacist_data_seeded_v2', 'true');
+    }
+
+    // --- UI RENDERING ---
+    function renderLists() {
+        const appointments = getAppointments();
+        const waitingPatients = appointments.filter(a => a.status === 'approved' && a.prescription === null && a.doctorNotes);
+        const completedPatients = appointments.filter(a => a.status === 'approved' && Array.isArray(a.prescription));
+        
+        waitingListContainer.innerHTML = '';
+        if (waitingPatients.length > 0) {
+            noWaitingMsg.classList.add('hidden');
+            waitingPatients.forEach(renderPatientCard(waitingListContainer, 'waiting'));
+        } else { waitingListContainer.appendChild(noWaitingMsg); noWaitingMsg.classList.remove('hidden'); }
+        
+        completedListContainer.innerHTML = '';
+        if (completedPatients.length > 0) {
+            noCompletedMsg.classList.add('hidden');
+            completedPatients.forEach(renderPatientCard(completedListContainer, 'completed'));
+        } else { completedListContainer.appendChild(noCompletedMsg); noCompletedMsg.classList.remove('hidden'); }
+    }
+
+    const renderPatientCard = (container, type) => (appt) => {
+        const bgColor = type === 'waiting' ? 'bg-orange-50' : 'bg-green-50';
+        const borderColor = type === 'waiting' ? 'border-orange-500' : 'border-green-500';
+        const button = type === 'waiting' ? `<button data-id="${appt.id}" class="prescribe-btn px-3 py-1 bg-orange-500 text-white text-sm font-medium rounded hover:bg-orange-600">Kê Đơn</button>` : '';
+        const card = document.createElement('div');
+        card.className = `p-4 ${bgColor} border-l-4 ${borderColor} rounded-r-lg`;
+        card.innerHTML = `<div class="flex justify-between items-start"><div><p class="font-bold text-gray-800">${appt.patientFullname}</p><p class="text-sm text-gray-600">BS. ${appt.doctor} - ${new Date(appt.date).toLocaleDateString('vi-VN')}</p><p class="text-sm text-gray-700 mt-2 italic">" ${appt.doctorNotes || 'Không có ghi chú.'} "</p></div><div class="text-right">${button}</div></div>`;
+        container.appendChild(card);
+    };
+
+    function renderAvailableMedicines(filter = '') {
+        const medicines = getMedicines();
+        availableMedicinesList.innerHTML = '';
+        const filterLower = filter.toLowerCase();
+
+        for (const name in medicines) {
+            if (!name.toLowerCase().includes(filterLower)) continue;
+
+            const med = medicines[name];
+            // CẢI TIẾN: Tính toán tồn kho thực tế (trừ đi thuốc đã có trong đơn hiện tại)
+            const itemInPrescription = state.currentPrescription.find(p => p.name === name);
+            const currentStock = med.stock - (itemInPrescription ? itemInPrescription.quantity : 0);
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="px-4 py-2 text-sm">
+                    <p class="font-medium text-gray-800">${name}</p>
+                    <p class="text-xs text-gray-500">Tồn: ${currentStock} - Giá: ${med.price.toLocaleString('vi-VN')}</p>
+                </td>
+                <td class="px-2 py-2"><input type="number" class="w-16 p-1 border rounded" value="1" min="1"></td>
+                <td class="px-2 py-2"><button data-name="${name}" class="add-medicine-btn px-2 py-1 bg-blue-500 text-white text-xs font-bold rounded hover:bg-blue-600">Thêm</button></td>
+            `;
+            availableMedicinesList.appendChild(row);
+        }
+    }
+
+    function renderPrescriptionTable() {
+        prescriptionTableBody.innerHTML = '';
+        let total = 0;
+        state.currentPrescription.forEach(item => {
+            total += item.subtotal;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="px-4 py-2 whitespace-nowrap text-sm">${item.name}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-sm">${item.quantity}</td>
+                <td class="px-4 py-2 whitespace-nowrap text-sm">${item.subtotal.toLocaleString('vi-VN')}</td>
+                <td class="px-2 py-2 whitespace-nowrap text-sm">
+                    <button data-name="${item.name}" class="remove-medicine-btn text-red-500 hover:text-red-700">&times;</button>
+                </td>
+            `;
+            prescriptionTableBody.appendChild(row);
+        });
+        prescriptionTotalEl.textContent = total.toLocaleString('vi-VN');
+    }
+
+    // --- MODAL & PRESCRIPTION LOGIC ---
+    function openModal(appointmentId) {
+        state.currentAppointmentId = appointmentId;
+        const appt = getAppointments().find(a => a.id === appointmentId);
+        if (!appt) return;
+        patientInfoContainer.innerHTML = `<p><span class="font-semibold">Bệnh nhân:</span> ${appt.patientFullname}</p><p><span class="font-semibold">Chẩn đoán của Bác sĩ:</span> ${appt.doctorNotes}</p>`;
+        state.currentPrescription = [];
+        medicineSearchInput.value = '';
+        renderAllModalTables();
+        modal.classList.remove('hidden');
+        setTimeout(() => { modal.classList.remove('opacity-0'); modal.querySelector('.modal-content').classList.remove('scale-95'); }, 10);
+    }
+    
+    function closeModal() {
+        modal.classList.add('opacity-0');
+        modal.querySelector('.modal-content').classList.add('scale-95');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    function renderAllModalTables() {
+        renderAvailableMedicines(medicineSearchInput.value);
+        renderPrescriptionTable();
+    }
+    
+    function handleAddMedicine(name, quantity) {
+        const medicines = getMedicines();
+        const medicineData = medicines[name];
+        if (!name || !quantity || quantity <= 0) { alert('Vui lòng nhập số lượng hợp lệ.'); return; }
+        
+        const existing = state.currentPrescription.find(item => item.name === name);
+        const newTotalQuantity = (existing ? existing.quantity : 0) + quantity;
+
+        if (newTotalQuantity > medicineData.stock) { alert('Số lượng tồn kho không đủ.'); return; }
+
+        if (existing) {
+            existing.quantity = newTotalQuantity;
+            existing.subtotal = existing.quantity * existing.price;
+        } else {
+            state.currentPrescription.push({ name, quantity, price: medicineData.price, subtotal: quantity * medicineData.price });
+        }
+        renderAllModalTables();
+    }
+    
+    function handleRemoveMedicine(name) {
+        state.currentPrescription = state.currentPrescription.filter(item => item.name !== name);
+        renderAllModalTables();
+    }
+
+    function handleSavePrescription() {
+        if (state.currentPrescription.length === 0) { alert('Đơn thuốc trống.'); return; }
+        
+        let appointments = getAppointments();
+        let medicines = getMedicines();
+        const apptIndex = appointments.findIndex(a => a.id === state.currentAppointmentId);
+        if (apptIndex === -1) { alert('Lỗi: không tìm thấy lịch hẹn.'); return; }
+        
+        for (const item of state.currentPrescription) {
+            if (medicines[item.name]) { medicines[item.name].stock -= item.quantity; }
+        }
+        
+        appointments[apptIndex].prescription = state.currentPrescription;
+        appointments[apptIndex].services = appointments[apptIndex].services.filter(s => !medicines[s.name]); // Xóa đơn thuốc cũ nếu có
+        state.currentPrescription.forEach(item => { appointments[apptIndex].services.push({ name: item.name, price: item.subtotal }); });
+        let totalInvoice = appointments[apptIndex].services.reduce((sum, service) => sum + service.price, 0);
+        appointments[apptIndex].invoice = { total: totalInvoice, paymentStatus: 'unpaid' };
+
+        saveMedicines(medicines);
+        saveAppointments(appointments);
+        closeModal();
+        renderLists();
+    }
+
+    // --- EVENT LISTENERS ---
+    waitingListContainer.addEventListener('click', e => { if (e.target.matches('.prescribe-btn')) { openModal(e.target.dataset.id); } });
+    
+    availableMedicinesList.addEventListener('click', e => {
+        if (e.target.matches('.add-medicine-btn')) {
+            const name = e.target.dataset.name;
+            const quantityInput = e.target.closest('tr').querySelector('input[type="number"]');
+            const quantity = parseInt(quantityInput.value, 10);
+            handleAddMedicine(name, quantity);
+            quantityInput.value = 1; // Reset lại số lượng
+        }
+    });
+
+    prescriptionTableBody.addEventListener('click', e => {
+        if (e.target.matches('.remove-medicine-btn')) {
+            handleRemoveMedicine(e.target.dataset.name);
+        }
+    });
+
+    medicineSearchInput.addEventListener('input', () => renderAvailableMedicines(medicineSearchInput.value));
+
+    savePrescriptionBtn.addEventListener('click', handleSavePrescription);
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => e.target === modal && closeModal());
+
+    // --- INITIALIZATION ---
+    seedInitialData();
+    renderLists();
+});
+</script>
+
+</body>
+</html>
+

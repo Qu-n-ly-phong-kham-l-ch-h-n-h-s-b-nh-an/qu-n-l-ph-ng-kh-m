@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Quản Trị - Phòng Khám XYZ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-link.active { background-color: #1D4ED8; color: white; }
+        .sidebar-link { transition: all 0.2s ease-in-out; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .modal-overlay { transition: opacity 0.3s ease; }
+        .modal-content { transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white flex flex-col">
+        <div class="p-4 border-b border-gray-700">
+            <h1 class="text-2xl font-bold">ADMIN PANEL</h1>
+            <p class="text-sm text-gray-400">Phòng Khám XYZ</p>
+        </div>
+        <nav class="flex-grow p-2">
+            <a href="#" data-tab="dashboard" class="sidebar-link active flex items-center px-4 py-2 mt-2 rounded-lg hover:bg-gray-700">
+                <i class="fas fa-tachometer-alt w-6"></i><span class="ml-3">Tổng Quan</span>
+            </a>
+            <a href="#" data-tab="doctors" class="sidebar-link flex items-center px-4 py-2 mt-2 rounded-lg hover:bg-gray-700">
+                <i class="fas fa-user-md w-6"></i><span class="ml-3">Bác Sĩ</span>
+            </a>
+            <a href="#" data-tab="patients" class="sidebar-link flex items-center px-4 py-2 mt-2 rounded-lg hover:bg-gray-700">
+                <i class="fas fa-user-injured w-6"></i><span class="ml-3">Bệnh Nhân</span>
+            </a>
+            <a href="#" data-tab="accounts" class="sidebar-link flex items-center px-4 py-2 mt-2 rounded-lg hover:bg-gray-700">
+                <i class="fas fa-users-cog w-6"></i><span class="ml-3">Tài Khoản</span>
+            </a>
+            <a href="#" data-tab="specialties" class="sidebar-link flex items-center px-4 py-2 mt-2 rounded-lg hover:bg-gray-700">
+                <i class="fas fa-stethoscope w-6"></i><span class="ml-3">Chuyên Khoa</span>
+            </a>
+            <a href="#" data-tab="appointments" class="sidebar-link flex items-center px-4 py-2 mt-2 rounded-lg hover:bg-gray-700">
+                <i class="fas fa-calendar-alt w-6"></i><span class="ml-3">Lịch Hẹn</span>
+            </a>
+            <a href="#" data-tab="pharmacy" class="sidebar-link flex items-center px-4 py-2 mt-2 rounded-lg hover:bg-gray-700">
+                <i class="fas fa-pills w-6"></i><span class="ml-3">Kho Thuốc</span>
+            </a>
+            <a href="#" data-tab="invoices" class="sidebar-link flex items-center px-4 py-2 mt-2 rounded-lg hover:bg-gray-700">
+                <i class="fas fa-file-invoice-dollar w-6"></i><span class="ml-3">Hóa Đơn</span>
+            </a>
+            <a href="#" data-tab="revenue" class="sidebar-link flex items-center px-4 py-2 mt-2 rounded-lg hover:bg-gray-700">
+                <i class="fas fa-chart-line w-6"></i><span class="ml-3">Doanh Thu</span>
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-700">
+            <button class="w-full flex items-center justify-center px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700">
+                <i class="fas fa-sign-out-alt w-6"></i><span class="ml-3">Đăng Xuất</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8 overflow-y-auto">
+        <!-- Tab: Dashboard -->
+        <div id="dashboard" class="tab-content active">
+            <h2 class="text-3xl font-bold mb-6">Tổng Quan</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                 <div class="bg-white p-6 rounded-xl shadow-lg flex items-center">
+                    <div class="bg-blue-500 p-4 rounded-full text-white"><i class="fas fa-wallet fa-2x"></i></div>
+                    <div class="ml-4">
+                        <p class="text-gray-500">Doanh Thu Hôm Nay</p>
+                        <p id="daily-revenue" class="text-2xl font-bold">0 VNĐ</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg flex items-center">
+                    <div class="bg-green-500 p-4 rounded-full text-white"><i class="fas fa-user-friends fa-2x"></i></div>
+                    <div class="ml-4">
+                        <p class="text-gray-500">Bệnh Nhân Mới</p>
+                        <p id="new-patients" class="text-2xl font-bold">0</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg flex items-center">
+                    <div class="bg-yellow-500 p-4 rounded-full text-white"><i class="fas fa-calendar-check fa-2x"></i></div>
+                    <div class="ml-4">
+                        <p class="text-gray-500">Lịch Hẹn Hôm Nay</p>
+                        <p id="today-appointments" class="text-2xl font-bold">0</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg flex items-center">
+                    <div class="bg-red-500 p-4 rounded-full text-white"><i class="fas fa-receipt fa-2x"></i></div>
+                    <div class="ml-4">
+                        <p class="text-gray-500">Hóa Đơn Chưa Thanh Toán</p>
+                        <p id="unpaid-invoices" class="text-2xl font-bold">0</p>
+                    </div>
+                </div>
+            </div>
+             <div class="mt-8 bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Phân Tích Doanh Thu 7 Ngày Gần Nhất</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Tab: Doctors -->
+        <div id="doctors" class="tab-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold">Quản Lý Bác Sĩ</h2>
+                <button id="add-doctor-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"><i class="fas fa-plus mr-2"></i>Thêm Bác Sĩ</button>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tên Bác Sĩ</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Chuyên Khoa</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Điện Thoại</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctors-table" class="bg-white divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab: Patients -->
+        <div id="patients" class="tab-content">
+             <h2 class="text-3xl font-bold mb-6">Danh Sách Bệnh Nhân</h2>
+              <div class="bg-white p-6 rounded-xl shadow-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tên Bệnh Nhân</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tên Đăng Nhập</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ngày Sinh</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patients-table" class="bg-white divide-y divide-gray-200"></tbody>
+                </table>
+             </div>
+        </div>
+
+        <!-- Tab: Accounts -->
+        <div id="accounts" class="tab-content">
+             <h2 class="text-3xl font-bold mb-6">Quản Lý Tài Khoản</h2>
+              <div class="bg-white p-6 rounded-xl shadow-lg">
+                 <p>Nội dung quản lý tài khoản sẽ được hiển thị ở đây.</p>
+             </div>
+        </div>
+
+        <!-- Tab: Specialties -->
+        <div id="specialties" class="tab-content">
+             <h2 class="text-3xl font-bold mb-6">Quản Lý Chuyên Khoa</h2>
+              <div class="bg-white p-6 rounded-xl shadow-lg">
+                 <p>Nội dung quản lý chuyên khoa sẽ được hiển thị ở đây.</p>
+             </div>
+        </div>
+
+        <!-- Tab: Appointments -->
+        <div id="appointments" class="tab-content">
+             <h2 class="text-3xl font-bold mb-6">Quản Lý Lịch Hẹn</h2>
+             <div class="bg-white p-6 rounded-xl shadow-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bệnh Nhân</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bác Sĩ</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ngày Giờ</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trạng Thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointments-table" class="bg-white divide-y divide-gray-200"></tbody>
+                </table>
+             </div>
+        </div>
+        
+        <!-- Tab: Pharmacy -->
+        <div id="pharmacy" class="tab-content">
+             <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold">Quản Lý Kho Thuốc</h2>
+                <button id="add-medicine-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"><i class="fas fa-plus mr-2"></i>Thêm Thuốc</button>
+            </div>
+             <div class="bg-white p-6 rounded-xl shadow-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tên Thuốc</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tồn Kho</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Đơn Giá</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pharmacy-table" class="bg-white divide-y divide-gray-200"></tbody>
+                </table>
+             </div>
+        </div>
+        
+        <!-- Tab: Invoices -->
+        <div id="invoices" class="tab-content">
+             <h2 class="text-3xl font-bold mb-6">Quản Lý Hóa Đơn</h2>
+             <div class="bg-white p-6 rounded-xl shadow-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mã Lịch Hẹn</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bệnh Nhân</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tổng Tiền</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thanh Toán</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoices-table" class="bg-white divide-y divide-gray-200"></tbody>
+                </table>
+             </div>
+        </div>
+
+        <!-- Tab: Revenue -->
+        <div id="revenue" class="tab-content">
+             <h2 class="text-3xl font-bold mb-6">Báo Cáo Doanh Thu</h2>
+              <div class="bg-white p-6 rounded-xl shadow-lg">
+                 <p>Nội dung chi tiết về doanh thu sẽ được hiển thị ở đây.</p>
+             </div>
+        </div>
+    </main>
+</div>
+
+<!-- Doctor Modal -->
+<div id="doctor-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 modal-overlay opacity-0 z-30">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-lg modal-content transform scale-95">
+        <form id="doctor-form">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4 border-b pb-3">
+                    <h2 id="doctor-modal-title" class="text-2xl font-bold text-gray-800">Thêm Bác Sĩ Mới</h2>
+                    <button type="button" class="close-modal-btn text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+                </div>
+                <input type="hidden" id="doctor-id">
+                <div class="space-y-4">
+                    <div>
+                        <label for="doctor-name" class="block text-sm font-medium text-gray-700">Tên Bác Sĩ</label>
+                        <input type="text" id="doctor-name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="doctor-specialty" class="block text-sm font-medium text-gray-700">Chuyên Khoa</label>
+                        <input type="text" id="doctor-specialty" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                     <div>
+                        <label for="doctor-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="doctor-email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                     <div>
+                        <label for="doctor-phone" class="block text-sm font-medium text-gray-700">Điện Thoại</label>
+                        <input type="tel" id="doctor-phone" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+            </div>
+            <div class="px-6 pb-6 bg-gray-50 rounded-b-xl flex justify-end">
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">Lưu</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Medicine Modal -->
+<div id="medicine-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 modal-overlay opacity-0 z-30">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-lg modal-content transform scale-95">
+        <form id="medicine-form">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4 border-b pb-3">
+                    <h2 id="medicine-modal-title" class="text-2xl font-bold text-gray-800">Thêm Thuốc Mới</h2>
+                    <button type="button" class="close-modal-btn text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+                </div>
+                <input type="hidden" id="medicine-id">
+                <div class="space-y-4">
+                    <div>
+                        <label for="medicine-name" class="block text-sm font-medium text-gray-700">Tên Thuốc</label>
+                        <input type="text" id="medicine-name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="medicine-stock" class="block text-sm font-medium text-gray-700">Tồn Kho</label>
+                        <input type="number" id="medicine-stock" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                     <div>
+                        <label for="medicine-price" class="block text-sm font-medium text-gray-700">Đơn Giá</label>
+                        <input type="number" id="medicine-price" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+            </div>
+            <div class="px-6 pb-6 bg-gray-50 rounded-b-xl flex justify-end">
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">Lưu</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- DATA MANAGEMENT ---
+    const getAppointments = () => JSON.parse(localStorage.getItem('clinic_appointments')) || [];
+    const getUsers = () => JSON.parse(localStorage.getItem('clinic_users')) || {};
+    
+    const getDoctors = () => JSON.parse(localStorage.getItem('clinic_doctors')) || [];
+    const saveDoctors = (data) => localStorage.setItem('clinic_doctors', JSON.stringify(data));
+    
+    const getMedicines = () => JSON.parse(localStorage.getItem('clinic_medicines')) || {};
+    const saveMedicines = (data) => localStorage.setItem('clinic_medicines', JSON.stringify(data));
+    
+    function seedInitialData() {
+        if (getDoctors().length === 0) {
+            const initialDoctors = [
+                { id: `doc_${Date.now()}_1`, name: 'Dr. Nguyễn Văn An', specialty: 'Nha khoa', email: 'an.nv@clinic.vn', phone: '0901234567' },
+                { id: `doc_${Date.now()}_2`, name: 'Dr. Trần Thị B', specialty: 'Khám tổng quát', email: 'b.tt@clinic.vn', phone: '0901234568' },
+                { id: `doc_${Date.now()}_3`, name: 'Dr. Lê Văn C', specialty: 'Khám tổng quát', email: 'c.lv@clinic.vn', phone: '0901234569' },
+            ];
+            saveDoctors(initialDoctors);
+        }
+         // Medicine data is already seeded in pharmacist portal, so we don't need to re-seed here.
+    }
+
+    // --- DOM Elements ---
+    const doctorModal = document.getElementById('doctor-modal');
+    const doctorForm = document.getElementById('doctor-form');
+    const medicineModal = document.getElementById('medicine-modal');
+    const medicineForm = document.getElementById('medicine-form');
+
+    // --- MODAL & CRUD ---
+    function openModal(modal) {
+        modal.classList.remove('hidden');
+        setTimeout(() => { 
+            modal.classList.remove('opacity-0'); 
+            modal.querySelector('.modal-content').classList.remove('scale-95'); 
+        }, 10);
+    }
+
+    function closeModal(modal) {
+        modal.classList.add('opacity-0');
+        modal.querySelector('.modal-content').classList.add('scale-95');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+    
+    // Doctor CRUD
+    document.getElementById('add-doctor-btn').addEventListener('click', () => {
+        doctorForm.reset();
+        document.getElementById('doctor-id').value = '';
+        document.getElementById('doctor-modal-title').textContent = 'Thêm Bác Sĩ Mới';
+        openModal(doctorModal);
+    });
+    
+    document.getElementById('doctors-table').addEventListener('click', e => {
+        const target = e.target.closest('button');
+        if (!target) return;
+
+        const doctorId = target.dataset.id;
+        if (target.classList.contains('edit-doctor-btn')) {
+            const doctors = getDoctors();
+            const doctor = doctors.find(d => d.id === doctorId);
+            if (doctor) {
+                document.getElementById('doctor-id').value = doctor.id;
+                document.getElementById('doctor-name').value = doctor.name;
+                document.getElementById('doctor-specialty').value = doctor.specialty;
+                document.getElementById('doctor-email').value = doctor.email;
+                document.getElementById('doctor-phone').value = doctor.phone;
+                document.getElementById('doctor-modal-title').textContent = 'Sửa Thông Tin Bác Sĩ';
+                openModal(doctorModal);
+            }
+        }
+        if (target.classList.contains('delete-doctor-btn')) {
+            if (confirm('Bạn có chắc chắn muốn xóa bác sĩ này?')) {
+                let doctors = getDoctors();
+                doctors = doctors.filter(d => d.id !== doctorId);
+                saveDoctors(doctors);
+                renderDoctors();
+            }
+        }
+    });
+    
+    doctorForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const doctorId = document.getElementById('doctor-id').value;
+        const doctorData = {
+            name: document.getElementById('doctor-name').value,
+            specialty: document.getElementById('doctor-specialty').value,
+            email: document.getElementById('doctor-email').value,
+            phone: document.getElementById('doctor-phone').value,
+        };
+        
+        let doctors = getDoctors();
+        if (doctorId) { // Edit
+            const index = doctors.findIndex(d => d.id === doctorId);
+            if (index > -1) {
+                doctors[index] = { ...doctors[index], ...doctorData };
+            }
+        } else { // Add
+            doctorData.id = `doc_${Date.now()}`;
+            doctors.push(doctorData);
+        }
+        saveDoctors(doctors);
+        renderDoctors();
+        closeModal(doctorModal);
+    });
+
+    // Medicine CRUD
+    document.getElementById('add-medicine-btn').addEventListener('click', () => {
+        medicineForm.reset();
+        document.getElementById('medicine-id').value = '';
+        document.getElementById('medicine-modal-title').textContent = 'Thêm Thuốc Mới';
+        openModal(medicineModal);
+    });
+
+    document.getElementById('pharmacy-table').addEventListener('click', e => {
+        const target = e.target.closest('button');
+        if (!target) return;
+
+        const medicineId = target.dataset.id; // The ID is the medicine name
+        if (target.classList.contains('edit-medicine-btn')) {
+            const medicines = getMedicines();
+            const medicine = medicines[medicineId];
+            if (medicine) {
+                document.getElementById('medicine-id').value = medicineId;
+                document.getElementById('medicine-name').value = medicineId;
+                document.getElementById('medicine-name').readOnly = true; // Cannot change name (ID)
+                document.getElementById('medicine-stock').value = medicine.stock;
+                document.getElementById('medicine-price').value = medicine.price;
+                document.getElementById('medicine-modal-title').textContent = 'Sửa Thông Tin Thuốc';
+                openModal(medicineModal);
+            }
+        }
+        if (target.classList.contains('delete-medicine-btn')) {
+            if (confirm('Bạn có chắc chắn muốn xóa thuốc này?')) {
+                let medicines = getMedicines();
+                delete medicines[medicineId];
+                saveMedicines(medicines);
+                renderPharmacy();
+            }
+        }
+    });
+
+    medicineForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const medicineId = document.getElementById('medicine-id').value;
+        const medicineName = document.getElementById('medicine-name').value;
+        const medicineData = {
+            stock: parseInt(document.getElementById('medicine-stock').value),
+            price: parseInt(document.getElementById('medicine-price').value),
+        };
+
+        let medicines = getMedicines();
+        if (medicineId) { // Edit
+            if(medicines[medicineId]) {
+                 medicines[medicineId] = medicineData;
+            }
+        } else { // Add
+            if(medicines[medicineName]) {
+                alert('Tên thuốc đã tồn tại!');
+                return;
+            }
+            medicines[medicineName] = medicineData;
+        }
+        saveMedicines(medicines);
+        renderPharmacy();
+        closeModal(medicineModal);
+        document.getElementById('medicine-name').readOnly = false;
+    });
+
+    document.querySelectorAll('.close-modal-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            closeModal(btn.closest('.modal-overlay'));
+        });
+    });
+
+    // --- TAB SWITCHING LOGIC ---
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const tabContents = document.querySelectorAll('.tab-content');
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const tab = link.dataset.tab;
+            sidebarLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            tabContents.forEach(content => content.classList.remove('active'));
+            const targetTab = document.getElementById(tab);
+            if (targetTab) targetTab.classList.add('active');
+        });
+    });
+
+    // --- RENDER FUNCTIONS ---
+    function renderDashboard() {
+        const appointments = getAppointments();
+        const today = new Date().toISOString().split('T')[0];
+        const todayAppointments = appointments.filter(a => a.date && a.date.startsWith(today));
+        const unpaidInvoices = appointments.filter(a => a.invoice && a.invoice.paymentStatus === 'unpaid');
+        const dailyRevenue = appointments
+            .filter(a => a.invoice && a.invoice.paymentStatus === 'completed' && a.date && a.date.startsWith(today))
+            .reduce((sum, a) => sum + a.invoice.total, 0);
+
+        document.getElementById('daily-revenue').textContent = `${dailyRevenue.toLocaleString('vi-VN')} VNĐ`;
+        document.getElementById('today-appointments').textContent = todayAppointments.length;
+        document.getElementById('unpaid-invoices').textContent = unpaidInvoices.length;
+        document.getElementById('new-patients').textContent = Object.keys(getUsers()).length;
+        renderRevenueChart();
+    }
+    
+    function renderDoctors() {
+        const tableBody = document.getElementById('doctors-table');
+        tableBody.innerHTML = '';
+        const doctors = getDoctors();
+        doctors.forEach(doc => {
+            const row = `<tr>
+                <td class="px-6 py-4 whitespace-nowrap">${doc.name}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${doc.specialty}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${doc.email}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${doc.phone}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button data-id="${doc.id}" class="edit-doctor-btn text-indigo-600 hover:text-indigo-900 mr-4"><i class="fas fa-edit"></i> Sửa</button>
+                    <button data-id="${doc.id}" class="delete-doctor-btn text-red-600 hover:text-red-900"><i class="fas fa-trash"></i> Xóa</button>
+                </td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    function renderPatients() {
+        const tableBody = document.getElementById('patients-table');
+        tableBody.innerHTML = '';
+        const users = getUsers();
+        for (const username in users) {
+            const user = users[username];
+             const row = `<tr>
+                <td class="px-6 py-4 whitespace-nowrap">${user.fullname}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${user.username}</td>
+                <td class="px-6 py-4 whitespace-nowrap">N/A</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        }
+    }
+
+    function renderAppointments() {
+         const tableBody = document.getElementById('appointments-table');
+        tableBody.innerHTML = '';
+        const appointments = getAppointments();
+        appointments.forEach(appt => {
+             const statusMap = { 'pending': 'Chờ duyệt', 'approved': 'Đã duyệt', 'completed': 'Hoàn thành' };
+             const statusColorMap = { 'pending': 'bg-yellow-100 text-yellow-800', 'approved': 'bg-blue-100 text-blue-800', 'completed': 'bg-green-100 text-green-800' };
+             const row = `<tr>
+                <td class="px-6 py-4 whitespace-nowrap">${appt.patientFullname}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${appt.doctor}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${new Date(appt.date).toLocaleDateString('vi-VN')} ${appt.time}</td>
+                <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColorMap[appt.status] || ''}">${statusMap[appt.status] || appt.status}</span></td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+    
+    function renderPharmacy() {
+        const tableBody = document.getElementById('pharmacy-table');
+        tableBody.innerHTML = '';
+        const medicines = getMedicines();
+        for(const name in medicines) {
+            const med = medicines[name];
+            const row = `<tr>
+                <td class="px-6 py-4 whitespace-nowrap">${name}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${med.stock}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${med.price.toLocaleString('vi-VN')} VNĐ</td>
+                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button data-id="${name}" class="edit-medicine-btn text-indigo-600 hover:text-indigo-900 mr-4"><i class="fas fa-edit"></i> Sửa</button>
+                    <button data-id="${name}" class="delete-medicine-btn text-red-600 hover:text-red-900"><i class="fas fa-trash"></i> Xóa</button>
+                </td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        }
+    }
+    
+    function renderInvoices() {
+        const tableBody = document.getElementById('invoices-table');
+        tableBody.innerHTML = '';
+        const appointments = getAppointments().filter(a => a.invoice);
+        appointments.forEach(appt => {
+            const statusMap = { 'unpaid': 'Chưa thanh toán', 'completed': 'Đã thanh toán' };
+            const statusColorMap = { 'unpaid': 'text-red-600', 'completed': 'text-green-600' };
+            const row = `<tr>
+                <td class="px-6 py-4 whitespace-nowrap">${appt.id}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${appt.patientFullname}</td>
+                <td class="px-6 py-4 whitespace-nowrap font-semibold">${appt.invoice.total.toLocaleString('vi-VN')} VNĐ</td>
+                <td class="px-6 py-4 whitespace-nowrap ${statusColorMap[appt.invoice.paymentStatus] || ''}">${statusMap[appt.invoice.paymentStatus] || ''}</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    function renderRevenueChart() {
+        const canvas = document.getElementById('revenueChart');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const labels = [];
+        const data = [];
+        const appointments = getAppointments();
+        
+        let existingChart = Chart.getChart(ctx);
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            const dateString = date.toISOString().split('T')[0];
+            labels.push(date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit'}));
+            const dailyRevenue = appointments
+                .filter(a => a.invoice && a.invoice.paymentStatus === 'completed' && a.date && a.date.startsWith(dateString))
+                .reduce((sum, a) => sum + a.invoice.total, 0);
+            data.push(dailyRevenue);
+        }
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Doanh Thu (VNĐ)',
+                    data: data,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    // --- INITIALIZATION ---
+    function initialize() {
+        seedInitialData();
+        renderDashboard();
+        renderDoctors();
+        renderPatients();
+        renderAppointments();
+        renderPharmacy();
+        renderInvoices();
+    }
+
+    initialize();
+});
+</script>
+
+</body>
+</html>
+

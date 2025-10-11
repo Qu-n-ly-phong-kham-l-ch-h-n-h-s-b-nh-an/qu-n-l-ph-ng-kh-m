@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng thông tin Lễ tân - Phòng Khám XYZ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- MỚI: Thư viện để xuất file Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .modal-overlay { transition: opacity 0.3s ease; }
+        .modal-content { transition: all 0.3s ease; }
+
+        /* MỚI: CSS để định dạng trang in hóa đơn */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-invoice, #printable-invoice * {
+                visibility: visible;
+            }
+            #printable-invoice {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-blue-600">LỄ TÂN - PHÒNG KHÁM XYZ</h1>
+            <div>
+                <span class="text-gray-700 mr-4">Chào mừng, Thu Ngân!</span>
+                <button id="logout-button" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm font-medium">Đăng xuất</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Cột 1: Lịch hẹn chờ duyệt -->
+            <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-3">Lịch Hẹn Chờ Duyệt</h2>
+                <div id="pending-list" class="space-y-4 max-h-[70vh] overflow-y-auto">
+                    <!-- Lịch hẹn chờ duyệt sẽ được render ở đây -->
+                    <div id="no-pending" class="text-center text-gray-500 py-10">
+                        <p>Không có lịch hẹn nào chờ duyệt.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột 2: Lịch khám đã xác nhận -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+                <div class="flex justify-between items-center mb-4 border-b pb-3">
+                    <h2 class="text-xl font-bold text-gray-800">Lịch Khám & Thanh Toán</h2>
+                    <!-- MỚI: Nút xuất Excel -->
+                    <button id="export-excel-btn" class="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        Xuất Excel
+                    </button>
+                </div>
+                <div id="approved-list" class="space-y-4 max-h-[70vh] overflow-y-auto">
+                     <!-- Lịch khám đã xác nhận sẽ được render ở đây -->
+                    <div id="no-approved" class="text-center text-gray-500 py-10">
+                        <p>Không có lịch khám nào trong ngày.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Invoice Modal -->
+    <div id="invoice-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 modal-overlay opacity-0">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-lg modal-content transform scale-95">
+            <!-- MỚI: Thêm id `printable-invoice` để định nghĩa vùng in -->
+            <div id="printable-invoice" class="p-8">
+                <div class="text-center mb-6">
+                     <h1 class="text-2xl font-bold text-gray-800">HÓA ĐƠN DỊCH VỤ</h1>
+                     <p class="text-sm text-gray-500">Phòng Khám XYZ</p>
+                </div>
+                <div id="invoice-details" class="space-y-4">
+                    <!-- Chi tiết hóa đơn sẽ được render ở đây -->
+                </div>
+            </div>
+            <div class="px-8 pb-6 bg-gray-50 rounded-b-xl flex justify-end space-x-4">
+                <!-- MỚI: Nút In Hóa Đơn -->
+                <button id="print-invoice-btn" class="px-6 py-2 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700">In Hóa Đơn</button>
+                <button id="confirm-payment-btn" class="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700">Xác Nhận Đã Thanh Toán</button>
+            </div>
+            <button id="close-invoice-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- DOM Elements ---
+    const pendingListContainer = document.getElementById('pending-list');
+    const approvedListContainer = document.getElementById('approved-list');
+    const noPendingMsg = document.getElementById('no-pending');
+    const noApprovedMsg = document.getElementById('no-approved');
+    const invoiceModal = document.getElementById('invoice-modal');
+    const closeInvoiceModalBtn = document.getElementById('close-invoice-modal');
+    const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
+    const invoiceDetailsContainer = document.getElementById('invoice-details');
+    // MỚI: Thêm các nút mới
+    const exportExcelBtn = document.getElementById('export-excel-btn');
+    const printInvoiceBtn = document.getElementById('print-invoice-btn');
+
+
+    // --- Data Simulation ---
+    const getAppointments = () => JSON.parse(localStorage.getItem('clinic_appointments')) || [];
+    const saveAppointments = (appointments) => localStorage.setItem('clinic_appointments', JSON.stringify(appointments));
+
+    function seedInitialData() {
+        if (localStorage.getItem('clinic_data_seeded')) return;
+        let users = JSON.parse(localStorage.getItem('clinic_users')) || {};
+        if (!users['benhnhan_a']) {
+            users['benhnhan_a'] = { fullname: 'Nguyễn Văn A', username: 'benhnhan_a', password: '123', appointments: [] };
+            localStorage.setItem('clinic_users', JSON.stringify(users));
+        }
+
+        const initialAppointments = [
+            { id: 'appt_1', patientUsername: 'benhnhan_a', patientFullname: 'Nguyễn Văn A', specialty: 'Khám tổng quát', doctor: 'Dr. Trần Thị B', date: '2025-10-12', time: '09:00', reason: 'Kiểm tra sức khỏe định kỳ.', status: 'pending', services: [], files: [], invoice: null },
+            {
+                id: 'appt_2', patientUsername: 'benhnhan_a', patientFullname: 'Nguyễn Văn A', specialty: 'Nha khoa', doctor: 'Dr. Nguyễn Văn An', date: '2025-10-11', time: '14:00', reason: 'Đau răng hàm.', status: 'approved',
+                services: [ { name: 'Khám và tư vấn', price: 150000 }, { name: 'Chụp X-quang răng', price: 80000 }, { name: 'Thuốc giảm đau Paracetamol', price: 20000 } ],
+                // MỚI: Thêm dữ liệu tệp đính kèm mẫu
+                files: [ { name: 'x-quang-rang.pdf', url: '#' } ],
+                invoice: { total: 250000, paymentStatus: 'unpaid' }
+            }
+        ];
+        saveAppointments(initialAppointments);
+        localStorage.setItem('clinic_data_seeded', 'true');
+    }
+
+    // --- Render Functions ---
+    function renderPendingAppointments() {
+        const appointments = getAppointments().filter(a => a.status === 'pending');
+        pendingListContainer.innerHTML = ''; 
+        if (appointments.length === 0) {
+            pendingListContainer.appendChild(noPendingMsg);
+            noPendingMsg.classList.remove('hidden');
+        } else {
+            noPendingMsg.classList.add('hidden');
+            appointments.forEach(appt => {
+                const apptEl = document.createElement('div');
+                apptEl.className = 'p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded-r-lg';
+                apptEl.innerHTML = `
+                    <p class="font-bold text-gray-800">${appt.patientFullname}</p>
+                    <p class="text-sm text-gray-600">${appt.specialty} - ${appt.doctor}</p>
+                    <p class="text-sm text-gray-600">${new Date(appt.date).toLocaleDateString('vi-VN')} - ${appt.time}</p>
+                    <div class="text-right mt-2">
+                        <button data-id="${appt.id}" class="approve-btn px-3 py-1 bg-green-500 text-white text-sm font-medium rounded hover:bg-green-600">Duyệt</button>
+                    </div>
+                `;
+                pendingListContainer.appendChild(apptEl);
+            });
+        }
+    }
+    
+    function renderApprovedAppointments() {
+        const appointments = getAppointments().filter(a => ['approved', 'completed'].includes(a.status));
+        approvedListContainer.innerHTML = '';
+        if (appointments.length === 0) {
+            approvedListContainer.appendChild(noApprovedMsg);
+            noApprovedMsg.classList.remove('hidden');
+        } else {
+            noApprovedMsg.classList.add('hidden');
+            appointments.forEach(appt => {
+                const bgColor = appt.status === 'completed' ? 'bg-green-50' : 'bg-blue-50';
+                const borderColor = appt.status === 'completed' ? 'border-green-500' : 'border-blue-500';
+                const statusText = appt.status === 'completed' ? 
+                    `<p class="font-semibold text-green-700">ĐÃ THANH TOÁN</p>` : 
+                    `<button data-id="${appt.id}" class="invoice-btn px-3 py-1 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600">Thanh Toán</button>`;
+                // MỚI: Logic hiển thị tệp
+                const filesHtml = appt.files && appt.files.length > 0 ? `
+                    <div class="mt-2 pt-2 border-t border-dashed">
+                        <span class="text-sm font-medium text-gray-600">Tệp đính kèm:</span>
+                        ${appt.files.map(file => `<a href="${file.url}" target="_blank" class="text-sm text-blue-600 hover:underline ml-2">${file.name}</a>`).join('')}
+                    </div>` : '';
+
+                const apptEl = document.createElement('div');
+                apptEl.className = `p-4 ${bgColor} border-l-4 ${borderColor} rounded-r-lg`;
+                apptEl.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-gray-800">${appt.patientFullname}</p>
+                            <p class="text-sm text-gray-600">${appt.specialty} - ${appt.doctor}</p>
+                            <p class="text-sm text-gray-600">${new Date(appt.date).toLocaleDateString('vi-VN')} - ${appt.time}</p>
+                        </div>
+                        <div class="text-right">
+                           ${statusText}
+                        </div>
+                    </div>
+                    ${filesHtml}
+                `;
+                 approvedListContainer.appendChild(apptEl);
+            });
+        }
+    }
+    
+    // --- Event Handlers ---
+    function handleApprove(appointmentId) {
+        let appointments = getAppointments();
+        const index = appointments.findIndex(a => a.id === appointmentId);
+        if (index !== -1) {
+            appointments[index].status = 'approved';
+            saveAppointments(appointments);
+            renderAll();
+        }
+    }
+    
+    function openInvoiceModal(appointmentId) {
+        const appointments = getAppointments();
+        const appt = appointments.find(a => a.id === appointmentId);
+        if (!appt) return;
+
+        let total = 0;
+        let servicesHtml = appt.services.map(service => {
+            total += service.price;
+            return `<tr><td class="py-2 pr-4">${service.name}</td><td class="py-2 text-right">${service.price.toLocaleString('vi-VN')} VNĐ</td></tr>`;
+        }).join('');
+        
+        invoiceDetailsContainer.innerHTML = `
+            <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700">
+                <span class="font-semibold">Bệnh nhân:</span> <span>${appt.patientFullname}</span>
+                <span class="font-semibold">Bác sĩ:</span> <span>${appt.doctor}</span>
+                <span class="font-semibold">Ngày khám:</span> <span>${new Date(appt.date).toLocaleDateString('vi-VN')}</span>
+                <span class="font-semibold">Mã hóa đơn:</span> <span>HD-${appt.id.split('_')[1]}</span>
+            </div>
+            <hr class="my-4">
+            <h3 class="text-lg font-bold mb-2">Chi tiết chi phí:</h3>
+            <table class="w-full text-sm">
+                <thead><tr class="border-b"><th class="text-left font-semibold pb-2">Dịch vụ / Thuốc</th><th class="text-right font-semibold pb-2">Chi phí</th></tr></thead>
+                <tbody>${servicesHtml}</tbody>
+            </table>
+            <hr class="my-4">
+            <div class="text-right text-xl font-bold">
+                <span>Tổng cộng:</span><span class="text-red-600 ml-4">${total.toLocaleString('vi-VN')} VNĐ</span>
+            </div>
+        `;
+
+        confirmPaymentBtn.dataset.id = appointmentId;
+        invoiceModal.classList.remove('hidden');
+        setTimeout(() => {
+            invoiceModal.classList.remove('opacity-0');
+            invoiceModal.querySelector('.modal-content').classList.remove('scale-95');
+        }, 10);
+    }
+    
+    function closeInvoiceModal() {
+        invoiceModal.classList.add('opacity-0');
+        invoiceModal.querySelector('.modal-content').classList.add('scale-95');
+        setTimeout(() => invoiceModal.classList.add('hidden'), 300);
+    }
+    
+    function handleConfirmPayment() {
+        const appointmentId = confirmPaymentBtn.dataset.id;
+        let appointments = getAppointments();
+        const index = appointments.findIndex(a => a.id === appointmentId);
+        if (index !== -1) {
+            appointments[index].status = 'completed';
+            if (appointments[index].invoice) { appointments[index].invoice.paymentStatus = 'paid'; }
+            saveAppointments(appointments);
+            closeInvoiceModal();
+            renderAll();
+        }
+    }
+
+    // MỚI: Hàm xử lý in hóa đơn
+    function handlePrintInvoice() {
+        window.print();
+    }
+
+    // MỚI: Hàm xử lý xuất file Excel
+    function handleExportExcel() {
+        const appointments = getAppointments();
+        if (appointments.length === 0) {
+            alert("Không có dữ liệu để xuất.");
+            return;
+        }
+
+        // Chuyển đổi dữ liệu để phù hợp với file Excel
+        const dataForExport = appointments.map(appt => ({
+            'Mã Lịch Hẹn': appt.id,
+            'Tên Bệnh Nhân': appt.patientFullname,
+            'Chuyên Khoa': appt.specialty,
+            'Bác Sĩ': appt.doctor,
+            'Ngày Khám': new Date(appt.date).toLocaleDateString('vi-VN'),
+            'Giờ Khám': appt.time,
+            'Trạng Thái': appt.status === 'pending' ? 'Chờ duyệt' : (appt.status === 'approved' ? 'Đã duyệt' : 'Hoàn thành'),
+            'Tổng Tiền (VNĐ)': appt.invoice ? appt.invoice.total : 0
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(dataForExport);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "LichKham");
+
+        // Xuất file
+        XLSX.writeFile(workbook, "DanhSachLichKham.xlsx");
+    }
+    
+    // --- Event Listeners ---
+    pendingListContainer.addEventListener('click', (e) => e.target.matches('.approve-btn') && handleApprove(e.target.dataset.id));
+    approvedListContainer.addEventListener('click', (e) => e.target.matches('.invoice-btn') && openInvoiceModal(e.target.dataset.id));
+    closeInvoiceModalBtn.addEventListener('click', closeInvoiceModal);
+    invoiceModal.addEventListener('click', e => e.target === invoiceModal && closeInvoiceModal());
+    confirmPaymentBtn.addEventListener('click', handleConfirmPayment);
+    // MỚI: Gán sự kiện cho các nút mới
+    printInvoiceBtn.addEventListener('click', handlePrintInvoice);
+    exportExcelBtn.addEventListener('click', handleExportExcel);
+
+
+    // --- Initial Load ---
+    function renderAll() {
+        renderPendingAppointments();
+        renderApprovedAppointments();
+    }
+    
+    seedInitialData();
+    renderAll();
+});
+</script>
+
+</body>
+</html>
+

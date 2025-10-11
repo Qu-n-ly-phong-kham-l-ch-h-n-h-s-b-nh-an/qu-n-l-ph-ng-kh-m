@@ -1,211 +1,450 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Phòng Khám</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng thông tin Bệnh nhân - Phòng Khám XYZ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer; opacity: 0.6; transition: opacity 0.2s;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+        .hidden { display: none; }
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+    </style>
 </head>
-<body>
-  <!-- HEADER -->
-  <header class="header">
-    <div class="brand">
-      <img src="assets/images/logo.png" alt="Logo Phòng Khám">
-    </div>
-    <div class="auth" id="authBox">
-      <div class="hotline">
-        <span class="label">Hotline</span>
-        <span class="phone">0123 456 789</span>
-      </div>
-      <button class="btn login" onclick="showLoginForm()">Đăng nhập</button>
-      <button class="btn register" onclick="showRegisterForm()">Đăng ký</button>
-    </div>
-    <div class="user" id="userBox" style="display:none;">
-      <span id="usernameDisplay"></span>
-    </div>
-  </header>
 
-  <!-- MODAL ĐĂNG KÝ -->
-  <div class="modal" id="registerModal">
-    <div class="modal-content">
-      <h2>Đăng ký</h2>
-      <label>Họ và tên</label>
-      <input type="text" id="regName">
-      <label>Email</label>
-      <input type="email" id="regEmail">
-      <label>Mật khẩu</label>
-      <input type="password" id="regPass">
-      <button onclick="submitRegister()">Đăng ký</button>
-      <button onclick="closeRegisterForm()">Hủy</button>
-    </div>
-  </div>
+<body class="bg-gray-100">
 
-  <!-- MODAL ĐĂNG NHẬP -->
-  <div class="modal" id="loginModal">
-    <div class="modal-content">
-      <h2>Đăng nhập</h2>
-      <label>Email</label>
-      <input type="email" id="loginEmail">
-      <label>Mật khẩu</label>
-      <input type="password" id="loginPass">
-      <button onclick="submitLogin()">Đăng nhập</button>
-      <button onclick="closeLoginForm()">Hủy</button>
-    </div>
-  </div>
+    <!-- Auth View: Hiển thị khi chưa đăng nhập -->
+    <div id="auth-view" class="flex items-center justify-center min-h-screen">
+        <div class="w-full max-w-md">
+            <!-- Login Form -->
+            <div id="login-container">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-gray-800">Phòng Khám XYZ</h1>
+                        <p class="text-gray-500 mt-2">Đăng nhập vào cổng thông tin bệnh nhân</p>
+                    </div>
+                    <form id="loginForm">
+                        <div id="login-error" class="hidden text-sm text-red-600 bg-red-100 p-3 rounded-lg mb-4"></div>
+                        <div class="mb-4">
+                            <label for="login-username" class="block text-gray-700 font-medium mb-2">Tên đăng nhập</label>
+                            <input type="text" id="login-username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="login-password" class="block text-gray-700 font-medium mb-2">Mật khẩu</label>
+                            <input type="password" id="login-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300 font-semibold">Đăng Nhập</button>
+                    </form>
+                    <p class="text-center text-sm text-gray-600 mt-6">
+                        Chưa có tài khoản? <a href="#" id="show-register" class="font-medium text-blue-600 hover:underline">Đăng ký ngay</a>
+                    </p>
+                </div>
+            </div>
 
-  <!-- MENU NGANG -->
-  <nav class="main-menu">
-    <a href="#">CHUYÊN KHOA</a>
-    <a href="#">GÓI KHÁM</a>
-    <a href="#">HỖ TRỢ</a>
+            <!-- Register Form -->
+            <div id="register-container" class="hidden">
+                 <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-gray-800">Tạo Tài Khoản</h1>
+                        <p class="text-gray-500 mt-2">Điền thông tin để đăng ký</p>
+                    </div>
+                    <form id="registerForm">
+                        <div id="register-error" class="hidden text-sm text-red-600 bg-red-100 p-3 rounded-lg mb-4"></div>
+                        <div class="mb-4">
+                            <label for="register-fullname" class="block text-gray-700 font-medium mb-2">Họ và Tên</label>
+                            <input type="text" id="register-fullname" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="register-username" class="block text-gray-700 font-medium mb-2">Tên đăng nhập</p></label>
+                            <input type="text" id="register-username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="register-password" class="block text-gray-700 font-medium mb-2">Mật khẩu</label>
+                            <input type="password" id="register-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition duration-300 font-semibold">Đăng Ký</button>
+                    </form>
+                    <p class="text-center text-sm text-gray-600 mt-6">
+                        Đã có tài khoản? <a href="#" id="show-login" class="font-medium text-blue-600 hover:underline">Đăng nhập</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <a href="#">VIỆN PHÍ</a>
-    <a href="#">BÁC SĨ</a>
-    <a href="#">TIN TỨC</a>
-    <a href="#">🔍</a>
-  </nav>
+    <!-- Main App View: Hiển thị sau khi đăng nhập thành công -->
+    <div id="main-view" class="hidden">
+        <!-- Header -->
+        <header class="bg-white shadow-md">
+            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-bold text-blue-600">Phòng Khám XYZ</h1>
+                <div class="flex items-center">
+                    <span id="welcome-message" class="text-gray-700 mr-4"></span>
+                    <!-- MỚI: Nút xem hồ sơ -->
+                    <button id="profile-button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition duration-300 text-sm font-medium mr-4">Hồ sơ</button>
+                    <button id="logout-button" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300 text-sm font-medium">Đăng xuất</button>
+                </div>
+            </nav>
+        </header>
 
-<!-- KHU VỰC NỘI DUNG -->
-<div class="content">
-  <!-- Cột trái: Tin tức -->
-  <div class="news-box">
-    <div class="news-slider">
-      <div class="slide active">
-        <img src="assets/images/news1.png" alt="Tin tức 1">
-      </div>
-      <div class="slide">
-        <img src="assets/images/news2.png" alt="Tin tức 2">
-      </div>
-      <div class="slide">
-        <img src="assets/images/news3.png" alt="Tin tức 3">
-      </div>
+        <!-- Main Content -->
+        <main class="container mx-auto px-6 py-8">
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-2">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Đặt Lịch Khám Mới</h2>
+                        <div id="successMessage" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-6">...</div>
+                        <div id="errorMessage" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6">...</div>
+                        <form id="bookingForm">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="specialty" class="block text-gray-700 font-medium mb-2">Chuyên khoa</label>
+                                    <select id="specialty" class="w-full px-4 py-2 border rounded-lg bg-white">
+                                        <option>Chọn chuyên khoa</option>
+                                        <option>Khám tổng quát</option>
+                                        <option>Tim mạch</option>
+                                        <option>Nha khoa</option>
+                                        <option>Da liễu</option>
+                                        <option>Tai mũi họng</option>
+                                    </select>
+                                </div>
+                                 <div>
+                                    <label for="doctor" class="block text-gray-700 font-medium mb-2">Bác sĩ</label>
+                                    <select id="doctor" class="w-full px-4 py-2 border rounded-lg bg-white">
+                                        <option>Chọn bác sĩ</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="appointmentDate" class="block text-gray-700 font-medium mb-2">Ngày khám</label>
+                                    <input type="date" id="appointmentDate" class="w-full px-4 py-2 border rounded-lg">
+                                </div>
+                                <div>
+                                    <label for="appointmentTime" class="block text-gray-700 font-medium mb-2">Giờ khám</label>
+                                    <select id="appointmentTime" class="w-full px-4 py-2 border rounded-lg bg-white">
+                                        <option>Chọn giờ</option>
+                                        <option>08:00</option>
+                                        <option>09:00</option>
+                                        <option>10:00</option>
+                                        <option>14:00</option>
+                                        <option>15:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <label for="reason" class="block text-gray-700 font-medium mb-2">Lý do khám</label>
+                                <textarea id="reason" rows="4" class="w-full px-4 py-2 border rounded-lg" placeholder="Mô tả ngắn gọn..."></textarea>
+                            </div>
+                            <div class="mt-8 text-right">
+                                 <button type="submit" class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">Xác Nhận</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="md:col-span-1">
+                     <div class="bg-white p-8 rounded-xl shadow-lg h-full">
+                         <h2 class="text-2xl font-bold text-gray-800 mb-6">Lịch Khám Sắp Tới</h2>
+                         <div id="appointmentList" class="space-y-4">
+                              <div id="noAppointment" class="text-center text-gray-500 pt-8">
+                                <p>Bạn chưa có lịch hẹn nào.</p>
+                            </div>
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </main>
     </div>
-  </div>
 
-    <!-- Cột phải: đặt lịch -->
-    <div>
-      <div id="step1" class="form-container">
-        <h2>ĐẶT LỊCH HẸN KHÁM</h2>
-        <div class="form-group">
-          <label>Chọn phòng khám</label>
-          <select>
-            <option value="">--Chọn phòng khám--</option>
-            <option>Phòng khám A</option>
-            <option>Phòng khám B</option>
-          </select>
+    <!-- MỚI: Profile Modal -->
+    <!-- ĐÃ SỬA: Thêm class 'opacity-0' để hiệu ứng hoạt động đúng -->
+    <div id="profile-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 modal-overlay opacity-0">
+        <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md modal-content transform scale-95">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Hồ sơ cá nhân</h2>
+                <button id="close-profile-modal" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm font-medium text-gray-600">Họ và tên</label>
+                    <p id="profile-fullname" class="text-lg text-gray-800 p-2 bg-gray-100 rounded-md"></p>
+                </div>
+                 <div>
+                    <label class="text-sm font-medium text-gray-600">Tên đăng nhập</label>
+                    <p id="profile-username" class="text-lg text-gray-800 p-2 bg-gray-100 rounded-md"></p>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <label>Chọn chuyên khoa</label>
-          <select>
-            <option value="">--Chọn chuyên khoa--</option>
-            <option>Nội tổng quát</option>
-            <option>Nhi khoa</option>
-            <option>Tim mạch</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Chọn bác sĩ</label>
-          <select>
-            <option value="">--Chọn bác sĩ--</option>
-            <option>BS. Nguyễn Văn A</option>
-            <option>BS. Trần Thị B</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Ngày khám</label>
-          <input type="date" id="dateInput">
-        </div>
-        <div class="form-group">
-          <label>Giờ khám</label>
-          <select id="timeInput">
-            <option value="">--Chọn giờ--</option>
-          </select>
-        </div>
-        <button id="nextBtn" disabled>Tiếp theo</button>
-      </div>
-
-      <div id="step2" class="form-container">
-        <h2>THÔNG TIN BỆNH NHÂN</h2>
-        <div class="form-group">
-          <label>Họ tên người đăng ký</label>
-          <input type="text">
-        </div>
-        <div class="form-group">
-          <label>Điện thoại</label>
-          <input type="tel">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email">
-        </div>
-        <div class="form-group">
-          <label>Họ tên người khám</label>
-          <input type="text">
-        </div>
-        <div class="form-group">
-          <label>Ngày sinh</label>
-          <input type="text" placeholder="dd/mm/yyyy">
-        </div>
-        <div class="form-group">
-          <label>Giới tính</label>
-          <select>
-            <option>Nam</option>
-            <option>Nữ</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Lời nhắn</label>
-          <textarea rows="3"></textarea>
-        </div>
-        <button>Hoàn tất</button>
-      </div>
     </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <!-- About -->
-      <div class="footer-column">
-        <h3>CarePlus Vietnam</h3>
-        <p>Hệ thống Phòng khám quốc tế CarePlus được điều hành bởi Công ty TNHH CityClinic Việt Nam. Những thông tin y khoa trên trang web chỉ dùng để tham khảo, bạn nên liên hệ bác sĩ để được tư vấn trước khi có bất cứ hành động nào.</p>
-      </div>
-
-      <!-- Quick Links -->
-      <div class="footer-column">
-        <h3>Liên kết nhanh</h3>
-        <ul>
-          <li><a href="#">Giới thiệu</a></li>
-          <li><a href="#">Các chuyên khoa</a></li>
-          <li><a href="#">Tin tức</a></li>
-        </ul>
-      </div>
-
-      <!-- Clinic Branches -->
-      <div class="footer-column">
-        <h3>Hệ thống phòng khám</h3>
-        <p><strong>Phòng khám Quận 1:</strong> Tòa nhà Tasco, 66-68 Nam Kỳ Khởi Nghĩa, P. Sài Gòn, TP HCM. <a href="#">Xem bản đồ</a></p>
-        <p><strong>Phòng khám Quận 7:</strong> Lầu 2, Tòa nhà Crescent Plaza, 105 Tôn Dật Tiên, P. Tân Mỹ, Quận 7, TP HCM. <a href="#">Xem bản đồ</a></p>
-        <p><strong>Phòng khám Tân Bình:</strong> 107, Đường Tân Hải, P. Tân Bình, TP HCM. <a href="#">Xem bản đồ</a></p>
-      </div>
-
-      <!-- Contact & Policies -->
-      <div class="footer-column">
-        <h3>Liên hệ & Chính sách</h3>
-        <p><strong>Hotline:</strong> 1800 6116</p>
-        <p><strong>Email:</strong> info@careplusvn.com</p>
-        <p><strong>Chính sách:</strong></p>
-        <ul>
-          <li><a href="#">Chính sách hoạt động</a></li>
-          <li><a href="#">Chính sách bảo mật</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2025 Công ty TNHH CITYCLINIC Việt Nam | Số ĐKKD 0313149135, cấp ngày 27/02/2015</p>
-    </div>
-  </footer>
 
 
-  <script src="js/script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- Views and Forms ---
+        const authView = document.getElementById('auth-view');
+        const mainView = document.getElementById('main-view');
+        const loginContainer = document.getElementById('login-container');
+        const registerContainer = document.getElementById('register-container');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const showRegisterLink = document.getElementById('show-register');
+        const showLoginLink = document.getElementById('show-login');
+        const logoutButton = document.getElementById('logout-button');
+        const welcomeMessage = document.getElementById('welcome-message');
+
+        // --- Auth Functions ---
+        
+        // Use localStorage to simulate a user database
+        const getUsers = () => JSON.parse(localStorage.getItem('clinic_users')) || {};
+        const saveUsers = (users) => localStorage.setItem('clinic_users', JSON.stringify(users));
+
+        const getCurrentUser = () => sessionStorage.getItem('clinic_currentUser');
+        const setCurrentUser = (user) => sessionStorage.setItem('clinic_currentUser', JSON.stringify(user));
+        const clearCurrentUser = () => sessionStorage.removeItem('clinic_currentUser');
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const users = getUsers();
+            const errorDiv = document.getElementById('login-error');
+
+            if (users[username] && users[username].password === password) {
+                setCurrentUser(users[username]);
+                renderView();
+            } else {
+                errorDiv.textContent = 'Tên đăng nhập hoặc mật khẩu không đúng.';
+                errorDiv.classList.remove('hidden');
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const fullname = document.getElementById('register-fullname').value;
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+            const users = getUsers();
+            const errorDiv = document.getElementById('register-error');
+
+            if (users[username]) {
+                errorDiv.textContent = 'Tên đăng nhập đã tồn tại.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            if(password.length < 6){
+                 errorDiv.textContent = 'Mật khẩu phải có ít nhất 6 ký tự.';
+                 errorDiv.classList.remove('hidden');
+                 return;
+            }
+
+            users[username] = { fullname, username, password, appointments: [] };
+            saveUsers(users);
+            setCurrentUser(users[username]);
+            renderView();
+        }
+
+        function handleLogout() {
+            clearCurrentUser();
+            renderView();
+        }
+
+        function renderView() {
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+                authView.classList.add('hidden');
+                mainView.classList.remove('hidden');
+                const user = JSON.parse(currentUser);
+                welcomeMessage.textContent = `Chào mừng, ${user.fullname}!`;
+                initializeMainApp(user); // Khởi chạy app chính với dữ liệu người dùng
+            } else {
+                authView.classList.remove('hidden');
+                mainView.classList.add('hidden');
+            }
+        }
+        
+        // Toggle between Login and Register forms
+        showRegisterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginContainer.classList.add('hidden');
+            registerContainer.classList.remove('hidden');
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerContainer.classList.add('hidden');
+            loginContainer.classList.remove('hidden');
+        });
+
+        // Add form submit listeners
+        loginForm.addEventListener('submit', handleLogin);
+        registerForm.addEventListener('submit', handleRegister);
+        logoutButton.addEventListener('click', handleLogout);
+
+        // --- Main App Logic (for logged in users) ---
+        function initializeMainApp(user) {
+            const bookingForm = document.getElementById('bookingForm');
+            const specialtySelect = document.getElementById('specialty');
+            const doctorSelect = document.getElementById('doctor');
+            const appointmentDateInput = document.getElementById('appointmentDate');
+            const appointmentList = document.getElementById('appointmentList');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const noAppointmentMessage = document.getElementById('noAppointment');
+
+            // --- MỚI: Profile Modal Logic ---
+            const profileButton = document.getElementById('profile-button');
+            const profileModal = document.getElementById('profile-modal');
+            const closeProfileModal = document.getElementById('close-profile-modal');
+            const profileFullname = document.getElementById('profile-fullname');
+            const profileUsername = document.getElementById('profile-username');
+
+            profileButton.addEventListener('click', () => {
+                profileFullname.textContent = user.fullname;
+                profileUsername.textContent = user.username;
+                profileModal.classList.remove('hidden');
+                // Hiệu ứng
+                setTimeout(() => {
+                    // ĐÃ SỬA: Tác động trực tiếp vào `profileModal` thay vì tìm con
+                    profileModal.classList.remove('opacity-0');
+                    profileModal.querySelector('.modal-content').classList.remove('scale-95');
+                }, 10);
+            });
+
+            const closeModal = () => {
+                // ĐÃ SỬA: Tác động trực tiếp vào `profileModal` thay vì tìm con
+                profileModal.classList.add('opacity-0');
+                profileModal.querySelector('.modal-content').classList.add('scale-95');
+                setTimeout(() => {
+                    profileModal.classList.add('hidden');
+                }, 300);
+            }
+
+            closeProfileModal.addEventListener('click', closeModal);
+            profileModal.addEventListener('click', (e) => {
+                // Chỉ đóng khi click vào nền mờ
+                if (e.target === profileModal) {
+                    closeModal();
+                }
+            });
+            // --- Kết thúc Profile Modal Logic ---
+
+            
+            successMessage.innerHTML = `<strong class="font-bold">Thành công!</strong> <span class="block sm:inline">Lịch khám của bạn đã được đặt.</span>`;
+            errorMessage.innerHTML = `<strong class="font-bold">Lỗi!</strong> <span class="block sm:inline">Vui lòng điền đầy đủ tất cả các trường.</span>`;
+
+
+            const doctorsData = {
+                'Khám tổng quát': ['Dr. Trần Thị B', 'Dr. Lê Văn C'],
+                'Tim mạch': ['Dr. Phạm Thị D', 'Dr. Hoàng Văn E'],
+                'Nha khoa': ['Dr. Nguyễn Văn An', 'Dr. Vũ Thị F'],
+                'Da liễu': ['Dr. Đặng Văn G'],
+                'Tai mũi họng': ['Dr. Ngô Thị H']
+            };
+
+            function setMinDate() {
+                appointmentDateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+            }
+
+            function updateDoctors() {
+                const selectedSpecialty = specialtySelect.value;
+                doctorSelect.innerHTML = '<option>Chọn bác sĩ</option>';
+                if (doctorsData[selectedSpecialty]) {
+                    doctorsData[selectedSpecialty].forEach(doc => {
+                        doctorSelect.innerHTML += `<option value="${doc}">${doc}</option>`;
+                    });
+                }
+            }
+
+            function renderAppointments() {
+                const users = getUsers();
+                // Luôn đảm bảo chúng ta có dữ liệu mới nhất của user
+                const currentUserData = users[user.username] || { appointments: [] };
+                
+                while (appointmentList.firstChild && appointmentList.firstChild.id !== 'noAppointment') {
+                    appointmentList.removeChild(appointmentList.firstChild);
+                }
+
+                if (currentUserData.appointments && currentUserData.appointments.length > 0) {
+                    noAppointmentMessage.classList.add('hidden');
+                    currentUserData.appointments.forEach(appt => {
+                        const apptEl = document.createElement('div');
+                        apptEl.className = 'p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg';
+                        const formattedDate = new Date(appt.date).toLocaleDateString('vi-VN', {
+                            weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric'
+                        });
+                        apptEl.innerHTML = `
+                            <p class="font-semibold text-gray-800">${appt.specialty} - ${appt.doctor}</p>
+                            <p class="text-sm text-gray-600">${formattedDate} - ${appt.time}</p>
+                            <p class="text-sm text-gray-500 mt-1">${appt.reason}</p>`;
+                        appointmentList.prepend(apptEl);
+                    });
+                } else {
+                    noAppointmentMessage.classList.remove('hidden');
+                }
+            }
+            
+            function handleBookingSubmit(e) {
+                e.preventDefault();
+                successMessage.classList.add('hidden');
+                errorMessage.classList.add('hidden');
+
+                const newAppointment = {
+                    specialty: specialtySelect.value,
+                    doctor: doctorSelect.value,
+                    date: appointmentDateInput.value,
+                    time: document.getElementById('appointmentTime').value,
+                    reason: document.getElementById('reason').value,
+                };
+
+                if (newAppointment.specialty === 'Chọn chuyên khoa' || newAppointment.doctor === 'Chọn bác sĩ' || !newAppointment.date || newAppointment.time === 'Chọn giờ' || !newAppointment.reason) {
+                    errorMessage.classList.remove('hidden');
+                    return;
+                }
+
+                const users = getUsers();
+                // Thêm lịch hẹn vào đúng user trong database localStorage
+                if (!users[user.username].appointments) {
+                    users[user.username].appointments = [];
+                }
+                users[user.username].appointments.push(newAppointment);
+                saveUsers(users);
+                
+                // Cập nhật lại sessionStorage để đồng bộ (tùy chọn nhưng nên có)
+                const updatedUser = users[user.username];
+                setCurrentUser(updatedUser);
+
+                renderAppointments();
+                successMessage.classList.remove('hidden');
+                bookingForm.reset();
+                updateDoctors();
+                setTimeout(() => successMessage.classList.add('hidden'), 5000);
+            }
+
+            specialtySelect.addEventListener('change', updateDoctors);
+            bookingForm.addEventListener('submit', handleBookingSubmit);
+            
+            setMinDate();
+            renderAppointments();
+        }
+        
+        // Initial render on page load
+        renderView();
+    });
+    </script>
 </body>
 </html>
+
