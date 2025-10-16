@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý Bác sĩ - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Style cho scrollbar (tùy chọn) */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px;}
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                <h1 class="text-3xl font-bold text-slate-800">👨‍⚕️ Quản lý Bác sĩ</h1>
+                <div class="flex items-center gap-3 mt-4 sm:mt-0">
+                    <button id="addBtn" class="flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                        Thêm Bác sĩ
+                    </button>
+                    <button id="exportBtn" class="flex items-center gap-2 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition-colors duration-300">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        Xuất Excel
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="relative">
+                    <input id="searchKeyword" type="text" placeholder="Tìm theo tên bác sĩ..." class="w-full border border-slate-300 p-2 pl-10 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" />
+                    <svg class="w-5 h-5 text-slate-400 absolute top-1/2 left-3 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <select id="specialtyFilter" class="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"></select>
+                <button id="searchBtn" class="col-span-1 md:col-span-2 lg:col-span-1 w-full bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-600 transition-colors">Tìm kiếm</button>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-slate-200">
+                <table class="min-w-full divide-y divide-slate-200">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Họ và tên</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Chuyên khoa</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Số điện thoại</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctorTable" class="bg-white divide-y divide-slate-200">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="doctorModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+        <div class="bg-white p-8 rounded-xl w-full max-w-lg shadow-2xl transform scale-95 transition-transform duration-300">
+            <h2 id="modalTitle" class="text-2xl font-bold text-slate-800 mb-6"></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                 <div>
+                    <label for="doctorName" class="block text-sm font-medium text-slate-700 mb-1">Họ và tên</label>
+                    <input id="doctorName" type="text" placeholder="Nguyễn Văn A" class="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                </div>
+                <div>
+                    <label for="doctorSpecialty" class="block text-sm font-medium text-slate-700 mb-1">Chuyên khoa</label>
+                    <select id="doctorSpecialty" class="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-indigo-500"></select>
+                </div>
+                <div>
+                    <label for="doctorPhone" class="block text-sm font-medium text-slate-700 mb-1">Số điện thoại</label>
+                    <input id="doctorPhone" type="text" placeholder="09xxxxxxxx" class="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                </div>
+                 <div>
+                    <label for="doctorEmail" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                    <input id="doctorEmail" type="email" placeholder="example@email.com" class="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                </div>
+            </div>
+            <div class="flex justify-end gap-4 mt-8">
+                <button id="cancelDoctor" class="bg-slate-200 text-slate-800 font-semibold py-2 px-4 rounded-lg hover:bg-slate-300 transition-colors">Hủy</button>
+                <button id="saveDoctor" class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-3"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- CONFIG & STATE ---
+        const apiBase = "http://localhost:5236/api";
+        const token = localStorage.getItem("token");
+        const headers = { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" };
+        let allDoctors = [];
+        let editingId = null;
+
+        // --- DOM ELEMENTS ---
+        const tbody = document.getElementById("doctorTable");
+        const doctorModal = document.getElementById("doctorModal");
+        const searchKeywordInput = document.getElementById("searchKeyword");
+        const specialtyFilterSelect = document.getElementById("specialtyFilter");
+        const modalForm = {
+            title: document.getElementById("modalTitle"),
+            name: document.getElementById("doctorName"),
+            specialty: document.getElementById("doctorSpecialty"),
+            phone: document.getElementById("doctorPhone"),
+            email: document.getElementById("doctorEmail"),
+        };
+
+        // --- AUTH CHECK ---
+        if (!token) {
+            showToast("Vui lòng đăng nhập để tiếp tục!", "error");
+            setTimeout(() => window.location.href = "../Login/login.html?role=Admin", 2000);
+            return;
+        }
+        
+        // --- UTILS ---
+        const showToast = (message, type = 'success') => {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'bg-green-500',
+                error: 'bg-red-500',
+                info: 'bg-blue-500'
+            };
+            toast.className = `text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full opacity-0 transition-all duration-500 ${colors[type]}`;
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-x-full', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-x-full', 'opacity-0');
+                toast.addEventListener('transitionend', () => toast.remove());
+            }, 3000);
+        };
+
+        const openModal = () => {
+            doctorModal.classList.remove('hidden');
+            setTimeout(() => {
+                doctorModal.classList.remove('opacity-0');
+                doctorModal.querySelector('div').classList.remove('scale-95');
+            }, 10);
+        };
+
+        const closeModal = () => {
+            doctorModal.classList.add('opacity-0');
+            doctorModal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                doctorModal.classList.add('hidden');
+            }, 300);
+        };
+
+        // --- API CALLS ---
+        const loadSpecialties = async () => {
+            try {
+                const res = await fetch(`${apiBase}/Specialties`, { headers });
+                if (!res.ok) throw new Error('Không tải được danh sách chuyên khoa.');
+                const list = await res.json();
+                
+                specialtyFilterSelect.innerHTML = '<option value="">Tất cả chuyên khoa</option>';
+                modalForm.specialty.innerHTML = '<option value="">-- Chọn chuyên khoa --</option>';
+                
+                list.forEach(s => {
+                    const option = `<option value="${s.specialtyId}">${s.specialtyName}</option>`;
+                    specialtyFilterSelect.innerHTML += option;
+                    modalForm.specialty.innerHTML += option;
+                });
+            } catch (error) {
+                showToast(error.message, 'error');
+            }
+        };
+
+        const loadDoctors = async () => {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center p-6 text-slate-500">Đang tải dữ liệu...</td></tr>`;
+            try {
+                const res = await fetch(`${apiBase}/Doctors`, { headers });
+                if (!res.ok) throw new Error('Không thể tải dữ liệu bác sĩ.');
+                allDoctors = await res.json();
+                renderDoctors(allDoctors);
+            } catch (error) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center p-6 text-red-500">Lỗi: ${error.message}</td></tr>`;
+                showToast(error.message, 'error');
+            }
+        };
+
+        const saveDoctor = async () => {
+            const doctorData = {
+                fullName: modalForm.name.value.trim(),
+                specialtyId: parseInt(modalForm.specialty.value) || null,
+                phone: modalForm.phone.value.trim(),
+                email: modalForm.email.value.trim()
+            };
+
+            if (!doctorData.fullName || !doctorData.specialtyId) {
+                showToast("Vui lòng nhập tên và chọn chuyên khoa.", "error");
+                return;
+            }
+
+            const method = editingId ? "PUT" : "POST";
+            const url = editingId ? `${apiBase}/Doctors/${editingId}` : `${apiBase}/Doctors`;
+
+            try {
+                const res = await fetch(url, { method, headers, body: JSON.stringify(doctorData) });
+                if (!res.ok) throw new Error(await res.text());
+                
+                showToast(editingId ? "Cập nhật thành công!" : "Thêm mới thành công!");
+                closeModal();
+                loadDoctors();
+            } catch (error) {
+                showToast(`Thao tác thất bại: ${error.message}`, "error");
+            }
+        };
+
+        const deleteDoctor = async (id) => {
+            if (!confirm("Bạn có chắc muốn xóa bác sĩ này? Hành động này không thể hoàn tác.")) return;
+            try {
+                const res = await fetch(`${apiBase}/Doctors/${id}`, { method: "DELETE", headers });
+                if (!res.ok) throw new Error(await res.text());
+                showToast("Đã xóa bác sĩ thành công!", "success");
+                loadDoctors();
+            } catch (error) {
+                showToast(`Không thể xóa: ${error.message}`, "error");
+            }
+        };
+        
+        const exportToExcel = async () => {
+             try {
+                showToast("Đang chuẩn bị file Excel...", "info");
+                const res = await fetch(`${apiBase}/Doctors/export`, { headers });
+                if (!res.ok) throw new Error('Xuất file thất bại.');
+                const blob = await res.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.style.display = 'none';
+                a.href = url;
+                a.download = `DanhSach_BacSi_${new Date().toISOString().slice(0,10)}.xlsx`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+             } catch (error) {
+                 showToast(error.message, 'error');
+             }
+        };
+
+        // --- RENDERING & FORM HANDLING ---
+        const renderDoctors = (list) => {
+            tbody.innerHTML = "";
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center p-6 text-slate-500">Không tìm thấy bác sĩ nào.</td></tr>`;
+                return;
+            }
+            list.forEach(d => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition-colors";
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">${d.doctorId}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${d.fullName || "—"}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${d.specialtyName || "—"}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${d.phone || "—"}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${d.email || "—"}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button data-id="${d.doctorId}" class="edit-btn text-indigo-600 hover:text-indigo-900 mr-4">Sửa</button>
+                        <button data-id="${d.doctorId}" class="delete-btn text-red-600 hover:text-red-900">Xóa</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        };
+        
+        const handleFilter = () => {
+            const keyword = searchKeywordInput.value.trim().toLowerCase();
+            const specialty = specialtyFilterSelect.value;
+            const filtered = allDoctors.filter(d =>
+                (!keyword || (d.fullName || "").toLowerCase().includes(keyword)) &&
+                (!specialty || (d.specialtyId && d.specialtyId.toString() === specialty))
+            );
+            renderDoctors(filtered);
+        };
+
+        const setupAddModal = () => {
+            editingId = null;
+            modalForm.title.textContent = "Thêm Bác sĩ Mới";
+            modalForm.name.value = "";
+            modalForm.phone.value = "";
+            modalForm.email.value = "";
+            modalForm.specialty.value = "";
+            openModal();
+        };
+
+        const setupEditModal = async (id) => {
+            try {
+                const res = await fetch(`${apiBase}/Doctors/${id}`, { headers });
+                if (!res.ok) throw new Error('Không thể tải dữ liệu bác sĩ.');
+                const d = await res.json();
+                
+                editingId = id;
+                modalForm.title.textContent = "Chỉnh sửa Thông tin Bác sĩ";
+                modalForm.name.value = d.fullName || "";
+                modalForm.phone.value = d.phone || "";
+                modalForm.email.value = d.email || "";
+                modalForm.specialty.value = d.specialtyId || "";
+                openModal();
+            } catch (error) {
+                showToast(error.message, 'error');
+            }
+        };
+
+        // --- EVENT LISTENERS ---
+        document.getElementById("searchBtn").addEventListener("click", handleFilter);
+        document.getElementById("addBtn").addEventListener("click", setupAddModal);
+        document.getElementById("saveDoctor").addEventListener("click", saveDoctor);
+        document.getElementById("cancelDoctor").addEventListener("click", closeModal);
+        document.getElementById("exportBtn").addEventListener("click", exportToExcel);
+
+        tbody.addEventListener('click', (e) => {
+            if (e.target.classList.contains('edit-btn')) {
+                setupEditModal(e.target.dataset.id);
+            }
+            if (e.target.classList.contains('delete-btn')) {
+                deleteDoctor(e.target.dataset.id);
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !doctorModal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        // --- INITIAL LOAD ---
+        const initialize = async () => {
+            await loadSpecialties();
+            await loadDoctors();
+        };
+
+        initialize();
+    });
+    </script>
+</body>
+</html>

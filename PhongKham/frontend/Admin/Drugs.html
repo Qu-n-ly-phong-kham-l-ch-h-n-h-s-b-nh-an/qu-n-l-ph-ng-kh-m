@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản lý Thuốc - Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    /* Thêm animation cho modal */
+    #drugModal[data-state="open"] {
+        display: flex;
+    }
+    #drugModal[data-state="open"] > div {
+        animation: fadeInScale 0.2s ease-out forwards;
+    }
+    #drugModal[data-state="closing"] > div {
+        animation: fadeOutScale 0.2s ease-in forwards;
+    }
+    @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeOutScale {
+        from { opacity: 1; transform: scale(1); }
+        to { opacity: 0; transform: scale(0.95); }
+    }
+  </style>
+</head>
+
+<body class="bg-slate-100">
+  <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl transition-shadow duration-300 hover:shadow-2xl">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 mb-6 border-b border-slate-200">
+        <div class="flex items-center gap-3">
+            <div class="bg-indigo-100 p-2 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-bold text-slate-800">Danh sách Thuốc</h1>
+        </div>
+        <button id="addDrugBtn" class="mt-4 sm:mt-0 flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75 transition-all duration-200 transform hover:scale-105">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+          </svg>
+          Thêm thuốc mới
+        </button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-4 mb-6">
+        <input id="keyword" type="text" placeholder="Tìm tên thuốc..." class="flex-grow min-w-[200px] border-slate-300 rounded-lg shadow-sm transition focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+        <input id="minPrice" type="number" placeholder="Giá từ" class="w-32 border-slate-300 rounded-lg shadow-sm transition focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+        <input id="maxPrice" type="number" placeholder="Giá đến" class="w-32 border-slate-300 rounded-lg shadow-sm transition focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+        <select id="sortBy" class="w-40 border-slate-300 rounded-lg shadow-sm transition focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+          <option value="">Sắp xếp</option>
+          <option value="name">Theo tên</option>
+          <option value="price">Theo giá</option>
+        </select>
+        <button id="filterBtn" class="flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-75 transition-all duration-200 transform hover:scale-105">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+          Lọc
+        </button>
+      </div>
+
+      <div class="overflow-x-auto rounded-lg border border-slate-200">
+        <table class="min-w-full text-sm">
+          <thead class="bg-slate-100">
+            <tr>
+              <th class="px-4 py-3 text-left font-semibold text-slate-600 uppercase tracking-wider">ID</th>
+              <th class="px-4 py-3 text-left font-semibold text-slate-600 uppercase tracking-wider">Tên thuốc</th>
+              <th class="px-4 py-3 text-left font-semibold text-slate-600 uppercase tracking-wider">Đơn vị</th>
+              <th class="px-4 py-3 text-left font-semibold text-slate-600 uppercase tracking-wider">Giá</th>
+              <th class="px-4 py-3 text-center font-semibold text-slate-600 uppercase tracking-wider">Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="drugTable" class="bg-white">
+             </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="drugModal" data-state="closed" class="fixed inset-0 bg-black/60 z-50 items-center justify-center p-4 hidden">
+    <div class="bg-white p-6 rounded-xl w-full max-w-md shadow-2xl space-y-4">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+        <h2 id="modalTitle" class="text-2xl font-bold text-slate-800"></h2>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 transition-transform transform hover:rotate-90">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+      </div>
+      <div class="space-y-4 pt-2">
+        <input id="drugName" type="text" placeholder="Tên thuốc" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg transition focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+        <input id="unit" type="text" placeholder="Đơn vị (ví dụ: viên, hộp...)" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg transition focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+        <input id="price" type="number" placeholder="Giá" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg transition focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+      </div>
+      <div class="flex justify-end gap-3 pt-4">
+        <button id="cancelDrug" class="px-5 py-2.5 bg-slate-200 text-slate-800 font-semibold rounded-lg hover:bg-slate-300 transition-all duration-200 transform hover:scale-105">Hủy</button>
+        <button id="saveDrug" class="px-5 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-200 transform hover:scale-105">Lưu thay đổi</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const apiBase = "http://localhost:5236/api/Drugs";
+    const token = localStorage.getItem("token");
+    const headers = { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" };
+    const drugTableBody = document.getElementById("drugTable");
+
+    let drugs = [];
+    let editingId = null;
+
+    if (!token) {
+      alert("Vui lòng đăng nhập trước!");
+      window.location.href = "../Login/login.html?role=Admin";
+    }
+
+    window.onload = async () => loadDrugs();
+    
+    function showLoading() {
+      drugTableBody.innerHTML = `
+        <tr><td colspan="5" class="p-8 text-center text-slate-500">
+            <div class="flex items-center justify-center gap-2">
+                <svg class="animate-spin h-5 w-5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Đang tải dữ liệu...</span>
+            </div>
+        </td></tr>`;
+    }
+
+    async function loadDrugs() {
+      showLoading();
+      try {
+        const res = await fetch(apiBase, { headers });
+        if (!res.ok) throw new Error('Không thể tải dữ liệu thuốc.');
+        drugs = await res.json();
+        renderDrugs(drugs);
+      } catch (error) {
+        drugTableBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-red-500">${error.message}</td></tr>`;
+      }
+    }
+
+    function renderDrugs(drugsToRender) {
+      drugTableBody.innerHTML = "";
+      if (drugsToRender.length === 0) {
+        drugTableBody.innerHTML = `
+          <tr>
+            <td colspan="5" class="p-8 text-center text-slate-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <p class="mt-2">Không tìm thấy dữ liệu phù hợp.</p>
+            </td>
+          </tr>`;
+        return;
+      }
+      drugsToRender.forEach(d => {
+        const row = `
+          <tr class="even:bg-slate-50 hover:bg-indigo-50 transition-colors duration-200 border-b border-slate-200 last:border-b-0">
+            <td class="px-4 py-3 whitespace-nowrap text-slate-600">${d.drugId}</td>
+            <td class="px-4 py-3 whitespace-nowrap font-medium text-slate-900">${d.drugName}</td>
+            <td class="px-4 py-3 whitespace-nowrap text-slate-600">${d.unit}</td>
+            <td class="px-4 py-3 whitespace-nowrap text-slate-600">${d.price.toLocaleString('vi-VN')} ₫</td>
+            <td class="px-4 py-3 whitespace-nowrap text-center">
+                <div class="flex items-center justify-center gap-4">
+                    <button onclick="openEditModal(${d.drugId})" class="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-100 rounded-full transition-all duration-200" title="Sửa">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg>
+                    </button>
+                    <button onclick="deleteDrug(${d.drugId})" class="p-2 text-slate-500 hover:text-red-600 hover:bg-red-100 rounded-full transition-all duration-200" title="Xóa">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                    </button>
+                </div>
+            </td>
+          </tr>`;
+        drugTableBody.innerHTML += row;
+      });
+    }
+
+    // Tìm kiếm / Lọc
+    document.getElementById("filterBtn").addEventListener("click", async () => {
+      showLoading();
+      const keyword = document.getElementById("keyword").value.trim();
+      const minPrice = document.getElementById("minPrice").value || '';
+      const maxPrice = document.getElementById("maxPrice").value || '';
+      const sortBy = document.getElementById("sortBy").value;
+      const desc = false; 
+
+      const query = `?keyword=${keyword}&minPrice=${minPrice}&maxPrice=${maxPrice}&sortBy=${sortBy}&desc=${desc}`;
+      try {
+        const res = await fetch(`${apiBase}${query}`, { headers });
+        const filteredDrugs = await res.json();
+        renderDrugs(filteredDrugs);
+      } catch (error) {
+        drugTableBody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-red-500">Đã xảy ra lỗi khi tìm kiếm.</td></tr>`;
+      }
+    });
+
+    // Mở và đóng Modal
+    const drugModal = document.getElementById("drugModal");
+    
+    function showModal() {
+        drugModal.dataset.state = 'open';
+    }
+
+    function closeModal() {
+        drugModal.dataset.state = 'closing';
+        setTimeout(() => { 
+            drugModal.dataset.state = 'closed';
+        }, 200); // Thời gian phải khớp với animation
+    }
+    
+    document.getElementById("addDrugBtn").onclick = () => openAddModal();
+    document.getElementById("cancelDrug").onclick = () => closeModal();
+
+    function openAddModal() {
+      editingId = null;
+      document.getElementById("modalTitle").innerText = "Thêm thuốc mới";
+      document.getElementById("saveDrug").innerText = "Lưu";
+      document.getElementById("drugName").value = "";
+      document.getElementById("unit").value = "";
+      document.getElementById("price").value = "";
+      showModal();
+    }
+
+    async function openEditModal(id) {
+        try {
+            const res = await fetch(`${apiBase}/${id}`, { headers });
+            if (!res.ok) throw new Error('Không tìm thấy thông tin thuốc.');
+            const d = await res.json();
+            editingId = id;
+            document.getElementById("modalTitle").innerText = "Cập nhật thông tin";
+            document.getElementById("saveDrug").innerText = "Lưu thay đổi";
+            document.getElementById("drugName").value = d.drugName;
+            document.getElementById("unit").value = d.unit;
+            document.getElementById("price").value = d.price;
+            showModal();
+        } catch(error) {
+            alert(error.message);
+        }
+    }
+
+    // Lưu (thêm/sửa)
+    document.getElementById("saveDrug").onclick = async () => {
+      const drug = {
+        drugName: document.getElementById("drugName").value.trim(),
+        unit: document.getElementById("unit").value.trim(),
+        price: parseFloat(document.getElementById("price").value),
+      };
+      
+      if (!drug.drugName || !drug.unit || isNaN(drug.price) || drug.price < 0) {
+          alert("Vui lòng điền đầy đủ và chính xác thông tin.");
+          return;
+      }
+      
+      const url = editingId ? `${apiBase}/${editingId}` : apiBase;
+      const method = editingId ? "PUT" : "POST";
+      const body = editingId ? JSON.stringify({ ...drug, drugId: editingId }) : JSON.stringify(drug);
+
+      try {
+        const res = await fetch(url, { method, headers, body });
+        if (res.ok) {
+          alert(editingId ? "Cập nhật thuốc thành công!" : "Thêm thuốc thành công!");
+          closeModal();
+          loadDrugs();
+        } else {
+          const err = await res.text();
+          throw new Error(err);
+        }
+      } catch (error) {
+        alert("Lỗi: " + error.message);
+      }
+    };
+
+    // Xóa thuốc
+    async function deleteDrug(id) {
+      if (!confirm("Bạn có chắc muốn xóa thuốc này? Hành động này không thể hoàn tác.")) return;
+      try {
+        const res = await fetch(`${apiBase}/${id}`, { method: "DELETE", headers });
+        if (res.ok) {
+          alert("Đã xóa thành công!");
+          loadDrugs();
+        } else {
+          const err = await res.text();
+          throw new Error(err);
+        }
+      } catch (error) {
+        alert("Không thể xóa: " + error.message);
+      }
+    }
+  </script>
+</body>
+</html>

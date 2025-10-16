@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Bác sĩ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px;}
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .status-badge {
+            padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                <h1 id="doctor-welcome" class="text-3xl font-bold text-slate-800">🗓️ Lịch hẹn của tôi</h1>
+                <div class="flex items-center gap-3 mt-4 sm:mt-0">
+                     <button id="addAppointmentBtn" class="flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                        Tạo Lịch Hẹn
+                    </button>
+                    <button id="logoutBtn" class="flex items-center gap-2 bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-red-700 transition-colors duration-300">
+                        Đăng xuất
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="relative">
+                    <input id="searchPatientName" type="text" placeholder="Tìm theo tên bệnh nhân..." class="w-full border border-slate-300 p-2 pl-10 rounded-lg focus:ring-2 focus:ring-indigo-500 transition" />
+                     <svg class="w-5 h-5 text-slate-400 absolute top-1/2 left-3 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <select id="statusFilter" class="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-indigo-500 transition">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="Chờ xác nhận">Chờ xác nhận</option>
+                    <option value="Đã xác nhận">Đã xác nhận</option>
+                    <option value="Đang khám">Đang khám</option>
+                    <option value="Đã hoàn tất">Đã hoàn tất</option>
+                    <option value="Đã hủy">Đã hủy</option>
+                </select>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-slate-200">
+                <table class="min-w-full divide-y divide-slate-200">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Bệnh nhân</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Ngày & Giờ hẹn</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Trạng thái</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-slate-500 uppercase">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointmentTableBody" class="bg-white divide-y divide-slate-200"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div id="appointmentModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-xl w-full max-w-lg shadow-2xl">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">Tạo Lịch Hẹn Mới</h2>
+            <div class="space-y-4">
+                 <div>
+                    <label for="patientSelect" class="block text-sm font-medium text-slate-700 mb-1">Chọn Bệnh nhân</label>
+                    <select id="patientSelect" class="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-indigo-500"></select>
+                </div>
+                <div>
+                    <label for="appointmentDate" class="block text-sm font-medium text-slate-700 mb-1">Chọn Ngày & Giờ hẹn</label>
+                    <input id="appointmentDate" type="datetime-local" class="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                </div>
+            </div>
+            <div class="flex justify-end gap-4 mt-8">
+                <button id="cancelAppointment" class="bg-slate-200 text-slate-800 font-semibold py-2 px-4 rounded-lg hover:bg-slate-300">Hủy</button>
+                <button id="saveAppointment" class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700">Lưu Lịch Hẹn</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-3"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const apiBase = "http://localhost:5236/api";
+    const token = localStorage.getItem("token");
+    const doctorId = localStorage.getItem("doctorId");
+    const doctorName = localStorage.getItem("doctorName");
+    const headers = { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" };
+    let allAppointments = [];
+
+    const tbody = document.getElementById("appointmentTableBody");
+    const appointmentModal = document.getElementById("appointmentModal");
+
+    // --- UTILS ---
+    const showToast = (message, type = 'success') => {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        const colors = { success: 'bg-green-500', error: 'bg-red-500', info: 'bg-blue-500' };
+        toast.className = `text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full opacity-0 transition-all duration-500 ${colors[type]}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.remove('translate-x-full', 'opacity-0'), 10);
+        setTimeout(() => {
+            toast.classList.add('translate-x-full', 'opacity-0');
+            toast.addEventListener('transitionend', () => toast.remove());
+        }, 3000);
+    };
+
+    const formatDate = (dateString) => new Date(dateString).toLocaleString('vi-VN');
+    const getStatusBadge = (status) => {
+        const map = {
+            "Chờ xác nhận": "bg-yellow-100 text-yellow-800",
+            "Đã xác nhận": "bg-blue-100 text-blue-800",
+            "Đang khám": "bg-indigo-100 text-indigo-800",
+            "Đã hoàn tất": "bg-green-100 text-green-800",
+            "Đã hủy": "bg-red-100 text-red-800",
+        };
+        return `<span class="status-badge ${map[status] || 'bg-slate-100'}">${status}</span>`;
+    };
+    
+    // --- AUTH CHECK ---
+    if (!token || !doctorId) {
+        showToast("Vui lòng đăng nhập với tài khoản bác sĩ!", "error");
+        setTimeout(() => window.location.href = "login.html", 2000);
+        return;
+    }
+    document.getElementById('doctor-welcome').textContent = `🗓️ Lịch hẹn của Bác sĩ ${doctorName || ''}`;
+
+    // --- API & RENDERING ---
+    const loadAppointments = async () => {
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center p-6 text-slate-500">Đang tải...</td></tr>`;
+        try {
+            const res = await fetch(`${apiBase}/Appointments/doctor/${doctorId}`, { headers });
+            if (!res.ok) throw new Error('Không thể tải lịch hẹn.');
+            allAppointments = await res.json();
+            renderAppointments(allAppointments);
+        } catch (error) {
+            tbody.innerHTML = `<tr><td colspan="4" class="text-center p-6 text-red-500">${error.message}</td></tr>`;
+        }
+    };
+    
+    const renderAppointments = (list) => {
+        tbody.innerHTML = "";
+        if (list.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" class="text-center p-6 text-slate-500">Không có lịch hẹn nào.</td></tr>`;
+            return;
+        }
+        list.forEach(a => {
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-slate-50";
+            const canStartExam = a.status === 'Đã xác nhận' || a.status === 'Đang khám';
+            tr.innerHTML = `
+                <td class="px-6 py-4 text-sm font-medium text-slate-900">${a.patientName || "—"}</td>
+                <td class="px-6 py-4 text-sm text-slate-600">${formatDate(a.appointmentDate)}</td>
+                <td class="px-6 py-4 text-sm">${getStatusBadge(a.status)}</td>
+                <td class="px-6 py-4 text-center text-sm">
+                    <button data-appointment-id="${a.appointmentId}" 
+                            class="start-exam-btn text-white font-bold py-2 px-4 rounded ${canStartExam ? 'bg-green-500 hover:bg-green-600' : 'bg-slate-400 cursor-not-allowed'}"
+                            ${!canStartExam ? 'disabled' : ''}>
+                        ${a.status === 'Đang khám' ? 'Tiếp tục Khám' : 'Bắt đầu Khám'}
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    };
+
+    const handleFilter = () => {
+        const patientName = document.getElementById('searchPatientName').value.toLowerCase();
+        const status = document.getElementById('statusFilter').value;
+        const filtered = allAppointments.filter(a =>
+            (a.patientName || '').toLowerCase().includes(patientName) &&
+            (!status || a.status === status)
+        );
+        renderAppointments(filtered);
+    };
+
+    // --- MODAL LOGIC ---
+    const openAppointmentModal = async () => {
+        const patientSelect = document.getElementById('patientSelect');
+        try {
+            const res = await fetch(`${apiBase}/Patients`, { headers });
+            if (!res.ok) throw new Error("Không tải được danh sách bệnh nhân");
+            const patients = await res.json();
+            patientSelect.innerHTML = '<option value="">-- Chọn bệnh nhân --</option>';
+            patients.forEach(p => {
+                patientSelect.innerHTML += `<option value="${p.patientId}">${p.fullName} (ID: ${p.patientId})</option>`;
+            });
+            document.getElementById('appointmentDate').valueAsNumber = new Date().valueOf();
+            appointmentModal.classList.remove('hidden');
+        } catch (error) {
+            showToast(error.message, "error");
+        }
+    };
+
+    const saveAppointment = async () => {
+        const patientId = document.getElementById('patientSelect').value;
+        const appointmentDate = document.getElementById('appointmentDate').value;
+
+        if (!patientId || !appointmentDate) {
+            showToast("Vui lòng chọn bệnh nhân và ngày hẹn.", "error");
+            return;
+        }
+
+        const body = {
+            patientId: parseInt(patientId),
+            doctorId: parseInt(doctorId),
+            appointmentDate: new Date(appointmentDate).toISOString()
+        };
+
+        try {
+            const res = await fetch(`${apiBase}/Appointments/book`, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify(body)
+            });
+            if (!res.ok) {
+                 const errorData = await res.json();
+                 throw new Error(errorData.message || 'Tạo lịch hẹn thất bại.');
+            }
+            showToast("Tạo lịch hẹn thành công! Vui lòng chờ lễ tân duyệt.", "success");
+            appointmentModal.classList.add('hidden');
+            loadAppointments();
+        } catch (error) {
+            showToast(error.message, "error");
+        }
+    };
+    
+    // --- EVENT LISTENERS ---
+    document.getElementById('searchPatientName').addEventListener('input', handleFilter);
+    document.getElementById('statusFilter').addEventListener('change', handleFilter);
+    document.getElementById('addAppointmentBtn').addEventListener('click', openAppointmentModal);
+    document.getElementById('saveAppointment').addEventListener('click', saveAppointment);
+    document.getElementById('cancelAppointment').addEventListener('click', () => appointmentModal.classList.add('hidden'));
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.clear();
+        window.location.href = "login.html";
+    });
+
+    tbody.addEventListener('click', async (e) => {
+        if (e.target.classList.contains('start-exam-btn')) {
+            const appointmentId = e.target.dataset.appointmentId;
+            try {
+                const res = await fetch(`${apiBase}/Encounters/search?appointmentId=${appointmentId}`, { headers });
+                if(!res.ok) throw new Error("Lỗi khi tìm lần khám.");
+
+                const encounters = await res.json();
+                const encounter = encounters.find(enc => enc.appointmentId == appointmentId);
+
+                if (encounter && encounter.encounterId) {
+                    window.location.href = `kham_benh.html?encounterId=${encounter.encounterId}`;
+                } else {
+                    showToast("Lỗi: Không tìm thấy lần khám tương ứng. Lịch hẹn có thể chưa được duyệt.", "error");
+                }
+            } catch (error) {
+                showToast("Không thể bắt đầu khám: " + error.message, 'error');
+            }
+        }
+    });
+
+    // --- INITIAL LOAD ---
+    loadAppointments();
+});
+</script>
+</body>
+</html>

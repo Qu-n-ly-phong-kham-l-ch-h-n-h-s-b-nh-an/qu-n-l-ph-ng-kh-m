@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi tiết Khám bệnh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px;}
+    </style>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 bg-white p-6 rounded-xl shadow-lg">
+            <div>
+                 <a href="bac_si_dashboard.html" class="text-indigo-600 hover:text-indigo-800 text-sm font-semibold mb-2 inline-block">&larr; Quay lại Dashboard</a>
+                <h1 class="text-3xl font-bold text-slate-800">🔬 Chi tiết Khám Bệnh</h1>
+            </div>
+            <button id="completeEncounterBtn" class="mt-4 sm:mt-0 flex items-center gap-2 bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-700">
+                Hoàn Tất Khám
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg h-fit sticky top-6">
+                    <h2 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4">Thông tin Bệnh nhân</h2>
+                    <div id="patient-info" class="space-y-3 text-slate-700"></div>
+                </div>
+                 <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold text-slate-800 mb-4">Ghi Chú Lâm Sàng</h2>
+                    <textarea id="encounterNotes" class="w-full border border-slate-300 p-2 rounded-lg h-40"></textarea>
+                    <button id="saveNotesBtn" class="mt-2 bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-800">Lưu Ghi Chú</button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4">Chẩn đoán</h2>
+                    <div id="diagnosis-list" class="space-y-2 mb-4"></div>
+                    <div class="space-y-3">
+                        <textarea id="diagnosisDescription" placeholder="Nhập mô tả chẩn đoán..." class="w-full border border-slate-300 p-2 rounded-lg" rows="3"></textarea>
+                        <button id="addDiagnosisBtn" class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700">Thêm Chẩn đoán</button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4">Kê đơn thuốc</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end mb-6 p-4 border rounded-lg bg-slate-50">
+                        <div class="md:col-span-2"><label for="drugSelect" class="block text-sm font-medium">Chọn thuốc</label><select id="drugSelect" class="w-full border p-2 rounded-lg"></select></div>
+                        <div><label for="drugQuantity" class="block text-sm font-medium">Số lượng</label><input id="drugQuantity" type="number" min="1" value="1" class="w-full border p-2 rounded-lg" /></div>
+                        <div class="md:col-span-2"><label for="drugUsage" class="block text-sm font-medium">Cách dùng</label><input id="drugUsage" type="text" placeholder="Sáng 1v, Tối 1v" class="w-full border p-2 rounded-lg" /></div>
+                        <button id="addPrescriptionBtn" class="md:col-span-5 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700">Thêm vào đơn</button>
+                    </div>
+                    <table class="min-w-full"><thead class="bg-slate-50"><tr>
+                        <th class="px-4 py-2 text-left text-xs font-medium uppercase">Tên thuốc</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium uppercase">Số lượng</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium uppercase">Cách dùng</th>
+                    </tr></thead><tbody id="prescription-list" class="divide-y"></tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-3"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const apiBase = "http://localhost:5236/api";
+    const token = localStorage.getItem("token");
+    const headers = { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" };
+    const encounterId = new URLSearchParams(window.location.search).get('encounterId');
+    let currentEncounterData = {};
+
+    // --- UTILS ---
+    const showToast = (message, type = 'success') => {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        const colors = { success: 'bg-green-500', error: 'bg-red-500', info: 'bg-blue-500' };
+        toast.className = `text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full opacity-0 transition-all duration-500 ${colors[type]}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.remove('translate-x-full', 'opacity-0'), 10);
+        setTimeout(() => {
+            toast.classList.add('translate-x-full', 'opacity-0');
+            toast.addEventListener('transitionend', () => toast.remove());
+        }, 3000);
+    };
+    const formatDate = (dateStr) => dateStr ? new Date(dateStr).toLocaleDateString('vi-VN') : 'N/A';
+    
+    // --- AUTH CHECK ---
+    if (!token || !encounterId) {
+        showToast("Phiên làm việc không hợp lệ.", "error");
+        setTimeout(() => window.location.href = "bac_si_dashboard.html", 2000);
+        return;
+    }
+
+    // --- API CALLS ---
+    const loadEncounterDetails = async () => {
+        try {
+            const res = await fetch(`${apiBase}/Encounters/${encounterId}`, { headers });
+            if (!res.ok) throw new Error('Không tải được chi tiết lần khám.');
+            const data = await res.json();
+            currentEncounterData = data;
+            renderAll(data);
+        } catch (error) {
+            showToast(error.message, 'error');
+        }
+    };
+    
+    const loadDrugList = async () => {
+        try {
+            const res = await fetch(`${apiBase}/Drugs`, { headers });
+            if (!res.ok) throw new Error("Lỗi tải danh sách thuốc.");
+            const drugs = await res.json();
+            const drugSelect = document.getElementById('drugSelect');
+            drugSelect.innerHTML = '<option value="">-- Chọn thuốc --</option>';
+            drugs.forEach(d => drugSelect.innerHTML += `<option value="${d.drugId}">${d.drugName}</option>`);
+        } catch (error) { showToast(error.message, 'error'); }
+    };
+    
+    const saveNotes = async () => {
+        const notes = document.getElementById('encounterNotes').value;
+        const body = { 
+            ...currentEncounterData,
+            notes: notes
+         };
+        try {
+            const res = await fetch(`${apiBase}/Encounters/${encounterId}`, { 
+                method: 'PUT',
+                headers, 
+                body: JSON.stringify(body) 
+            });
+            if(!res.ok) throw new Error("Lưu ghi chú thất bại.");
+            showToast("Đã lưu ghi chú.", "success");
+        } catch (error) { showToast(error.message, "error"); }
+    };
+
+    const addDiagnosis = async () => {
+        const description = document.getElementById('diagnosisDescription').value.trim();
+        if (!description) {
+            showToast("Vui lòng nhập mô tả chẩn đoán.", "error");
+            return;
+        }
+        try {
+            const res = await fetch(`${apiBase}/Encounters/${encounterId}/diagnosis`, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify({ description: description })
+            });
+            if (!res.ok) throw new Error('Thêm chẩn đoán thất bại.');
+            showToast("Thêm chẩn đoán thành công!", "success");
+            document.getElementById('diagnosisDescription').value = "";
+            loadEncounterDetails(); 
+        } catch(error) {
+            showToast(error.message, 'error');
+        }
+    };
+
+    const addPrescription = async () => {
+        const drugId = document.getElementById('drugSelect').value;
+        const quantity = document.getElementById('drugQuantity').value;
+        const usage = document.getElementById('drugUsage').value.trim();
+
+        if (!drugId || !quantity || quantity < 1) {
+            showToast("Vui lòng chọn thuốc và nhập số lượng hợp lệ.", "error");
+            return;
+        }
+        const body = { drugId: parseInt(drugId), quantity: parseInt(quantity), usage };
+        try {
+            const res = await fetch(`${apiBase}/Encounters/${encounterId}/prescription`, {
+                method: 'POST', headers, body: JSON.stringify(body)
+            });
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || 'Kê đơn thất bại.');
+            }
+            showToast("Đã thêm thuốc vào đơn.", "success");
+            document.getElementById('drugSelect').value = "";
+            document.getElementById('drugQuantity').value = "1";
+            document.getElementById('drugUsage').value = "";
+            loadEncounterDetails();
+        } catch (error) {
+            showToast(error.message, 'error');
+        }
+    };
+
+    const completeEncounter = async () => {
+        if (!confirm("Bạn có chắc muốn hoàn tất lần khám này? Hóa đơn sẽ được tạo tự động.")) return;
+        try {
+            const res = await fetch(`${apiBase}/Encounters/${encounterId}/complete`, { 
+                method: 'PUT', headers 
+            });
+            if (!res.ok) throw new Error('Hoàn tất khám thất bại.');
+            showToast("Đã hoàn tất khám và tạo hóa đơn.", "success");
+            setTimeout(() => window.location.href = "bac_si_dashboard.html", 2000);
+        } catch (error) {
+            showToast(error.message, 'error');
+        }
+    };
+
+    // --- RENDER ---
+    const renderAll = (data) => {
+        const patient = data.appointment?.patient;
+        document.getElementById('patient-info').innerHTML = patient ? `
+            <p><strong>Họ tên:</strong> ${patient.fullName}</p>
+            <p><strong>Ngày sinh:</strong> ${formatDate(patient.dob)}</p>
+            <p><strong>Tiền sử bệnh:</strong> ${patient.medicalHistory || 'Chưa có'}</p>` : 'Lỗi tải thông tin.';
+        
+        document.getElementById('encounterNotes').value = data.notes || '';
+        
+        const diagnosisList = document.getElementById('diagnosis-list');
+        diagnosisList.innerHTML = data.diagnoses?.length ? data.diagnoses.map(d => 
+            `<div class="p-3 bg-slate-100 rounded-md">${d.description}</div>`).join('') :
+            `<p class="text-sm italic text-slate-500">Chưa có chẩn đoán.</p>`;
+        
+        const presList = document.getElementById('prescription-list');
+        presList.innerHTML = data.prescriptions?.length ? data.prescriptions.map(p => `
+            <tr>
+                <td class="px-4 py-3 font-medium">${p.drug?.drugName || 'Không rõ'}</td>
+                <td class="px-4 py-3">${p.quantity}</td>
+                <td class="px-4 py-3">${p.usage || 'Theo chỉ định'}</td>
+            </tr>`).join('') :
+            `<tr><td colspan="3" class="text-center p-4 italic text-slate-500">Chưa kê đơn.</td></tr>`;
+    };
+
+    // --- EVENT LISTENERS ---
+    document.getElementById('saveNotesBtn').addEventListener('click', saveNotes);
+    document.getElementById('addDiagnosisBtn').addEventListener('click', addDiagnosis);
+    document.getElementById('addPrescriptionBtn').addEventListener('click', addPrescription);
+    document.getElementById('completeEncounterBtn').addEventListener('click', completeEncounter);
+
+    // Initial Load
+    loadDrugList();
+    loadEncounterDetails();
+});
+</script>
+</body>
+</html>

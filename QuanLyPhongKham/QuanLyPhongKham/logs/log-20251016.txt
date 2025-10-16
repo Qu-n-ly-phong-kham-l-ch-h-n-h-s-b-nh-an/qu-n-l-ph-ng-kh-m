@@ -1,0 +1,31 @@
+2025-10-16 09:23:23.485 +07:00 [INF] Bắt đầu khởi tạo ứng dụng...
+2025-10-16 09:23:26.016 +07:00 [INF] User profile is available. Using 'C:\Users\duyen\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-10-16 09:23:26.199 +07:00 [INF] Now listening on: https://localhost:7220
+2025-10-16 09:23:26.201 +07:00 [INF] Now listening on: http://localhost:5219
+2025-10-16 09:23:26.268 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-16 09:23:26.270 +07:00 [INF] Hosting environment: Development
+2025-10-16 09:23:26.272 +07:00 [INF] Content root path: C:\Users\duyen\Videos\QuanLyPhongKham\QuanLyPhongKham\QuanLyPhongKham
+2025-10-16 09:23:26.742 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/index.html - null null
+2025-10-16 09:23:27.078 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/index.html - 200 null text/html;charset=utf-8 342.7902ms
+2025-10-16 09:23:27.090 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/_framework/aspnetcore-browser-refresh.js - null null
+2025-10-16 09:23:27.112 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/_framework/aspnetcore-browser-refresh.js - 200 16515 application/javascript; charset=utf-8 22.5625ms
+2025-10-16 09:23:27.154 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/_vs/browserLink - null null
+2025-10-16 09:23:27.227 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/_vs/browserLink - 200 null text/javascript; charset=UTF-8 73.8348ms
+2025-10-16 09:23:27.328 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/v1/swagger.json - null null
+2025-10-16 09:23:27.381 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 53.2185ms
+2025-10-16 09:24:24.500 +07:00 [INF] Request starting HTTP/1.1 POST https://localhost:7220/api/accounts/login - application/json 50
+2025-10-16 09:24:24.632 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.Login (QuanLyPhongKham)'
+2025-10-16 09:24:24.666 +07:00 [INF] Route matched with {action = "Login", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(QuanLyPhongKhamApi.Controllers.LoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-16 09:24:25.975 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType3`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[<>f__AnonymousType4`4[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-16 09:24:25.998 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.Login (QuanLyPhongKham) in 1320.7346ms
+2025-10-16 09:24:26.003 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.Login (QuanLyPhongKham)'
+2025-10-16 09:24:26.009 +07:00 [INF] HTTP POST /api/accounts/login responded 200 in 1495.5953 ms
+2025-10-16 09:24:26.015 +07:00 [INF] Request finished HTTP/1.1 POST https://localhost:7220/api/accounts/login - 200 null application/json; charset=utf-8 1515.4756ms
+2025-10-16 09:24:51.771 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7220/api/Reports/doctor-revenue?startDate=2025-01-01&endDate=2025-12-31 - null null
+2025-10-16 09:24:51.874 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.ReportsController.GetDoctorRevenue (QuanLyPhongKham)'
+2025-10-16 09:24:51.882 +07:00 [INF] Route matched with {action = "GetDoctorRevenue", controller = "Reports"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetDoctorRevenue(System.DateTime, System.DateTime) on controller QuanLyPhongKhamApi.Controllers.ReportsController (QuanLyPhongKham).
+2025-10-16 09:24:51.924 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.DoctorRevenueReport, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-16 09:24:51.940 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.ReportsController.GetDoctorRevenue (QuanLyPhongKham) in 52.6701ms
+2025-10-16 09:24:51.947 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.ReportsController.GetDoctorRevenue (QuanLyPhongKham)'
+2025-10-16 09:24:51.948 +07:00 [INF] HTTP GET /api/Reports/doctor-revenue responded 200 in 168.3901 ms
+2025-10-16 09:24:51.952 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7220/api/Reports/doctor-revenue?startDate=2025-01-01&endDate=2025-12-31 - 200 null application/json; charset=utf-8 180.9421ms

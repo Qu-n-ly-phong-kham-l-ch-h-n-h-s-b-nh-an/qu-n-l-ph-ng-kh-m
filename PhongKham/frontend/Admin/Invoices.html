@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💰 Quản lý Hóa đơn</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .btn { padding: 0.5rem 1rem; border-radius: 0.375rem; color: white; font-weight: 600; transition: background-color 0.2s; cursor: pointer; }
+    .btn-blue { background-color: #2563eb; }
+    .btn-blue:hover { background-color: #1d4ed8; }
+    .btn-green { background-color: #16a34a; }
+    .btn-green:hover { background-color: #15803d; }
+    .btn-red { background-color: #dc2626; }
+    .btn-red:hover { background-color: #b91c1c; }
+    .btn-gray { background-color: #6b7280; }
+    .btn-gray:hover { background-color: #4b5563; }
+    /* ✅ CSS cho nút bị vô hiệu hóa */
+    .btn:disabled { background-color: #9ca3af; cursor: not-allowed; opacity: 0.7; }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 50; }
+    .modal.flex { display: flex; }
+  </style>
+</head>
+
+<body class="bg-gray-100 p-6 min-h-screen">
+  <div class="max-w-7xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+    <h1 class="text-3xl font-bold text-blue-700 mb-6 border-b pb-4">💰 Quản lý Hóa đơn</h1>
+
+    <div class="flex flex-wrap gap-4 items-center mb-6">
+      <input id="keyword" type="text" placeholder="Tìm theo tên bệnh nhân..." class="border p-2 rounded-lg w-full sm:w-60 focus:ring-2 focus:ring-blue-500" />
+      <select id="statusFilter" class="border p-2 rounded-lg w-full sm:w-auto focus:ring-2 focus:ring-blue-500">
+        <option value="">-- Tất cả trạng thái --</option>
+        <option value="Chưa thanh toán">Chưa thanh toán</option>
+        <option value="Đã thanh toán">Đã thanh toán</option>
+        <option value="Đã hủy">Đã hủy</option>
+      </select>
+      <button id="filterBtn" class="btn btn-blue w-full sm:w-auto">Tìm kiếm</button>
+      <div class="sm:ml-auto flex gap-2">
+          <button id="addInvoiceBtn" class="btn btn-green">+ Thêm hóa đơn</button>
+          <button id="exportBtn" class="btn btn-blue">📤 Xuất Excel</button>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto border rounded-lg">
+      <table class="min-w-full">
+        <thead class="bg-gray-50 text-left">
+          <tr>
+            <th class="p-3 font-semibold text-gray-600">ID</th>
+            <th class="p-3 font-semibold text-gray-600">Bệnh nhân</th>
+            <th class="p-3 font-semibold text-gray-600">Tổng tiền</th>
+            <th class="p-3 font-semibold text-gray-600">Ngày thanh toán</th>
+            <th class="p-3 font-semibold text-gray-600">Phương thức</th>
+            <th class="p-3 font-semibold text-gray-600">Trạng thái</th>
+            <th class="p-3 font-semibold text-gray-600 text-center">Hành động</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y" id="invoiceBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="invoiceModal" class="modal">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+      <h2 id="modalTitle" class="text-xl font-bold mb-4 text-blue-700">Thêm Hóa đơn</h2>
+      <form id="invoiceForm" class="flex flex-col gap-4">
+        <input type="hidden" id="invoiceId">
+        <div>
+            <label for="patientId" class="block text-sm font-medium text-gray-700">Bệnh nhân</label>
+            <select id="patientId" class="border p-2 rounded w-full mt-1" required></select>
+        </div>
+        <div>
+            <label for="encounterId" class="block text-sm font-medium text-gray-700">Lần khám</label>
+            <select id="encounterId" class="border p-2 rounded w-full mt-1" required></select>
+        </div>
+        <input id="totalAmount" type="number" placeholder="Tổng tiền (tự động tính nếu tạo từ lần khám)" class="border p-2 rounded" />
+        <input id="paymentDate" type="date" class="border p-2 rounded" />
+        <input id="paymentMethod" placeholder="Phương thức thanh toán" class="border p-2 rounded" />
+        <select id="status" class="border p-2 rounded">
+          <option value="Chưa thanh toán">Chưa thanh toán</option>
+          <option value="Đã thanh toán">Đã thanh toán</option>
+          <option value="Đã hủy">Đã hủy</option>
+        </select>
+        <div class="flex justify-end gap-3 mt-4">
+          <button type="button" id="cancelModal" class="btn btn-gray">Hủy</button>
+          <button type="submit" class="btn btn-green">Lưu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const apiBase = "http://localhost:5236/api";
+    const token = localStorage.getItem("token");
+    const headers = { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" };
+
+    const modal = document.getElementById("invoiceModal");
+    const form = document.getElementById("invoiceForm");
+
+    async function loadInvoices() {
+        const keyword = document.getElementById('keyword').value;
+        const status = document.getElementById('statusFilter').value;
+        const url = new URL(`${apiBase}/Invoices/search`);
+        if (keyword) url.searchParams.append('keyword', keyword);
+        if (status) url.searchParams.append('status', status);
+
+        try {
+            const res = await fetch(url, { headers });
+            if (!res.ok) throw new Error("Tải danh sách hóa đơn thất bại.");
+            const invoices = await res.json();
+            renderTable(invoices);
+        } catch (error) {
+            console.error(error);
+            alert(error.message);
+        }
+    }
+
+    async function saveInvoice(e) {
+        e.preventDefault();
+        const invoiceId = document.getElementById("invoiceId").value;
+        const data = {
+            invoiceId: invoiceId ? parseInt(invoiceId) : 0,
+            patientId: parseInt(document.getElementById("patientId").value),
+            encounterId: parseInt(document.getElementById("encounterId").value),
+            totalAmount: parseFloat(document.getElementById("totalAmount").value) || 0,
+            paymentDate: document.getElementById("paymentDate").value || new Date().toISOString().split('T')[0],
+            paymentMethod: document.getElementById("paymentMethod").value,
+            status: document.getElementById("status").value,
+        };
+        const method = invoiceId ? "PUT" : "POST";
+        const url = invoiceId ? `${apiBase}/Invoices/${invoiceId}` : `${apiBase}/Invoices`;
+        
+        try {
+            const res = await fetch(url, { method, headers, body: JSON.stringify(data) });
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || "Lưu thất bại.");
+            }
+            alert(`Đã ${invoiceId ? 'cập nhật' : 'thêm'} hóa đơn thành công!`);
+            closeModal();
+            loadInvoices();
+        } catch(error) {
+            console.error(error);
+            alert(error.message);
+        }
+    }
+
+    async function deleteInvoice(id) {
+        if (!confirm(`Bạn có chắc muốn xóa hóa đơn #${id}?`)) return;
+        try {
+            const res = await fetch(`${apiBase}/Invoices/${id}`, { method: 'DELETE', headers });
+             if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || "Xóa thất bại.");
+            }
+            alert("Đã xóa hóa đơn thành công!");
+            loadInvoices();
+        } catch(error) {
+            console.error(error);
+            alert(error.message);
+        }
+    }
+
+    async function loadSelects() {
+        const patientSelect = document.getElementById('patientId');
+        const encounterSelect = document.getElementById('encounterId');
+        try {
+            const [patientsRes, encountersRes] = await Promise.all([
+                fetch(`${apiBase}/Patients`, { headers }),
+                fetch(`${apiBase}/Encounters`, { headers })
+            ]);
+            const patients = await patientsRes.json();
+            const encounters = await encountersRes.json();
+            patientSelect.innerHTML = '<option value="">-- Chọn bệnh nhân --</option>';
+            patients.forEach(p => patientSelect.add(new Option(p.fullName, p.patientId)));
+            encounterSelect.innerHTML = '<option value="">-- Chọn lần khám --</option>';
+            encounters.forEach(e => encounterSelect.add(new Option(`ID ${e.encounterId} - ${e.patientName}`, e.encounterId)));
+        } catch (error) {
+            console.error("Lỗi tải danh sách cho form:", error);
+        }
+    }
+
+    // ✅ HÀM RENDER ĐÃ ĐƯỢC CẬP NHẬT
+    function renderTable(invoices) {
+        const tbody = document.getElementById("invoiceBody");
+        if (invoices.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-500">Không tìm thấy hóa đơn nào.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = invoices.map(i => {
+            const isPaid = i.status === 'Đã thanh toán';
+            const disabledAttribute = isPaid ? 'disabled' : '';
+            
+            return `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3 border-b">${i.invoiceId}</td>
+                    <td class="p-3 border-b">${i.patientName || 'N/A'}</td>
+                    <td class="p-3 border-b">${(i.totalAmount || 0).toLocaleString('vi-VN')} đ</td>
+                    <td class="p-3 border-b">${i.paymentDate ? new Date(i.paymentDate).toLocaleDateString('vi-VN') : ''}</td>
+                    <td class="p-3 border-b">${i.paymentMethod || ''}</td>
+                    <td class="p-3 border-b">${i.status || ''}</td>
+                    <td class="p-3 border-b text-center">
+                        <button class="btn btn-blue text-xs" onclick='openEditModal(${JSON.stringify(i)})' ${disabledAttribute}>Cập nhật</button>
+                        <button class="btn btn-red text-xs" onclick='deleteInvoice(${i.invoiceId})' ${disabledAttribute}>Xóa</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+    
+    function openModal() {
+        form.reset();
+        document.getElementById("invoiceId").value = '';
+        document.getElementById("modalTitle").textContent = "Thêm Hóa đơn mới";
+        loadSelects();
+        modal.classList.add("flex");
+    }
+
+    // ✅ HÀM MỞ MODAL SỬA ĐÃ ĐƯỢC CẬP NHẬT
+    async function openEditModal(invoice) {
+        form.reset();
+        await loadSelects(); 
+        
+        document.getElementById("invoiceId").value = invoice.invoiceId;
+        document.getElementById("patientId").value = invoice.patientId;
+        document.getElementById("encounterId").value = invoice.encounterId;
+        document.getElementById("totalAmount").value = invoice.totalAmount;
+        document.getElementById("paymentDate").value = invoice.paymentDate ? invoice.paymentDate.split('T')[0] : '';
+        document.getElementById("paymentMethod").value = invoice.paymentMethod;
+        document.getElementById("status").value = invoice.status;
+
+        document.getElementById("modalTitle").textContent = `Cập nhật Hóa đơn #${invoice.invoiceId}`;
+        modal.classList.add("flex");
+    }
+
+    function closeModal() {
+        modal.classList.remove("flex");
+    }
+
+    document.getElementById("filterBtn").onclick = loadInvoices;
+    document.getElementById("addInvoiceBtn").onclick = openModal;
+    document.getElementById("cancelModal").onclick = closeModal;
+    form.onsubmit = saveInvoice;
+    
+    document.getElementById("exportBtn").onclick = async () => {
+      try {
+        const res = await fetch(`${apiBase}/Invoices/export`, { headers });
+        if (res.ok) {
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `HoaDon_${new Date().toISOString().slice(0,10)}.xlsx`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        } else {
+            alert("Xuất Excel thất bại!");
+        }
+      } catch(error) {
+        console.error(error);
+        alert("Có lỗi xảy ra khi xuất file.");
+      }
+    };
+    
+    document.addEventListener('DOMContentLoaded', loadInvoices);
+  </script>
+</body>
+</html>

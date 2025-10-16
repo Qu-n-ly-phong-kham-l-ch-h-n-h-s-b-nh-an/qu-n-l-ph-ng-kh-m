@@ -1,0 +1,53 @@
+# Build folders
+bin/
+obj/
+Debug/
+Release/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider (nếu bạn dùng JetBrains Rider)
+.idea/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# NuGet Packages
+*.nupkg
+# Nếu bạn muốn commit package.lock.json thì bỏ dòng dưới đi
+packages/
+*.snupkg
+project.lock.json
+
+# Logs
+*.log
+
+# DLL / PDB / EXE
+*.dll
+*.exe
+*.pdb
+
+# Publish outputs
+publish/
+out/
+
+# Resharper / Code analysis
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Coverage
+*.coverage
+*.coveragexml
+
+# Others
+*.dbmdl
+*.bak
+*.swp
+*.tmp
+

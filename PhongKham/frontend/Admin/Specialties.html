@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản lý Chuyên khoa - Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .btn { padding: 0.5rem 1rem; border-radius: 0.25rem; color: #fff; font-weight: 600; }
+    .btn-blue { background-color: #2563eb; }
+    .btn-blue:hover { background-color: #1d4ed8; }
+    .btn-red { background-color: #dc2626; }
+    .btn-red:hover { background-color: #b91c1c; }
+    .btn-green { background-color: #16a34a; }
+    .btn-green:hover { background-color: #15803d; }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen p-6">
+  <div class="max-w-5xl mx-auto bg-white p-6 rounded-xl shadow">
+    <h1 class="text-2xl font-bold text-blue-700 mb-4">🩺 Quản lý Chuyên khoa</h1>
+
+    <!-- 🔍 Thanh tìm kiếm -->
+    <div class="flex flex-wrap items-center gap-3 mb-4">
+      <input id="searchKeyword" type="text" placeholder="Nhập tên chuyên khoa..." class="border p-2 rounded w-60" />
+      <button id="searchBtn" class="btn btn-blue">Tìm kiếm</button>
+      <button id="addBtn" class="btn btn-green ml-auto">+ Thêm chuyên khoa</button>
+    </div>
+
+    <!-- 📋 Bảng danh sách -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full border">
+        <thead class="bg-blue-100 text-left">
+          <tr>
+            <th class="p-3 border">ID</th>
+            <th class="p-3 border">Tên chuyên khoa</th>
+            <th class="p-3 border text-center">Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="specialtyTable" class="divide-y"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 🧩 Modal Thêm / Sửa -->
+  <div id="specialtyModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center">
+    <div class="bg-white p-6 rounded-xl w-full max-w-md shadow-lg">
+      <h2 id="modalTitle" class="text-xl font-bold text-blue-700 mb-4"></h2>
+      <div class="space-y-3">
+        <input id="specialtyName" type="text" placeholder="Nhập tên chuyên khoa" class="border p-2 rounded w-full" />
+      </div>
+      <div class="flex justify-end gap-2 mt-4">
+        <button id="saveSpecialty" class="btn btn-green">Lưu</button>
+        <button id="cancelSpecialty" class="btn btn-red">Hủy</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const apiBase = "http://localhost:5236/api";
+    const token = localStorage.getItem("token");
+    let specialties = [];
+    let editingId = null;
+
+    if (!token) {
+      alert("Vui lòng đăng nhập trước!");
+      window.location.href = "../Login/login.html?role=Admin";
+    }
+
+    const headers = { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" };
+
+    // 🚀 Load dữ liệu ban đầu
+    window.onload = async () => {
+      await loadSpecialties();
+    };
+
+    // 🔹 Load danh sách chuyên khoa
+    async function loadSpecialties() {
+      const res = await fetch(`${apiBase}/Specialties`, { headers });
+      specialties = await res.json();
+      renderSpecialties();
+    }
+
+    // 🔹 Hiển thị danh sách
+    function renderSpecialties() {
+      const tbody = document.getElementById("specialtyTable");
+      tbody.innerHTML = "";
+      specialties.forEach(s => {
+        tbody.innerHTML += `
+          <tr>
+            <td class="p-3 border">${s.specialtyId}</td>
+            <td class="p-3 border">${s.specialtyName}</td>
+            <td class="p-3 border text-center">
+              <button onclick="editSpecialty(${s.specialtyId})" class="text-blue-600 font-semibold mr-3">Sửa</button>
+              <button onclick="deleteSpecialty(${s.specialtyId})" class="text-red-600 font-semibold">Xóa</button>
+            </td>
+          </tr>`;
+      });
+    }
+
+    // 🔹 Tìm kiếm
+    document.getElementById("searchBtn").addEventListener("click", () => {
+      const keyword = document.getElementById("searchKeyword").value.trim().toLowerCase();
+      const filtered = specialties.filter(s => s.specialtyName?.toLowerCase().includes(keyword));
+      const tbody = document.getElementById("specialtyTable");
+      tbody.innerHTML = "";
+      filtered.forEach(s => {
+        tbody.innerHTML += `
+          <tr>
+            <td class="p-3 border">${s.specialtyId}</td>
+            <td class="p-3 border">${s.specialtyName}</td>
+            <td class="p-3 border text-center">
+              <button onclick="editSpecialty(${s.specialtyId})" class="text-blue-600 font-semibold mr-3">Sửa</button>
+              <button onclick="deleteSpecialty(${s.specialtyId})" class="text-red-600 font-semibold">Xóa</button>
+            </td>
+          </tr>`;
+      });
+    });
+
+    // 🔹 Thêm mới
+    document.getElementById("addBtn").onclick = () => {
+      editingId = null;
+      document.getElementById("modalTitle").textContent = "Thêm chuyên khoa";
+      document.getElementById("specialtyName").value = "";
+      document.getElementById("specialtyModal").classList.remove("hidden");
+      document.getElementById("specialtyModal").classList.add("flex");
+    };
+
+    // 🔹 Sửa
+    async function editSpecialty(id) {
+      const res = await fetch(`${apiBase}/Specialties/${id}`, { headers });
+      const s = await res.json();
+      editingId = id;
+      document.getElementById("modalTitle").textContent = "Chỉnh sửa chuyên khoa";
+      document.getElementById("specialtyName").value = s.specialtyName;
+      document.getElementById("specialtyModal").classList.remove("hidden");
+      document.getElementById("specialtyModal").classList.add("flex");
+    }
+
+    // 🔹 Lưu (Thêm hoặc cập nhật)
+    document.getElementById("saveSpecialty").onclick = async () => {
+      const name = document.getElementById("specialtyName").value.trim();
+      if (!name) return alert("Vui lòng nhập tên chuyên khoa.");
+
+      const method = editingId ? "PUT" : "POST";
+      const url = editingId ? `${apiBase}/Specialties/${editingId}` : `${apiBase}/Specialties`;
+
+      const res = await fetch(url, { method, headers, body: JSON.stringify({ specialtyName: name }) });
+      if (res.ok) {
+        alert(editingId ? "Cập nhật thành công!" : "Thêm mới thành công!");
+        document.getElementById("specialtyModal").classList.add("hidden");
+        loadSpecialties();
+      } else alert("Thao tác thất bại!");
+    };
+
+    // 🔹 Xóa
+    async function deleteSpecialty(id) {
+      if (!confirm("Bạn có chắc chắn muốn xóa chuyên khoa này?")) return;
+      const res = await fetch(`${apiBase}/Specialties/${id}`, { method: "DELETE", headers });
+      if (res.ok) {
+        alert("Đã xóa!");
+        loadSpecialties();
+      } else alert("Không thể xóa!");
+    }
+
+    // 🔹 Hủy modal
+    document.getElementById("cancelSpecialty").onclick = () => {
+      document.getElementById("specialtyModal").classList.add("hidden");
+    };
+  </script>
+</body>
+</html>

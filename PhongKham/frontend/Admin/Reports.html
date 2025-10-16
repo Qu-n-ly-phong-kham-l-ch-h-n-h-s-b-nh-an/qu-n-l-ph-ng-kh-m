@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Báo cáo doanh thu - Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .btn { padding: 0.5rem 1rem; border-radius: 0.25rem; color: #fff; font-weight: 600; }
+    .btn-blue { background-color: #2563eb; }
+    .btn-blue:hover { background-color: #1d4ed8; }
+    .btn-green { background-color: #16a34a; }
+    .btn-green:hover { background-color: #15803d; }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen p-6">
+  <div class="max-w-5xl mx-auto bg-white p-6 rounded-xl shadow">
+    <h1 class="text-2xl font-bold text-blue-700 mb-4">📊 Báo cáo doanh thu</h1>
+
+    <!-- 🔹 Bộ lọc -->
+    <div class="flex flex-wrap items-center gap-3 mb-4">
+      <select id="reportType" class="border p-2 rounded">
+        <option value="doctor">Theo bác sĩ</option>
+        <option value="specialty">Theo chuyên khoa</option>
+      </select>
+      <button id="loadBtn" class="btn btn-blue">Xem báo cáo</button>
+      <button id="exportBtn" class="btn btn-green">Xuất Excel</button>
+    </div>
+
+    <!-- 📋 Bảng dữ liệu -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full border text-sm">
+        <thead class="bg-blue-100 text-left">
+          <tr>
+            <th class="p-3 border w-16 text-center">#</th>
+            <th id="colName" class="p-3 border">Tên bác sĩ / chuyên khoa</th>
+            <th class="p-3 border text-right">Tổng doanh thu (VNĐ)</th>
+          </tr>
+        </thead>
+        <tbody id="reportTable" class="divide-y"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const apiBase = "http://localhost:5236/api/Reports";
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Vui lòng đăng nhập trước!");
+      window.location.href = "../Login/login.html?role=Admin";
+    }
+
+    const headers = { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" };
+
+    document.getElementById("loadBtn").addEventListener("click", loadReport);
+    document.getElementById("exportBtn").addEventListener("click", exportExcel);
+
+    // 🔹 Tải dữ liệu báo cáo
+    async function loadReport() {
+      const type = document.getElementById("reportType").value;
+      const colName = document.getElementById("colName");
+      colName.textContent = type === "doctor" ? "Tên bác sĩ" : "Tên chuyên khoa";
+
+      try {
+        const res = await fetch(`${apiBase}/${type}`, { headers });
+        if (!res.ok) throw new Error("Không thể tải dữ liệu!");
+
+        const data = await res.json();
+        renderTable(data);
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    // 🔹 Hiển thị bảng dữ liệu
+    function renderTable(data) {
+      const tbody = document.getElementById("reportTable");
+      tbody.innerHTML = "";
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-gray-500">Không có dữ liệu</td></tr>`;
+        return;
+      }
+
+      data.forEach((r, i) => {
+        const name = r.name || r.doctorName || r.specialtyName || "Không rõ";
+        const revenue = r.revenue ?? r.totalRevenue ?? r.tongDoanhThu ?? 0;
+
+        tbody.innerHTML += `
+          <tr>
+            <td class="p-3 border text-center">${i + 1}</td>
+            <td class="p-3 border">${name}</td>
+            <td class="p-3 border text-right">${revenue.toLocaleString("vi-VN")} ₫</td>
+          </tr>`;
+      });
+    }
+
+    // 🔹 Xuất Excel
+    async function exportExcel() {
+      const type = document.getElementById("reportType").value;
+      try {
+        const res = await fetch(`${apiBase}/${type}/export`, { headers });
+        if (!res.ok) throw new Error("Xuất Excel thất bại!");
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = type === "doctor" ? "DoanhThu_BacSi.xlsx" : "DoanhThu_ChuyenKhoa.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    // 🔹 Tự load báo cáo mặc định khi mở trang
+    window.onload = loadReport;
+  </script>
+</body>
+</html>
