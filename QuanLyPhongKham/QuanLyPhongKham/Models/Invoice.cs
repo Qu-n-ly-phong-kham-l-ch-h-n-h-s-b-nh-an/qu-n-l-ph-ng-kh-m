@@ -40,4 +40,24 @@ namespace QuanLyPhongKhamApi.Models
         [StringLength(50)]
         public string PaymentMethod { get; set; } = string.Empty;
     }
+
+    // ✅ BỔ SUNG: DTO cho chi tiết hóa đơn
+    public class InvoiceDetailDTO : InvoiceDTO
+    {
+        public DateTime EncounterDate { get; set; }
+        public string DoctorName { get; set; } = string.Empty;
+        public string ExaminationNotes { get; set; } = string.Empty;
+        public string DiagnosisDescription { get; set; } = string.Empty;
+        public decimal ServiceFee { get; set; }
+        public decimal DrugFee { get; set; }
+        public List<PrescriptionItemDetailDTO> PrescriptionItems { get; set; } = new();
+    }
+
+    public class PrescriptionItemDetailDTO
+    {
+        public string DrugName { get; set; } = string.Empty;
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+        public string? Usage { get; set; }
+    }
 }

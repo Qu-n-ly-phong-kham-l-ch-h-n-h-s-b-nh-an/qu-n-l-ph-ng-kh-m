@@ -1,5 +1,4 @@
-﻿// File: DAL/AccountDAL.cs
-using Dapper; // Thêm Dapper
+﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using QuanLyPhongKhamApi.Models;
 using System.Data;
@@ -17,7 +16,6 @@ namespace QuanLyPhongKhamApi.DAL
         public List<Account> GetAll()
         {
             using var connection = new SqlConnection(_conn);
-            // Lấy danh sách không bao gồm PasswordHash để bảo mật
             var sql = "SELECT AccountID, Username, Role, IsActive, CreatedAt FROM Accounts";
             return connection.Query<Account>(sql).ToList();
         }
@@ -25,7 +23,6 @@ namespace QuanLyPhongKhamApi.DAL
         public Account? GetByUsername(string username)
         {
             using var connection = new SqlConnection(_conn);
-            // Cần PasswordHash để xác thực
             var sql = "SELECT TOP 1 AccountID, Username, PasswordHash, Role, IsActive, CreatedAt FROM Accounts WHERE Username = @username";
             return connection.QueryFirstOrDefault<Account>(sql, new { username });
         }
@@ -33,7 +30,6 @@ namespace QuanLyPhongKhamApi.DAL
         public Account? GetById(int id)
         {
             using var connection = new SqlConnection(_conn);
-            // Lấy thông tin không bao gồm PasswordHash
             var sql = "SELECT AccountID, Username, Role, IsActive, CreatedAt FROM Accounts WHERE AccountID = @id";
             return connection.QueryFirstOrDefault<Account>(sql, new { id });
         }
@@ -70,7 +66,6 @@ namespace QuanLyPhongKhamApi.DAL
         public bool Delete(int id)
         {
             using var connection = new SqlConnection(_conn);
-            // Soft delete bằng cách set IsActive = 0
             var sql = "UPDATE Accounts SET IsActive = 0 WHERE AccountID = @id";
             return connection.Execute(sql, new { id }) > 0;
         }

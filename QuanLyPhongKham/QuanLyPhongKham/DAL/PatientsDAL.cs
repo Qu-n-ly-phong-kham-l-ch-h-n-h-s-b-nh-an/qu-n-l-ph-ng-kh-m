@@ -55,25 +55,22 @@ namespace QuanLyPhongKhamApi.DAL
             return parameters.Get<int>("@NewPatientID");
         }
 
-        public bool Update(int id, PatientUpdateRequest req)
+        // HÀM UPDATE ĐÃ ĐƯỢC SỬA LẠI (✅ ĐÃ SỬA)
+        // Nhận vào đối tượng Patient đầy đủ thay vì DTO
+        public bool Update(Patient patient)
         {
             using var connection = new SqlConnection(_conn);
             var sql = @"UPDATE Patients SET
-                            FullName = @FullName, DOB = @DOB, Gender = @Gender, Phone = @Phone,
-                            Email = @Email, Address = @Address, MedicalHistory = @MedicalHistory
-                        WHERE PatientID = @id AND IsDeleted = 0";
-            var parameters = new
-            {
-                id,
-                req.FullName,
-                req.DOB,
-                req.Gender,
-                req.Phone,
-                req.Email,
-                req.Address,
-                req.MedicalHistory
-            };
-            return connection.Execute(sql, parameters) > 0;
+                            FullName = @FullName,
+                            DOB = @DOB,
+                            Gender = @Gender,
+                            Phone = @Phone,
+                            Email = @Email,
+                            Address = @Address,
+                            MedicalHistory = @MedicalHistory,
+                            AccountID = @AccountID   -- Bổ sung AccountID
+                        WHERE PatientID = @PatientID AND IsDeleted = 0";
+            return connection.Execute(sql, patient) > 0;
         }
 
         public bool SoftDelete(int id)

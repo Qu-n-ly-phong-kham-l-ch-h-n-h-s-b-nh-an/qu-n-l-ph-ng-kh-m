@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QuanLyPhongKhamApi.Models
 {
-    // Model ánh xạ trực tiếp từ DB
+    // Model ánh xạ trực tiếp từ DB (Không đổi)
     public class Patient
     {
         public int PatientID { get; set; }
@@ -19,7 +19,7 @@ namespace QuanLyPhongKhamApi.Models
         public bool IsDeleted { get; set; } = false;
     }
 
-    // DTO dùng để tạo mới Hồ sơ Bệnh nhân (dùng cho Receptionist/Admin)
+    // DTO dùng để tạo mới Hồ sơ Bệnh nhân (Đã cập nhật)
     public class PatientCreateRequest
     {
         [Required]
@@ -31,12 +31,15 @@ namespace QuanLyPhongKhamApi.Models
         public string? Address { get; set; }
         public string? MedicalHistory { get; set; }
 
-        // Dùng khi tạo Account cho bệnh nhân ngay lập tức
+        // --- Tùy chọn 1: Tạo tài khoản mới ---
         public string? AccountUsername { get; set; }
         public string? AccountPassword { get; set; }
+
+        // --- Tùy chọn 2: Liên kết với tài khoản đã có ---
+        public int? AccountID { get; set; } // <-- THÊM DÒNG NÀY
     }
 
-    // DTO dùng để cập nhật Hồ sơ Bệnh nhân
+    // DTO dùng để cập nhật Hồ sơ Bệnh nhân (Không đổi)
     public class PatientUpdateRequest
     {
         [Required]
@@ -47,5 +50,8 @@ namespace QuanLyPhongKhamApi.Models
         public string? Email { get; set; }
         public string? Address { get; set; }
         public string? MedicalHistory { get; set; }
+
+        // --- BỔ SUNG TRƯỜNG AccountID VÀO ĐÂY ---
+        public int? AccountID { get; set; }
     }
 }

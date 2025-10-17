@@ -1,0 +1,397 @@
+2025-10-18 05:02:46.293 +07:00 [INF] Bắt đầu khởi tạo ứng dụng...
+2025-10-18 05:02:47.256 +07:00 [INF] User profile is available. Using 'C:\Users\duyen\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-10-18 05:02:47.275 +07:00 [INF] Dịch vụ Nhắc lịch hẹn đang khởi động.
+2025-10-18 05:02:47.683 +07:00 [INF] Now listening on: https://localhost:7220
+2025-10-18 05:02:47.686 +07:00 [INF] Now listening on: http://localhost:5219
+2025-10-18 05:02:47.799 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-18 05:02:47.803 +07:00 [INF] Hosting environment: Development
+2025-10-18 05:02:47.806 +07:00 [INF] Content root path: C:\Users\duyen\Videos\QuanLyPhongKham\QuanLyPhongKham\QuanLyPhongKham
+2025-10-18 05:02:57.277 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:02:57.2762248+07:00"
+2025-10-18 05:02:59.281 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:02:59.283 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:03:18.750 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/index.html - null null
+2025-10-18 05:03:19.106 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/index.html - 200 null text/html;charset=utf-8 368.944ms
+2025-10-18 05:03:19.200 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/_vs/browserLink - null null
+2025-10-18 05:03:19.200 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/_framework/aspnetcore-browser-refresh.js - null null
+2025-10-18 05:03:19.239 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/_framework/aspnetcore-browser-refresh.js - 200 16515 application/javascript; charset=utf-8 39.9669ms
+2025-10-18 05:03:19.315 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/_vs/browserLink - 200 null text/javascript; charset=UTF-8 115.8964ms
+2025-10-18 05:03:19.342 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/v1/swagger.json - null null
+2025-10-18 05:03:19.381 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 39.7127ms
+2025-10-18 05:03:59.310 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:03:59.3100033+07:00"
+2025-10-18 05:03:59.333 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:03:59.336 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:04:59.329 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:04:59.3289730+07:00"
+2025-10-18 05:04:59.343 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:04:59.346 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:05:59.356 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:05:59.3562626+07:00"
+2025-10-18 05:05:59.368 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:05:59.370 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:06:59.373 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:06:59.3734149+07:00"
+2025-10-18 05:06:59.379 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:06:59.380 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:07:59.390 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:07:59.3901198+07:00"
+2025-10-18 05:07:59.408 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:07:59.412 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:08:59.420 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:08:59.4205452+07:00"
+2025-10-18 05:08:59.426 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:08:59.427 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:09:59.424 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:09:59.4240923+07:00"
+2025-10-18 05:09:59.427 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:09:59.428 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:10:59.436 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:10:59.4361982+07:00"
+2025-10-18 05:10:59.443 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:10:59.446 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:11:59.455 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:11:59.4551733+07:00"
+2025-10-18 05:11:59.461 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:11:59.463 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:12:59.465 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:12:59.4652363+07:00"
+2025-10-18 05:12:59.474 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:12:59.480 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:13:43.770 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-18 05:13:43.847 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:43.858 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 61.0730 ms
+2025-10-18 05:13:43.866 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 96.2201ms
+2025-10-18 05:13:43.876 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 69
+2025-10-18 05:13:43.890 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:44.047 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-18 05:13:44.080 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-18 05:13:44.657 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[<>f__AnonymousType3`4[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-18 05:13:44.669 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 578.8972ms
+2025-10-18 05:13:44.672 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-18 05:13:44.673 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 789.1403 ms
+2025-10-18 05:13:44.675 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 799.364ms
+2025-10-18 05:13:45.681 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Accounts - null null
+2025-10-18 05:13:45.681 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Patients - null null
+2025-10-18 05:13:45.689 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:45.689 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:45.693 +07:00 [INF] HTTP OPTIONS /api/Patients responded 204 in 4.4614 ms
+2025-10-18 05:13:45.693 +07:00 [INF] HTTP OPTIONS /api/Accounts responded 204 in 4.4625 ms
+2025-10-18 05:13:45.702 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Patients - 204 null null 16.9568ms
+2025-10-18 05:13:45.715 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Accounts - 204 null null 22.2168ms
+2025-10-18 05:13:45.721 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Patients - application/json null
+2025-10-18 05:13:45.725 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Accounts - application/json null
+2025-10-18 05:13:45.730 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:45.730 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:45.821 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham)'
+2025-10-18 05:13:45.821 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham)'
+2025-10-18 05:13:45.828 +07:00 [INF] Route matched with {action = "GetAll", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-18 05:13:45.830 +07:00 [INF] Route matched with {action = "GetAll", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.PatientsController (QuanLyPhongKham).
+2025-10-18 05:13:45.836 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Account, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-18 05:13:45.845 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham) in 12.2836ms
+2025-10-18 05:13:45.848 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham)'
+2025-10-18 05:13:45.850 +07:00 [INF] HTTP GET /api/Accounts responded 200 in 119.8327 ms
+2025-10-18 05:13:45.855 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Accounts - 200 null application/json; charset=utf-8 133.6622ms
+2025-10-18 05:13:45.860 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Patient, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-18 05:13:45.871 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham) in 38.7197ms
+2025-10-18 05:13:45.874 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham)'
+2025-10-18 05:13:45.875 +07:00 [INF] HTTP GET /api/Patients responded 200 in 145.1330 ms
+2025-10-18 05:13:45.880 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Patients - 200 null application/json; charset=utf-8 164.1237ms
+2025-10-18 05:13:47.669 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Invoices?status=Ch%C6%B0a%20thanh%20to%C3%A1n - null null
+2025-10-18 05:13:47.669 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Invoices?status=%C4%90%C3%A3%20thanh%20to%C3%A1n - null null
+2025-10-18 05:13:47.680 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:47.680 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:47.683 +07:00 [INF] HTTP OPTIONS /api/Invoices responded 204 in 3.6973 ms
+2025-10-18 05:13:47.683 +07:00 [INF] HTTP OPTIONS /api/Invoices responded 204 in 3.6993 ms
+2025-10-18 05:13:47.689 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Invoices?status=Ch%C6%B0a%20thanh%20to%C3%A1n - 204 null null 20.6036ms
+2025-10-18 05:13:47.689 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Invoices?status=%C4%90%C3%A3%20thanh%20to%C3%A1n - 204 null null 18.2706ms
+2025-10-18 05:13:47.699 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Invoices?status=Ch%C6%B0a%20thanh%20to%C3%A1n - application/json null
+2025-10-18 05:13:47.705 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Invoices?status=%C4%90%C3%A3%20thanh%20to%C3%A1n - application/json null
+2025-10-18 05:13:47.710 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:47.710 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:47.716 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham)'
+2025-10-18 05:13:47.716 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham)'
+2025-10-18 05:13:47.725 +07:00 [INF] Route matched with {action = "GetAll", controller = "Invoices"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.String) on controller QuanLyPhongKhamApi.Controllers.InvoicesController (QuanLyPhongKham).
+2025-10-18 05:13:47.729 +07:00 [INF] Route matched with {action = "GetAll", controller = "Invoices"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.String) on controller QuanLyPhongKhamApi.Controllers.InvoicesController (QuanLyPhongKham).
+2025-10-18 05:13:47.759 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.InvoiceDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-18 05:13:47.763 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.InvoiceDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-18 05:13:47.767 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham) in 38.4797ms
+2025-10-18 05:13:47.771 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham)'
+2025-10-18 05:13:47.774 +07:00 [INF] HTTP GET /api/Invoices responded 200 in 64.2515 ms
+2025-10-18 05:13:47.777 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham) in 41.8037ms
+2025-10-18 05:13:47.778 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Invoices?status=Ch%C6%B0a%20thanh%20to%C3%A1n - 200 null application/json; charset=utf-8 78.3323ms
+2025-10-18 05:13:47.782 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham)'
+2025-10-18 05:13:47.783 +07:00 [INF] HTTP GET /api/Invoices responded 200 in 73.5404 ms
+2025-10-18 05:13:47.786 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Invoices?status=%C4%90%C3%A3%20thanh%20to%C3%A1n - 200 null application/json; charset=utf-8 87.0359ms
+2025-10-18 05:13:54.223 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-18 05:13:54.229 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:54.230 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 1.1165 ms
+2025-10-18 05:13:54.234 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 11.3484ms
+2025-10-18 05:13:54.240 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 63
+2025-10-18 05:13:54.247 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:13:54.250 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-18 05:13:54.252 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-18 05:13:54.552 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[<>f__AnonymousType3`4[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-18 05:13:54.558 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 302.3258ms
+2025-10-18 05:13:54.561 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-18 05:13:54.564 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 316.3650 ms
+2025-10-18 05:13:54.569 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 328.7616ms
+2025-10-18 05:13:59.490 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:13:59.4906218+07:00"
+2025-10-18 05:13:59.494 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:13:59.495 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:14:59.506 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:14:59.5061097+07:00"
+2025-10-18 05:14:59.512 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:14:59.515 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:15:59.529 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:15:59.5293388+07:00"
+2025-10-18 05:15:59.536 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:15:59.539 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:16:59.553 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:16:59.5531792+07:00"
+2025-10-18 05:16:59.558 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:16:59.560 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:17:59.559 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:17:59.5591596+07:00"
+2025-10-18 05:17:59.564 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:17:59.567 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:18:59.561 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:18:59.5618731+07:00"
+2025-10-18 05:18:59.573 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:18:59.576 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:19:59.585 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:19:59.5852917+07:00"
+2025-10-18 05:19:59.596 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:19:59.602 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:20:59.616 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:20:59.6167066+07:00"
+2025-10-18 05:20:59.626 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:20:59.628 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:21:59.640 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:21:59.6404412+07:00"
+2025-10-18 05:21:59.661 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:21:59.665 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:22:59.670 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:22:59.6706626+07:00"
+2025-10-18 05:22:59.686 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:22:59.689 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:23:59.694 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:23:59.6941426+07:00"
+2025-10-18 05:23:59.704 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:23:59.705 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:24:59.705 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:24:59.7048107+07:00"
+2025-10-18 05:24:59.717 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:24:59.719 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:25:59.741 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:25:59.7416798+07:00"
+2025-10-18 05:25:59.755 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:25:59.756 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:26:59.774 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:26:59.7741257+07:00"
+2025-10-18 05:26:59.780 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:26:59.781 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:27:59.802 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:27:59.8020133+07:00"
+2025-10-18 05:27:59.870 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:27:59.871 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:28:59.882 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:28:59.8821235+07:00"
+2025-10-18 05:28:59.889 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:28:59.891 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:29:59.892 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:29:59.8928613+07:00"
+2025-10-18 05:29:59.898 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:29:59.900 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:30:59.912 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:30:59.9129201+07:00"
+2025-10-18 05:30:59.922 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:30:59.923 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:31:59.937 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:31:59.9373680+07:00"
+2025-10-18 05:31:59.943 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:31:59.945 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:32:59.950 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:32:59.9499169+07:00"
+2025-10-18 05:32:59.959 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:32:59.963 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:33:59.995 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:33:59.9957890+07:00"
+2025-10-18 05:34:00.021 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:34:00.024 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:35:00.043 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:35:00.0430019+07:00"
+2025-10-18 05:35:00.049 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:35:00.050 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:36:00.055 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:36:00.0555110+07:00"
+2025-10-18 05:36:00.065 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:36:00.067 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:37:00.070 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:37:00.0701453+07:00"
+2025-10-18 05:37:00.080 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:37:00.083 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:38:00.098 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:38:00.0983388+07:00"
+2025-10-18 05:38:00.106 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:38:00.108 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:39:00.101 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:39:00.1010189+07:00"
+2025-10-18 05:39:00.106 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:39:00.107 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:40:00.125 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:40:00.1251139+07:00"
+2025-10-18 05:40:00.144 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:40:00.147 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:41:00.147 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:41:00.1479375+07:00"
+2025-10-18 05:41:00.154 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:41:00.156 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:42:00.156 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:42:00.1563174+07:00"
+2025-10-18 05:42:00.175 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:42:00.178 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:43:00.215 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:43:00.2157838+07:00"
+2025-10-18 05:43:00.230 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:43:00.232 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:44:00.241 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:44:00.2410183+07:00"
+2025-10-18 05:44:00.249 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:44:00.250 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:44:30.600 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-18 05:44:30.612 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:44:30.614 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 1.3058 ms
+2025-10-18 05:44:30.616 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 15.6741ms
+2025-10-18 05:44:30.623 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 63
+2025-10-18 05:44:30.627 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:44:30.629 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-18 05:44:30.630 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-18 05:44:30.826 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[<>f__AnonymousType3`4[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-18 05:44:30.830 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 197.2239ms
+2025-10-18 05:44:30.833 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-18 05:44:30.835 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 208.4109 ms
+2025-10-18 05:44:30.838 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 215.2913ms
+2025-10-18 05:45:00.255 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:45:00.2555380+07:00"
+2025-10-18 05:45:00.267 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:45:00.269 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:46:00.271 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:46:00.2714252+07:00"
+2025-10-18 05:46:00.285 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:46:00.288 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:47:00.303 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:47:00.3030923+07:00"
+2025-10-18 05:47:00.313 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:47:00.314 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:48:00.309 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:48:00.3093723+07:00"
+2025-10-18 05:48:00.320 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:48:00.321 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:49:00.326 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:49:00.3265500+07:00"
+2025-10-18 05:49:00.336 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:49:00.337 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:50:00.341 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:50:00.3417636+07:00"
+2025-10-18 05:50:00.350 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:50:00.351 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:51:00.357 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:51:00.3576481+07:00"
+2025-10-18 05:51:00.371 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:51:00.376 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:52:00.380 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:52:00.3802036+07:00"
+2025-10-18 05:52:00.391 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:52:00.394 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:52:00.681 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-18 05:52:00.693 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:52:00.696 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 2.9581 ms
+2025-10-18 05:52:00.702 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 20.9072ms
+2025-10-18 05:52:00.710 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 63
+2025-10-18 05:52:00.715 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:52:00.717 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-18 05:52:00.718 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-18 05:52:00.904 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[<>f__AnonymousType3`4[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-18 05:52:00.911 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 189.874ms
+2025-10-18 05:52:00.915 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-18 05:52:00.919 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 203.8060 ms
+2025-10-18 05:52:00.934 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 223.7599ms
+2025-10-18 05:53:00.404 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:53:00.4048500+07:00"
+2025-10-18 05:53:00.415 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:53:00.417 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:54:00.430 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:54:00.4299852+07:00"
+2025-10-18 05:54:00.437 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:54:00.438 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:55:00.453 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:55:00.4531206+07:00"
+2025-10-18 05:55:00.465 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:55:00.468 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:56:00.484 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:56:00.4845507+07:00"
+2025-10-18 05:56:00.494 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:56:00.499 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:57:00.502 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:57:00.5024740+07:00"
+2025-10-18 05:57:00.512 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:57:00.513 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:57:44.311 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-18 05:57:44.317 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:57:44.318 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 1.0319 ms
+2025-10-18 05:57:44.319 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 9.2474ms
+2025-10-18 05:57:44.325 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 63
+2025-10-18 05:57:44.328 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:57:44.329 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-18 05:57:44.330 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-18 05:57:44.454 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[<>f__AnonymousType3`4[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-18 05:57:44.458 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 126.383ms
+2025-10-18 05:57:44.460 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-18 05:57:44.462 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 133.9919 ms
+2025-10-18 05:57:44.464 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 139.8494ms
+2025-10-18 05:57:44.649 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Appointments?date=2025-10-17&status=%C4%90%C3%A3%20%C4%91%E1%BA%B7t - null null
+2025-10-18 05:57:44.653 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/drugs - null null
+2025-10-18 05:57:44.657 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:57:44.658 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:57:44.659 +07:00 [INF] HTTP OPTIONS /api/Appointments responded 204 in 2.3009 ms
+2025-10-18 05:57:44.659 +07:00 [INF] HTTP OPTIONS /api/drugs responded 204 in 2.2530 ms
+2025-10-18 05:57:44.666 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Appointments?date=2025-10-17&status=%C4%90%C3%A3%20%C4%91%E1%BA%B7t - 204 null null 14.6863ms
+2025-10-18 05:57:44.680 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/drugs - 204 null null 16.9458ms
+2025-10-18 05:57:44.691 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Appointments?date=2025-10-17&status=%C4%90%C3%A3%20%C4%91%E1%BA%B7t - application/json null
+2025-10-18 05:57:44.696 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/drugs - application/json null
+2025-10-18 05:57:44.699 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:57:44.701 +07:00 [INF] CORS policy execution successful.
+2025-10-18 05:57:44.703 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-18 05:57:44.706 +07:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin|Pharmacist)
+2025-10-18 05:57:44.710 +07:00 [INF] Route matched with {action = "GetAll", controller = "Appointments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], System.Nullable`1[System.DateTime], System.String) on controller QuanLyPhongKhamApi.Controllers.AppointmentsController (QuanLyPhongKham).
+2025-10-18 05:57:44.715 +07:00 [INF] AuthenticationScheme: Bearer was forbidden.
+2025-10-18 05:57:44.717 +07:00 [INF] HTTP GET /api/drugs responded 403 in 16.0363 ms
+2025-10-18 05:57:44.721 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/drugs - 403 0 null 29.7493ms
+2025-10-18 05:57:44.795 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.AppointmentDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-18 05:57:44.802 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham) in 86.9812ms
+2025-10-18 05:57:44.806 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-18 05:57:44.809 +07:00 [INF] HTTP GET /api/Appointments responded 200 in 109.1897 ms
+2025-10-18 05:57:44.815 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Appointments?date=2025-10-17&status=%C4%90%C3%A3%20%C4%91%E1%BA%B7t - 200 null application/json; charset=utf-8 134.6723ms
+2025-10-18 05:58:00.519 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:58:00.5191889+07:00"
+2025-10-18 05:58:00.525 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:58:00.526 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 05:59:00.530 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T05:59:00.5305778+07:00"
+2025-10-18 05:59:00.546 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 05:59:00.549 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:00:00.556 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:00:00.5563266+07:00"
+2025-10-18 06:00:00.568 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:00:00.571 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:01:00.580 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:01:00.5807274+07:00"
+2025-10-18 06:01:00.594 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:01:00.598 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:02:00.605 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:02:00.6051199+07:00"
+2025-10-18 06:02:00.614 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:02:00.617 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:03:00.620 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:03:00.6206627+07:00"
+2025-10-18 06:03:00.630 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:03:00.634 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:04:00.637 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:04:00.6376340+07:00"
+2025-10-18 06:04:00.647 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:04:00.649 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:05:00.642 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:05:00.6422355+07:00"
+2025-10-18 06:05:00.652 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:05:00.653 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:06:00.658 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:06:00.6585469+07:00"
+2025-10-18 06:06:00.671 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:06:00.676 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:07:00.681 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:07:00.6812285+07:00"
+2025-10-18 06:07:00.697 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:07:00.703 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:08:00.714 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:08:00.7143425+07:00"
+2025-10-18 06:08:00.721 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:08:00.722 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:09:00.735 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:09:00.7357292+07:00"
+2025-10-18 06:09:00.747 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:09:00.749 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:10:00.771 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:10:00.7717726+07:00"
+2025-10-18 06:10:00.782 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:10:00.784 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:11:00.777 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:11:00.7777822+07:00"
+2025-10-18 06:11:00.785 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:11:00.786 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:12:00.786 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:12:00.7867588+07:00"
+2025-10-18 06:12:00.796 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:12:00.798 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:13:00.799 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:13:00.7999513+07:00"
+2025-10-18 06:13:00.812 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:13:00.815 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:14:00.824 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:14:00.8245251+07:00"
+2025-10-18 06:14:00.833 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:14:00.837 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:15:00.845 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:15:00.8456192+07:00"
+2025-10-18 06:15:00.854 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:15:00.855 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:16:00.857 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:16:00.8573468+07:00"
+2025-10-18 06:16:00.867 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:16:00.869 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:17:00.873 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:17:00.8731535+07:00"
+2025-10-18 06:17:00.878 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:17:00.879 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:18:00.896 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:18:00.8962404+07:00"
+2025-10-18 06:18:00.920 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:18:00.925 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:19:00.939 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:19:00.9390670+07:00"
+2025-10-18 06:19:00.949 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:19:00.951 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:20:00.944 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:20:00.9442231+07:00"
+2025-10-18 06:20:00.959 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:20:00.963 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:21:00.968 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:21:00.9680665+07:00"
+2025-10-18 06:21:00.978 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:21:00.981 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-18 06:22:00.992 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-18T06:22:00.9927028+07:00"
+2025-10-18 06:22:00.999 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-18 06:22:01.001 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.

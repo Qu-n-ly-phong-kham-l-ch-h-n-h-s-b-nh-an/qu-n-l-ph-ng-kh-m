@@ -55,5 +55,35 @@ namespace QuanLyPhongKhamApi.DAL
 
             return connection.Execute(sql, new { id, paymentMethod }) > 0;
         }
+
+        // ✅ BỔ SUNG: Hàm lấy chi tiết hóa đơn
+        public InvoiceDetailDTO? GetDetailById(int id)
+        {
+            using var connection = new SqlConnection(_conn);
+            var sql = @"SELECT 
+                    i.InvoiceID, i.PatientID, p.FullName AS PatientName, i.EncounterID, i.TotalAmount, i.Status, i.CreatedAt,
+                    e.EncounterDate, d.FullName AS DoctorName, e.ExaminationNotes, diag.Description as DiagnosisDescription,
+                    i.ServiceFee, i.DrugFee
+                FROM Invoices i
+                INNER JOIN Patients p ON i.PatientID = p.PatientID
+                INNER JOIN Encounters e ON i.EncounterID = e.EncounterID
+                INNER JOIN Doctors d ON e.DoctorID = d.DoctorID
+                LEFT JOIN Diagnoses diag ON e.EncounterID = diag.EncounterID
+                WHERE i.InvoiceID = @id";
+
+            var invoiceDetail = connection.QueryFirstOrDefault<InvoiceDetailDTO>(sql, new { id });
+
+            if (invoiceDetail != null)
+            {
+                var itemsSql = @"SELECT dr.DrugName, pi.Quantity, dr.Price, pi.Usage
+                         FROM PrescriptionItems pi
+                         INNER JOIN Prescriptions pr ON pi.PrescriptionID = pr.PrescriptionID
+                         INNER JOIN Drugs dr ON pi.DrugID = dr.DrugID
+                         WHERE pr.EncounterID = @EncounterID";
+                invoiceDetail.PrescriptionItems = connection.Query<PrescriptionItemDetailDTO>(itemsSql, new { invoiceDetail.EncounterID }).ToList();
+            }
+
+            return invoiceDetail;
+        }
     }
 }

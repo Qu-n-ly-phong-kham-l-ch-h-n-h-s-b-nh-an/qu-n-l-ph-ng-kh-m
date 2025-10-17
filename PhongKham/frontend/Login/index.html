@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn Vai Trò - Phòng Khám</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SỬA LẠI ĐƯỜNG DẪN -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-2xl p-8 space-y-8 bg-white rounded-lg shadow-lg text-center">
+        <div>
+            <h2 class="text-3xl font-extrabold text-gray-900">Chào mừng đến với Hệ thống Quản lý Phòng khám</h2>
+            <p class="mt-2 text-lg text-gray-600">Vui lòng chọn vai trò của bạn để tiếp tục</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6">
+            <a href="login.html?role=Admin&roleName=Quản trị viên" class="role-card bg-red-600 hover:bg-red-700">
+                <span class="text-2xl">👤</span>
+                <span class="font-bold text-xl mt-2">Quản trị viên</span>
+            </a>
+            <a href="login.html?role=Receptionist&roleName=Lễ tân" class="role-card bg-blue-600 hover:bg-blue-700">
+                <span class="text-2xl">🛎️</span>
+                <span class="font-bold text-xl mt-2">Lễ tân</span>
+            </a>
+            <a href="login.html?role=Doctor&roleName=Bác sĩ" class="role-card bg-green-600 hover:bg-green-700">
+                <span class="text-2xl">👨‍⚕️</span>
+                <span class="font-bold text-xl mt-2">Bác sĩ</span>
+            </a>
+            <a href="login.html?role=Patient&roleName=Bệnh nhân" class="role-card bg-indigo-600 hover:bg-indigo-700">
+                <span class="text-2xl">🧍</span>
+                <span class="font-bold text-xl mt-2">Bệnh nhân</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using QuanLyPhongKhamApi.BackgroundServices;
 using QuanLyPhongKhamApi.BLL;
 using QuanLyPhongKhamApi.DAL;
-using QuanLyPhongKhamApi.Middleware; // Thêm Middleware
-using Serilog; // Thêm Serilog
+using QuanLyPhongKhamApi.Middleware;
+using QuanLyPhongKhamApi.Models;
+using QuanLyPhongKhamApi.Services;
+using Serilog;
 using System.Security.Claims;
 using System.Text;
 
@@ -20,30 +23,37 @@ try
     Log.Information("Bắt đầu khởi tạo ứng dụng...");
     var builder = WebApplication.CreateBuilder(args);
 
-    // Xóa logger mặc định và dùng Serilog
     builder.Host.UseSerilog();
 
     // --- 2. ĐĂNG KÝ DỊCH VỤ (SERVICES) ---
     var jwtKey = builder.Configuration["Jwt:Key"]!;
 
-    // Thêm Middleware xử lý lỗi
     builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
 
-    // Thêm CORS
+    // ✅ BƯỚC 1: THÊM CẤU HÌNH CORS VÀO ĐÂY
     builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowAll",
-            builder =>
+            policyBuilder =>
             {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
+                policyBuilder.AllowAnyOrigin() // Cho phép mọi địa chỉ gọi đến
+                       .AllowAnyMethod()   // Cho phép mọi phương thức (GET, POST, etc.)
+                       .AllowAnyHeader();  // Cho phép mọi header
             });
     });
 
+
+    // Đăng ký dịch vụ email "giả" để mô phỏng
+    builder.Services.AddTransient<IEmailService, MockEmailService>();
+
+    // Đăng ký Dịch vụ chạy nền
+    builder.Services.AddHostedService<AppointmentReminderService>();
+
+
+
     builder.Services.AddControllers();
 
-    // Đăng ký DAL & BLL (giữ nguyên)
+    // Đăng ký DAL & BLL
     builder.Services.AddSingleton<AccountDAL>();
     builder.Services.AddTransient<AppointmentDAL>();
     builder.Services.AddTransient<DoctorDAL>();
@@ -64,7 +74,7 @@ try
     builder.Services.AddTransient<ReportBLL>();
     builder.Services.AddTransient<SpecialtyBLL>();
 
-    // Cấu hình JWT (giữ nguyên)
+    // Cấu hình JWT
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
@@ -95,15 +105,13 @@ try
         app.UseSwaggerUI();
     }
 
-    // Thêm Middleware xử lý lỗi vào đầu pipeline
     app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
-
     app.UseHttpsRedirection();
-
-    // Ghi log cho mỗi request
     app.UseSerilogRequestLogging();
 
-    // Dùng CORS
+    // ✅ BƯỚC 2: KÍCH HOẠT CORS MIDDLEWARE Ở ĐÂY
+    // Vị trí này rất quan trọng: sau UseRouting và trước UseAuthorization
+    app.UseRouting();
     app.UseCors("AllowAll");
 
     app.UseAuthentication();

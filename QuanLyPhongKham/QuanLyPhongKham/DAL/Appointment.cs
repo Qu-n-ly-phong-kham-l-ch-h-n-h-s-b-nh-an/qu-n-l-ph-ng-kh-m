@@ -88,5 +88,27 @@ namespace QuanLyPhongKhamApi.DAL
             var sql = "UPDATE Appointments SET IsDeleted = 1 WHERE AppointmentID = @id";
             return connection.Execute(sql, new { id }) > 0;
         }
+
+        public List<AppointmentDTO> GetUpcomingAppointmentsForReminder()
+        {
+            using var connection = new SqlConnection(_conn);
+            // Lấy các lịch hẹn trong vòng 24 giờ tới mà chưa được gửi nhắc nhở
+            var sql = @"SELECT a.AppointmentID, a.AppointmentDate, a.Status, a.Notes,
+                       p.PatientID, p.FullName AS PatientName,
+                       d.DoctorID, d.FullName AS DoctorName
+                FROM Appointments a
+                INNER JOIN Patients p ON a.PatientID = p.PatientID
+                INNER JOIN Doctors d ON a.DoctorID = d.DoctorID
+                WHERE a.IsDeleted = 0 AND a.Status = N'Đã đặt' AND a.IsReminderSent = 0
+                  AND a.AppointmentDate BETWEEN GETDATE() AND DATEADD(hour, 24, GETDATE())";
+            return connection.Query<AppointmentDTO>(sql).ToList();
+        }
+
+        public bool MarkReminderAsSent(int appointmentId)
+        {
+            using var connection = new SqlConnection(_conn);
+            var sql = "UPDATE Appointments SET IsReminderSent = 1 WHERE AppointmentID = @appointmentId";
+            return connection.Execute(sql, new { appointmentId }) > 0;
+        }
     }
 }

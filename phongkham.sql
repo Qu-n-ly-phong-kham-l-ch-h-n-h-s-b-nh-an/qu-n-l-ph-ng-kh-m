@@ -573,6 +573,10 @@ GO
 SELECT * FROM Appointments;
 GO
 
+SELECT * FROM Invoices
+
+SELECT * FROM Receptionist
+SELECT * FROM Appointments;
 
 -- Gán biến cho các ID quan trọng để sử dụng sau này
 DECLARE @DoctorAccountID INT;
@@ -651,4 +655,30 @@ SELECT
     @AppointmentID AS AppointmentID, 
     @DrugID_1 AS DrugID_1, 
     @DrugID_2 AS DrugID_2;
+GO
+
+
+ALTER TABLE Appointments
+ADD IsReminderSent BIT NOT NULL DEFAULT 0;
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = N'IsReminderSent' AND Object_ID = Object_ID(N'Appointments'))
+BEGIN
+    ALTER TABLE Appointments
+    ADD IsReminderSent BIT NOT NULL DEFAULT 0;
+END
+GO
+
+-- Tạo một bệnh nhân mẫu có email. 
+-- QUAN TRỌNG: Nếu bạn đang test với MockEmailService, email này không cần phải có thật.
+IF NOT EXISTS (SELECT 1 FROM Patients WHERE Email = 'test.reminder@email.com')
+    INSERT INTO Patients (FullName, Email) VALUES (N'Bệnh Nhân Test Nhắc Lịch', 'test.reminder@email.com');
+
+-- Lấy ID của bệnh nhân và bác sĩ mẫu
+DECLARE @TestPatientID INT = (SELECT PatientID FROM Patients WHERE Email = 'test.reminder@email.com');
+DECLARE @TestDoctorID INT = (SELECT TOP 1 DoctorID FROM Doctors); -- Lấy bác sĩ đầu tiên làm mẫu
+
+-- Tạo lịch hẹn diễn ra sau 5 phút kể từ bây giờ
+INSERT INTO Appointments (PatientID, DoctorID, AppointmentDate, Status, Notes, IsReminderSent)
+VALUES (@TestPatientID, @TestDoctorID, DATEADD(minute, 5, GETDATE()), N'Đã đặt', N'Lịch hẹn để test mô phỏng email', 0);
 GO

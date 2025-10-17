@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SỬA LẠI ĐƯỜNG DẪN -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
+        <div>
+            <h2 class="text-center text-3xl font-extrabold text-gray-900">
+                Đăng nhập với vai trò <span id="login-role-title" class="text-indigo-600"></span>
+            </h2>
+        </div>
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label for="login-username" class="sr-only">Tên đăng nhập</label>
+                <input id="login-username" name="username" type="text" required class="input-field" placeholder="Tên đăng nhập">
+            </div>
+            <div>
+                <label for="login-password" class="sr-only">Mật khẩu</label>
+                <input id="login-password" name="password" type="password" required class="input-field" placeholder="Mật khẩu">
+            </div>
+            <div>
+                <button type="submit" class="button-primary">
+                    Đăng nhập
+                </button>
+            </div>
+            <p id="login-error" class="text-center text-red-500 font-medium"></p>
+        </form>
+        <div id="register-link-container" class="text-center hidden">
+            <p class="text-gray-600">Chưa có tài khoản?
+                <a href="register.html" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Đăng ký ngay
+                </a>
+            </p>
+        </div>
+        <div class="text-center">
+             <a href="index.html" class="font-medium text-gray-500 hover:text-gray-700">
+                &larr; Quay lại chọn vai trò
+            </a>
+        </div>
+    </div>
+    <!-- SỬA LẠI ĐƯỜNG DẪN -->
+    <script src="../js/app.js" defer></script>
+</body>
+</html>
+

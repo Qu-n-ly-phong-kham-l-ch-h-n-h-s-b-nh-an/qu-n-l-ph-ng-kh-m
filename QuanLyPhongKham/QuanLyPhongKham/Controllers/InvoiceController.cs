@@ -21,13 +21,13 @@ namespace QuanLyPhongKhamApi.Controllers
             return Ok(_bus.GetAll(status));
         }
 
-        // ✅ HOÀN THIỆN: Bổ sung API GetById
+        // ✅ SỬA LẠI: Hàm GetById giờ sẽ trả về chi tiết
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var invoice = _bus.GetById(id);
-            if (invoice == null) return NotFound();
-            return Ok(invoice);
+            var invoiceDetail = _bus.GetDetailById(id);
+            if (invoiceDetail == null) return NotFound();
+            return Ok(invoiceDetail);
         }
 
         // PATCH: api/invoices/5/payment

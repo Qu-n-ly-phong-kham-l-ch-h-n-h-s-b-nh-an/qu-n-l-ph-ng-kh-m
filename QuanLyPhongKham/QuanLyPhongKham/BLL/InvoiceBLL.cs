@@ -22,5 +22,8 @@ namespace QuanLyPhongKhamApi.BLL
             }
             return _dal.UpdatePaymentStatus(id, paymentMethod);
         }
+
+        // ✅ BỔ SUNG:
+        public InvoiceDetailDTO? GetDetailById(int id) => _dal.GetDetailById(id);
     }
 }
