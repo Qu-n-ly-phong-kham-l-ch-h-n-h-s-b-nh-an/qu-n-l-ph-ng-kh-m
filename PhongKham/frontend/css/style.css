@@ -1,20 +1,52 @@
+/* File: css/style.css */
+
+/* --- Base Styles --- */
 body {
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #f3f4f6; /* bg-gray-100 */
+    color: #1f2937; /* text-gray-800 */
 }
-.role-card {
-    transition: all 0.3s ease;
-    text-decoration: none;
+
+/* --- Kiểu Tab cho trang Hóa đơn --- */
+.tab-active { 
+    border-color: #4f46e5; /* border-indigo-600 */
+    color: #4f46e5; /* text-indigo-600 */
 }
-.role-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+/* --- MODAL STYLES (Quan trọng) --- */
+/* Thêm các kiểu này để modal hoạt động */
+.modal { 
+    display: none; /* Ẩn mặc định */
 }
-.form-screen {
-    animation: fadeIn 0.5s ease-in-out;
+.modal.active { 
+    display: flex; /* Hiển thị khi có class 'active' */
+    animation: fadeInBg 0.3s ease forwards;
 }
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+
+/* Hiệu ứng mờ dần cho nền */
+@keyframes fadeInBg {
+    from { background-color: rgba(107, 114, 128, 0); }
+    to { background-color: rgba(107, 114, 128, 0.5); }
 }
+
+/* Hiệu ứng phóng to cho nội dung modal */
+.modal.active > div {
+    animation: scaleUp 0.3s ease forwards;
+}
+@keyframes scaleUp {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* LƯU Ý:
+  Các lớp .input-field, .button, .role-card đã được chuyển thành
+  các lớp tiện ích Tailwind trực tiếp trong tệp HTML.
+  Lý do: Cú pháp @apply không hoạt động khi dùng CDN.
+
+  Phần gợi ý 'table-row-hover' đã được xóa vì nó cũng dùng @apply.
+  Thay vào đó, bạn hãy thêm trực tiếp các class của Tailwind
+  vào thẻ <tr> trong tệp .js của bạn, ví dụ:
+  tr.className = "hover:bg-gray-50 transition-colors duration-150";
+*/

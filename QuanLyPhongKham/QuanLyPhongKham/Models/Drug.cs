@@ -41,18 +41,18 @@ namespace QuanLyPhongKhamApi.Models
         public decimal Price { get; set; }
     }
 
-    // DTO cho request điều chỉnh tồn kho
+    // DTO cho request điều chỉnh tồn kho (Theo logic type: import/export)
     public class StockAdjustRequest
     {
         [Required]
         public int DrugID { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Số lượng phải là số dương.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Số lượng phải là số dương.")] // Quantity luôn dương
         public int Quantity { get; set; }
 
         [Required]
-        [RegularExpression("^(import|export)$", ErrorMessage = "Loại điều chỉnh phải là 'import' hoặc 'export'.")]
+        [RegularExpression("^(import|export)$", ErrorMessage = "Loại điều chỉnh phải là 'import' hoặc 'export'.")] // Chỉ chấp nhận 'import' hoặc 'export'
         public string Type { get; set; } = string.Empty; // "import" or "export"
     }
 }

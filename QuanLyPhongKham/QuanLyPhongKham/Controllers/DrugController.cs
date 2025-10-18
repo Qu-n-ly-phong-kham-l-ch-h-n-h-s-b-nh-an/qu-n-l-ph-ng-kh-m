@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace QuanLyPhongKhamApi.Controllers
 {
-    [Authorize(Roles = "Admin,Pharmacist")] // Chỉ Admin và Dược sĩ có quyền
+    [Authorize(Roles = "Admin,Doctor")] // Chỉ Admin và Dược sĩ có quyền
     [ApiController]
     [Route("api")]
     public class DrugsController : ControllerBase

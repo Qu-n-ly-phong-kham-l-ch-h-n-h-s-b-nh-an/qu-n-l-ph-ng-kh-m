@@ -3,115 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Bác sĩ - Quản Lý Phòng Khám</title>
+    <title>Dashboard Bác sĩ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .modal { display: none; }
-        .modal.active { display: flex; }
+        /* Thêm style để modal hoạt động */
+        .modal {
+            display: none; /* Ẩn mặc định */
+        }
+        .modal.active {
+            display: flex; /* Hiển thị khi có class 'active' */
+        }
+        #appointments-list button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: left;
+            background-color: #fff;
+            transition: background-color 0.2s;
+        }
+        #appointments-list button:hover {
+            background-color: #f9fafb;
+        }
+        #appointments-list button.completed {
+            background-color: #f0fdf4; /* Màu xanh lá nhạt cho lịch đã khám */
+            border-color: #bbf7d0;
+            color: #166534;
+        }
     </style>
 </head>
-<body id="doctor-dashboard" class="bg-gray-100">
+<body class="bg-gray-100">
     <div class="min-h-screen flex flex-col">
-        <!-- Header -->
         <header class="bg-white shadow-md">
             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <h1 class="text-2xl font-bold text-gray-800">Hệ Thống Quản Lý Phòng Khám</h1>
+                <h1 class="text-2xl font-bold text-gray-800">Trang Bác sĩ</h1>
                 <div class="flex items-center">
-                    <span id="username-display" class="text-gray-600 mr-4">Chào, Bác sĩ!</span>
+                    <span id="username-display" class="text-gray-600 mr-4"></span>
                     <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow">Đăng xuất</button>
                 </div>
             </div>
         </header>
 
-        <!-- Main Content -->
         <main class="flex-grow container mx-auto px-6 py-8">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">Lịch hẹn hôm nay</h2>
-            
-            <div class="bg-white rounded-lg shadow">
-                <div id="appointments-list" class="divide-y divide-gray-200">
-                    <p id="no-appointments-msg" class="p-6 text-center text-gray-500">Đang tải lịch hẹn...</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="md:col-span-1 bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Lịch hẹn hôm nay</h2>
+                    <div id="appointments-list" class="space-y-3">
+                        </div>
+                </div>
+
+                <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-bold mb-4">Chào mừng</h2>
+                    <p>Vui lòng chọn một lịch hẹn từ danh sách bên trái để bắt đầu khám bệnh.</p>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Encounter Modal -->
-    <div id="encounter-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-4xl max-h-full overflow-y-auto">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Hoàn tất Lần khám</h2>
-                <button id="close-encounter-modal-btn" class="text-3xl font-bold text-gray-500 hover:text-gray-800">&times;</button>
-            </div>
-            
+    <div id="encounter-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-3xl max-h-[90vh] overflow-y-auto">
             <form id="encounter-form">
-                <input type="hidden" id="encounter-appointment-id">
-                <div class="bg-gray-50 p-4 rounded-lg mb-6">
-                    <h3 class="font-bold text-lg mb-2 text-gray-700">Thông tin Bệnh nhân</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                        <p><strong>Họ tên:</strong> <span id="modal-patient-name" class="font-semibold text-gray-900"></span></p>
-                        <p><strong>Thời gian hẹn:</strong> <span id="modal-appointment-time" class="font-semibold text-gray-900"></span></p>
-                    </div>
-                </div>
-
+                <h2 class="text-2xl font-bold mb-4">Hoàn tất Khám Bệnh</h2>
+                <p class="mb-4">Bệnh nhân: <strong id="encounter-patient-name" class="text-indigo-600"></strong></p>
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="examination-notes" class="block text-sm font-bold mb-2 text-gray-700">Ghi chú khám:</label>
-                        <textarea id="examination-notes" class="input-field h-24" required></textarea>
-                    </div>
-                    <div>
-                        <label for="diagnosis-description" class="block text-sm font-bold mb-2 text-gray-700">Chẩn đoán:</label>
-                        <textarea id="diagnosis-description" class="input-field h-24" required></textarea>
-                    </div>
-                </div>
-
-                <div class="mt-6">
-                    <label for="service-fee" class="block text-sm font-bold mb-2 text-gray-700">Phí dịch vụ (VNĐ):</label>
-                    <input type="number" id="service-fee" class="input-field max-w-xs" required min="0" value="0">
-                </div>
-
-                <div class="mt-8 border-t pt-6">
-                    <h3 class="font-bold text-lg mb-4 text-gray-700">Kê đơn thuốc</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end bg-gray-50 p-4 rounded-lg">
-                        <div class="md:col-span-5"><label for="drug-select" class="block text-xs font-bold mb-1">Chọn thuốc:</label><select id="drug-select" class="input-field"></select></div>
-                        <div class="md:col-span-2"><label for="drug-quantity" class="block text-xs font-bold mb-1">Số lượng:</label><input type="number" id="drug-quantity" class="input-field" min="1" value="1"></div>
-                        <div class="md:col-span-4"><label for="drug-usage" class="block text-xs font-bold mb-1">Cách dùng:</label><input type="text" id="drug-usage" class="input-field" placeholder="VD: 2 viên/lần sau ăn"></div>
-                        <div class="md:col-span-1"><button type="button" id="add-drug-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg w-full text-lg">+</button></div>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="encounter-notes" class="block text-sm font-bold mb-2">Ghi chú Khám bệnh:</label>
+                            <textarea id="encounter-notes" class="shadow border rounded w-full py-2 px-3 h-32" required></textarea>
+                        </div>
+                        <div>
+                            <label for="encounter-diagnosis" class="block text-sm font-bold mb-2">Chẩn đoán:</label>
+                            <textarea id="encounter-diagnosis" class="shadow border rounded w-full py-2 px-3 h-32" required></textarea>
+                        </div>
+                        <div>
+                            <label for="encounter-fee" class="block text-sm font-bold mb-2">Phí dịch vụ (VNĐ):</label>
+                            <input type="number" id="encounter-fee" class="shadow border rounded w-full py-2 px-3" min="0" value="100000" required>
+                        </div>
                     </div>
                     
-                    <div class="mt-4 overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-100">
-                                <tr>
-                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-600">Tên thuốc</th>
-                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-600">Số lượng</th>
-                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-600">Cách dùng</th>
-                                    <th class="px-4 py-2 text-right text-xs font-medium text-gray-600">Hành động</th>
-                                </tr>
-                            </thead>
-                            <tbody id="prescription-items-body" class="bg-white divide-y divide-gray-200"></tbody>
-                        </table>
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold border-b pb-2">Kê đơn thuốc</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="col-span-3">
+                                <label for="drug-select" class="block text-sm font-bold mb-2">Chọn thuốc:</label>
+                                <select id="drug-select" class="shadow border rounded w-full py-2 px-3"></select>
+                            </div>
+                            <div>
+                                <label for="drug-quantity" class="block text-sm font-bold mb-2">Số lượng:</label>
+                                <input type="number" id="drug-quantity" class="shadow border rounded w-full py-2 px-3" min="1">
+                            </div>
+                            <div class="col-span-2">
+                                <label for="drug-usage" class="block text-sm font-bold mb-2">Cách dùng:</label>
+                                <input type="text" id="drug-usage" class="shadow border rounded w-full py-2 px-3" placeholder="Sáng 1 viên, tối 1 viên">
+                            </div>
+                        </div>
+                        <button type="button" id="add-drug-btn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg">Thêm thuốc vào đơn</button>
+                        
+                        <hr>
+                        <h4 class="font-semibold">Đơn thuốc hiện tại:</h4>
+                        <ul id="prescription-list" class="list-disc list-inside space-y-2 max-h-80 overflow-y-auto bg-gray-50 p-3 rounded-md">
+                            </ul>
+                        
+                        <div class="mt-4 space-y-2">
+                            <div class="flex justify-between font-medium">
+                                <span class="text-gray-600">Tiền thuốc:</span>
+                                <span id="drug-fee-display" class="text-gray-900">0 VNĐ</span>
+                            </div>
+                            <div class="flex justify-between font-medium">
+                                <span class="text-gray-600">Phí dịch vụ:</span>
+                                <span id="service-fee-display" class="text-gray-900">100,000 VNĐ</span>
+                            </div>
+                            <hr>
+                            <div class="flex justify-between text-lg font-bold">
+                                <span class="text-indigo-600">Tổng cộng:</span>
+                                <span id="total-fee-display" class="text-indigo-600">100,000 VNĐ</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
+
                 <div class="flex items-center justify-end gap-4 mt-8">
-                    <button id="cancel-encounter-btn" type="button" class="button-secondary">Hủy</button>
-                    <button type="submit" class="button-primary px-6 py-3 text-lg">Hoàn tất Khám</button>
+                    <button id="close-encounter-modal-btn" type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg">Hủy</button>
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg">Hoàn tất Khám</button>
                 </div>
             </form>
         </div>
     </div>
     
-    <div id="message-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center hidden z-50">
+    <div id="message-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center">
         <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-sm text-center">
-            <p id="message-text" class="text-lg text-gray-800 mb-6"></p>
-            <button id="close-message-modal-btn" class="button-primary w-full">OK</button>
+            <p id="message-text" class="text-lg mb-6"></p>
+            <button id="close-message-modal-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg">Đã hiểu</button>
         </div>
     </div>
 
-    <!-- Không cần app.js vì các hàm helper đã có trong doctor.js -->
     <script src="../js/doctor.js"></script>
 </body>
 </html>

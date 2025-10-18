@@ -1,6 +1,7 @@
 ﻿// File: BLL/DrugBLL.cs
 using QuanLyPhongKhamApi.DAL;
 using QuanLyPhongKhamApi.Models;
+using System; // Thêm using System nếu chưa có
 
 namespace QuanLyPhongKhamApi.BLL
 {
@@ -18,10 +19,8 @@ namespace QuanLyPhongKhamApi.BLL
             {
                 throw new ApplicationException("Tên thuốc đã tồn tại.");
             }
-            var newDrugId = _dal.Create(req, createdBy);
-            // Tự động khởi tạo tồn kho bằng 0 khi tạo thuốc mới
-            _dal.AdjustStock(newDrugId, 0);
-            return newDrugId;
+            // Hàm Create của DAL đã tự khởi tạo tồn kho
+            return _dal.Create(req, createdBy);
         }
 
         public bool Update(int id, DrugRequest req)
@@ -37,9 +36,16 @@ namespace QuanLyPhongKhamApi.BLL
 
         public List<DrugStockDTO> GetStockReport() => _dal.GetStockReport();
 
+        // Xử lý logic import/export để tính quantityChange
         public bool AdjustStock(StockAdjustRequest req)
         {
-            int quantityChange = req.Type == "import" ? req.Quantity : -req.Quantity;
+            // Validation req.Quantity > 0 đã được Model Binding xử lý
+            // Validation req.Type là 'import'/'export' đã được Model Binding xử lý
+
+            // Tính toán quantityChange dựa trên Type
+            int quantityChange = req.Type.ToLower() == "import" ? req.Quantity : -req.Quantity;
+
+            // Gọi DAL với quantityChange đã tính toán
             return _dal.AdjustStock(req.DrugID, quantityChange);
         }
     }

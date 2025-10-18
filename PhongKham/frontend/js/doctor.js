@@ -1,5 +1,5 @@
 // =================================================================
-// SCRIPT HOÀN CHỈNH CHO VAI TRÒ BÁC SĨ (ĐÃ SỬA LỖI)
+// SCRIPT HOÀN CHỈNH CHO VAI TRÒ BÁC SĨ (ĐÃ CẢI TIẾN)
 // =================================================================
 
 const API_BASE_URL = 'https://localhost:7220'; // <-- Đảm bảo URL này chính xác
@@ -10,138 +10,203 @@ const state = {
     allDrugs: [],
     currentEncounter: {
         appointmentId: null,
-        prescriptionItems: []
+        prescriptionItems: [] // Lưu trữ { drugID, quantity, usage, drugName, price }
     }
 };
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Kiểm tra xác thực và vai trò
     const user = JSON.parse(sessionStorage.getItem('user'));
     if (!user || user.role.toLowerCase() !== 'doctor') {
         alert('Bạn không có quyền truy cập trang này.');
-        window.location.href = '../Login/index.html';
+        window.location.href = '../Login/index.html'; // Điều hướng về trang chọn vai trò
         return;
     }
     
+    // 2. Thiết lập giao diện chung
     document.getElementById('username-display').textContent = `Chào, ${user.username}!`;
     document.getElementById('logout-button').addEventListener('click', () => {
         sessionStorage.clear();
         window.location.href = '../Login/index.html';
     });
     
+    // 3. Khởi chạy logic của trang
     initDoctorDashboard();
 });
 
+/**
+ * Khởi tạo Dashboard: Tải dữ liệu cần thiết và gán sự kiện
+ */
 async function initDoctorDashboard() {
     setupEventListeners();
     try {
+        // Tải song song lịch hẹn và danh sách thuốc
         await Promise.all([
             fetchTodaysAppointments(),
             fetchAllDrugs()
         ]);
+        
+        // Chỉ hiển thị sau khi đã có dữ liệu
         displayAppointments();
-        populateSelectOptions('drug-select', state.allDrugs, 'drugID', 'drugName', 'Chọn một loại thuốc...');
+        // Điền dữ liệu vào dropdown chọn thuốc
+        populateSelectOptions('drug-select', state.allDrugs, 'drugID', 'drugName', '--- Chọn loại thuốc ---');
+
     } catch (error) {
-        showMessage("Lỗi khi tải dữ liệu: " + error.message);
+        showMessage(`Lỗi tải dữ liệu ban đầu: ${error.message}`);
     }
 }
 
+/**
+ * Gán các sự kiện click cho các nút bấm
+ */
 function setupEventListeners() {
-    document.getElementById('appointments-list').addEventListener('click', handleAppointmentClick);
+    // Nút đóng modal
     document.getElementById('close-encounter-modal-btn').addEventListener('click', closeEncounterModal);
-    document.getElementById('cancel-encounter-btn').addEventListener('click', closeEncounterModal);
-    document.getElementById('encounter-form').addEventListener('submit', handleEncounterFormSubmit);
-    document.getElementById('add-drug-btn').addEventListener('click', addDrugToPrescription);
-    document.getElementById('prescription-items-body').addEventListener('click', handlePrescriptionActions);
     document.getElementById('close-message-modal-btn').addEventListener('click', closeMessageModal);
+    
+    // Nút thêm thuốc
+    document.getElementById('add-drug-btn').addEventListener('click', handleAddDrug);
+    
+    // Submit form khám bệnh
+    document.getElementById('encounter-form').addEventListener('submit', handleEncounterSubmit);
+
+    // === SỬA ĐỔI 3: Thêm sự kiện 'input' cho ô Phí dịch vụ ===
+    document.getElementById('encounter-fee').addEventListener('input', () => {
+        // Cập nhật hiển thị phí dịch vụ và tổng tiền
+        const fee = parseFloat(document.getElementById('encounter-fee').value) || 0;
+        const formatter = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
+        document.getElementById('service-fee-display').textContent = formatter.format(fee);
+        updateTotalFees(); // Gọi hàm tính tổng
+    });
 }
 
-// --- API FETCHING ---
+// --- DATA FETCHING (LẤY DỮ LIỆU) ---
+
+/**
+ * Chức năng 1: Lấy lịch hẹn của bác sĩ
+ * API: GET /api/Appointments
+ */
 async function fetchTodaysAppointments() {
-    const today = new Date().toISOString().split('T')[0];
-    const appointments = await fetchAPI(`/api/Appointments?date=${today}&status=Đã đặt`);
-    state.todaysAppointments = appointments || [];
+    try {
+        const data = await fetchAPI('/api/Appointments', 'GET');
+        // Backend tự lọc theo DoctorID của người đăng nhập
+        // Chúng ta lọc thêm ở frontend để chỉ hiển thị các lịch "Đã đặt"
+        state.todaysAppointments = data.filter(appt => appt.status.toLowerCase() === 'đã đặt');
+    } catch (error) {
+        console.error('Lỗi fetchTodaysAppointments:', error);
+        showMessage(error.message);
+    }
 }
 
+/**
+ * Lấy danh sách thuốc để kê đơn
+ * API: GET /api/drugs
+ */
 async function fetchAllDrugs() {
-    const drugs = await fetchAPI('/api/drugs');
-    state.allDrugs = drugs || [];
+    try {
+        // API này cần vai trò Doctor (đã kiểm tra trong DrugController.cs của bạn)
+        state.allDrugs = await fetchAPI('/api/drugs', 'GET');
+    } catch (error) {
+        console.error('Lỗi fetchAllDrugs:', error);
+        showMessage(`Không thể tải danh sách thuốc: ${error.message}`);
+    }
 }
 
-// --- UI RENDERING ---
+// --- UI RENDERING (HIỂN THỊ GIAO DIỆN) ---
+
+/**
+ * Hiển thị danh sách lịch hẹn ra cột bên trái
+ */
 function displayAppointments() {
-    const list = document.getElementById('appointments-list');
-    const noAppMsg = document.getElementById('no-appointments-msg');
-    list.innerHTML = ''; 
+    const listElement = document.getElementById('appointments-list');
+    listElement.innerHTML = ''; // Xóa danh sách cũ
 
     if (state.todaysAppointments.length === 0) {
-        noAppMsg.textContent = "Không có lịch hẹn nào hôm nay.";
-        noAppMsg.classList.remove('hidden');
+        listElement.innerHTML = '<p class="text-gray-500">Không có lịch hẹn nào "Đã đặt".</p>';
         return;
     }
 
-    noAppMsg.classList.add('hidden');
-    state.todaysAppointments.forEach(app => {
-        const item = document.createElement('div');
-        item.className = 'p-4 border-b hover:bg-indigo-50 cursor-pointer';
-        item.dataset.appointmentId = app.appointmentID;
-        item.innerHTML = `
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="font-bold text-lg text-indigo-700">${app.patientName}</p>
-                    <p class="text-sm text-gray-600">Thời gian: ${new Date(app.appointmentDate).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</p>
-                </div>
-                <span class="text-indigo-600 font-semibold">&#9654;</span>
-            </div>
+    state.todaysAppointments.forEach(appt => {
+        const button = document.createElement('button');
+        button.className = "text-left p-3 border rounded-lg hover:bg-gray-50 w-full";
+        button.innerHTML = `
+            <strong class="text-indigo-600">${appt.patientName}</strong>
+            <p class="text-sm text-gray-700">Giờ hẹn: ${formatTime(appt.appointmentDate)}</p>
         `;
-        list.appendChild(item);
+        // Gán sự kiện click để mở modal
+        button.addEventListener('click', () => openEncounterModal(appt));
+        listElement.appendChild(button);
     });
 }
 
-function displayPrescriptionItems() {
-    const tableBody = document.getElementById('prescription-items-body');
-    tableBody.innerHTML = '';
+/**
+ * === SỬA ĐỔI 4: Cập nhật hàm render danh sách thuốc ===
+ * Hiển thị danh sách thuốc trong đơn, bao gồm giá và nút xóa
+ */
+function renderPrescriptionList() {
+    const listElement = document.getElementById('prescription-list');
+    listElement.innerHTML = ''; // Xóa cũ
+
     if (state.currentEncounter.prescriptionItems.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-gray-500">Chưa có thuốc nào được thêm.</td></tr>';
+        listElement.innerHTML = '<li class="text-gray-500 italic">Chưa có thuốc nào được thêm.</li>';
         return;
     }
-    
+
     state.currentEncounter.prescriptionItems.forEach((item, index) => {
-        const drug = state.allDrugs.find(d => d.drugID === item.drugID);
-        const row = `
-            <tr class="text-sm">
-                <td class="px-4 py-2">${drug?.drugName || 'Không tìm thấy thuốc'}</td>
-                <td class="px-4 py-2">${item.quantity}</td>
-                <td class="px-4 py-2">${item.usage}</td>
-                <td class="px-4 py-2 text-right">
-                    <button type="button" data-index="${index}" class="remove-drug-btn text-red-500 hover:text-red-700 font-semibold">Xóa</button>
-                </td>
-            </tr>
+        const li = document.createElement('li');
+        li.className = "flex justify-between items-center py-1";
+        // Hiển thị cả giá tiền của thuốc
+        li.innerHTML = `
+            <span>
+                <strong>${item.drugName}</strong> (SL: ${item.quantity}) - ${item.price.toLocaleString('vi-VN')} VNĐ/đv
+                <br>
+                <span class="text-sm text-gray-600">${item.usage}</span>
+            </span>
+            <button type="button" class="text-red-500 hover:text-red-700 font-semibold px-2" data-index="${index}">Xóa</button>
         `;
-        tableBody.innerHTML += row;
+        
+        // Gán sự kiện cho nút xóa
+        li.querySelector('button').addEventListener('click', (e) => {
+            const indexToRemove = parseInt(e.currentTarget.getAttribute('data-index'));
+            removeDrugFromPrescription(indexToRemove);
+        });
+        
+        listElement.appendChild(li);
     });
 }
 
-// --- EVENT HANDLERS ---
-function handleAppointmentClick(e) {
-    const appointmentDiv = e.target.closest('[data-appointment-id]');
-    if (appointmentDiv) {
-        openEncounterModal(parseInt(appointmentDiv.dataset.appointmentId));
-    }
-}
 
-function openEncounterModal(appointmentId) {
-    const appointment = state.todaysAppointments.find(app => app.appointmentID === appointmentId);
-    if (!appointment) return;
+// --- EVENT HANDLERS (XỬ LÝ SỰ KIỆN) ---
 
-    document.getElementById('encounter-form').reset();
-    state.currentEncounter = { appointmentId, prescriptionItems: [] };
+/**
+ * === SỬA ĐỔI 6: Cập nhật hàm mở Modal ===
+ * Mở modal khám bệnh và reset hiển thị chi phí
+ */
+function openEncounterModal(appointment) {
+    // 1. Reset trạng thái
+    state.currentEncounter = {
+        appointmentId: appointment.appointmentID,
+        prescriptionItems: []
+    };
     
-    document.getElementById('encounter-appointment-id').value = appointmentId;
-    document.getElementById('modal-patient-name').textContent = appointment.patientName;
-    document.getElementById('modal-appointment-time').textContent = new Date(appointment.appointmentDate).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+    // 2. Reset form
+    document.getElementById('encounter-form').reset();
+    const defaultFee = 100000;
+    document.getElementById('encounter-fee').value = defaultFee; // Set phí khám mặc định
+    
+    renderPrescriptionList(); // Xóa danh sách thuốc
 
-    displayPrescriptionItems();
+    // 3. Điền thông tin bệnh nhân
+    document.getElementById('encounter-patient-name').textContent = appointment.patientName;
+    
+    // 4. Reset hiển thị chi phí
+    const formatter = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
+    document.getElementById('service-fee-display').textContent = formatter.format(defaultFee);
+    document.getElementById('drug-fee-display').textContent = formatter.format(0);
+    document.getElementById('total-fee-display').textContent = formatter.format(defaultFee);
+
+    // 5. Hiển thị modal
     document.getElementById('encounter-modal').classList.add('active');
 }
 
@@ -149,102 +214,146 @@ function closeEncounterModal() {
     document.getElementById('encounter-modal').classList.remove('active');
 }
 
-function addDrugToPrescription() {
-    const drugId = parseInt(document.getElementById('drug-select').value);
+/**
+ * === SỬA ĐỔI 2: Cập nhật hàm thêm thuốc ===
+ * Thêm một loại thuốc vào đơn thuốc (trong state)
+ */
+function handleAddDrug() {
+    const drugId = document.getElementById('drug-select').value;
     const quantity = parseInt(document.getElementById('drug-quantity').value);
     const usage = document.getElementById('drug-usage').value;
 
-    if (!drugId || !quantity || quantity <= 0) {
-        showMessage("Vui lòng chọn thuốc và nhập số lượng hợp lệ.");
+    if (!drugId) {
+        showMessage("Vui lòng chọn một loại thuốc.");
+        return;
+    }
+    if (isNaN(quantity) || quantity <= 0) {
+        showMessage("Số lượng thuốc phải là số dương.");
+        return;
+    }
+    if (!usage) {
+        showMessage("Vui lòng nhập cách dùng thuốc.");
         return;
     }
 
-    state.currentEncounter.prescriptionItems.push({ drugID: drugId, quantity, usage });
-    displayPrescriptionItems();
+    // Xóa bỏ kiểm tra thuốc trùng lặp
+    
+    // Lấy thông tin thuốc (bao gồm cả giá) từ state.allDrugs
+    const selectedDrug = state.allDrugs.find(d => d.drugID == drugId);
+    if (!selectedDrug) {
+        showMessage("Lỗi: Không tìm thấy thông tin thuốc.");
+        return;
+    }
 
+    // Thêm vào state (bao gồm cả price và drugName)
+    state.currentEncounter.prescriptionItems.push({
+        drugID: parseInt(drugId),
+        quantity: quantity,
+        usage: usage,
+        drugName: selectedDrug.drugName, // Để hiển thị
+        price: selectedDrug.price        // Để tính tiền
+    });
+
+    // Cập nhật UI (hiển thị danh sách thuốc)
+    renderPrescriptionList();
+    
+    // Cập nhật tổng tiền
+    updateTotalFees();
+
+    // Reset các ô nhập
     document.getElementById('drug-select').value = '';
-    document.getElementById('drug-quantity').value = 1;
+    document.getElementById('drug-quantity').value = '';
     document.getElementById('drug-usage').value = '';
 }
 
-function handlePrescriptionActions(e) {
-    if (e.target.classList.contains('remove-drug-btn')) {
-        const index = parseInt(e.target.dataset.index);
-        state.currentEncounter.prescriptionItems.splice(index, 1);
-        displayPrescriptionItems();
+/**
+ * === SỬA ĐỔI 5: Cập nhật hàm xóa thuốc ===
+ * Xóa một loại thuốc khỏi đơn (trong state) bằng index
+ */
+function removeDrugFromPrescription(indexToRemove) {
+    if (indexToRemove > -1 && indexToRemove < state.currentEncounter.prescriptionItems.length) {
+        state.currentEncounter.prescriptionItems.splice(indexToRemove, 1);
     }
+    
+    renderPrescriptionList(); // Cập nhật lại UI
+    updateTotalFees(); // Cập nhật tổng tiền
 }
 
-async function handleEncounterFormSubmit(e) {
-    e.preventDefault();
-    const submitButton = e.target.querySelector('button[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.textContent = "Đang xử lý...";
+/**
+ * Chức năng 2: Gửi thông tin khám bệnh lên server
+ * API: POST /api/Encounters/complete
+ */
+async function handleEncounterSubmit(event) {
+    event.preventDefault(); // Ngăn form reload trang
     
-    const encounterData = {
+    // 1. Lấy dữ liệu từ form
+    const notes = document.getElementById('encounter-notes').value;
+    const diagnosis = document.getElementById('encounter-diagnosis').value;
+    const fee = parseFloat(document.getElementById('encounter-fee').value);
+
+    // 2. Tạo body request (khớp với CompleteEncounterRequest)
+    const body = {
         appointmentID: state.currentEncounter.appointmentId,
-        examinationNotes: document.getElementById('examination-notes').value,
-        diagnosisDescription: document.getElementById('diagnosis-description').value,
-        serviceFee: parseFloat(document.getElementById('service-fee').value),
-        prescriptionItems: state.currentEncounter.prescriptionItems
+        examinationNotes: notes,
+        diagnosisDescription: diagnosis,
+        serviceFee: fee,
+        // Chỉ gửi đi các trường cần thiết cho backend
+        prescriptionItems: state.currentEncounter.prescriptionItems.map(item => ({
+            drugID: item.drugID,
+            quantity: item.quantity,
+            usage: item.usage
+        }))
     };
 
+    // 3. Gửi API
     try {
-        await fetchAPI('/api/Encounters/complete', 'POST', encounterData);
-        showMessage("Hoàn tất lần khám thành công!");
+        const result = await fetchAPI('/api/Encounters/complete', 'POST', body);
+        
+        // 4. Xử lý thành công
         closeEncounterModal();
+        showMessage(result.message || "Hoàn tất khám bệnh thành công!");
+        
+        // 5. Tải lại danh sách lịch hẹn
         await fetchTodaysAppointments();
         displayAppointments();
+
     } catch (error) {
-        showMessage(error.message || "Đã xảy ra lỗi khi hoàn tất khám.");
-    } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = "Hoàn tất Khám";
+        console.error('Lỗi handleEncounterSubmit:', error);
+        showMessage(error.message);
     }
 }
 
+/**
+ * === SỬA ĐỔI 7: Thêm hàm mới để tính tổng chi phí ===
+ * Tính toán và cập nhật chi phí trên UI
+ */
+function updateTotalFees() {
+    // 1. Lấy phí dịch vụ từ ô input
+    const serviceFeeInput = document.getElementById('encounter-fee');
+    const serviceFee = parseFloat(serviceFeeInput.value) || 0;
 
-// =================================================================
-// SHARED HELPER FUNCTIONS (Copied from app.js)
-// =================================================================
-async function fetchAPI(endpoint, method = 'GET', body = null) {
-    const token = sessionStorage.getItem('jwt_token');
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-    const config = { method, headers };
-    if (body) {
-        config.body = JSON.stringify(body);
-    }
-    try {
-        const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
-        if (!response.ok) {
-            await handleResponseError(response);
-        }
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-            return response.json();
-        }
-        return null;
-    } catch (error) {
-        console.error(`API Fetch Error (${method} ${endpoint}):`, error);
-        if (error.message.includes("Failed to fetch")) {
-            throw new Error("Lỗi kết nối: Không thể kết nối đến máy chủ.");
-        }
-        throw error;
-    }
+    // 2. Tính tổng tiền thuốc từ state
+    const drugFee = state.currentEncounter.prescriptionItems.reduce((total, item) => {
+        return total + (item.price * item.quantity);
+    }, 0);
+
+    // 3. Tính tổng cộng
+    const totalAmount = serviceFee + drugFee;
+
+    // 4. Cập nhật giao diện
+    const formatter = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
+
+    document.getElementById('service-fee-display').textContent = formatter.format(serviceFee);
+    document.getElementById('drug-fee-display').textContent = formatter.format(drugFee);
+    document.getElementById('total-fee-display').textContent = formatter.format(totalAmount);
 }
 
-async function handleResponseError(response) {
-    let errorMessage = `Lỗi ${response.status}: ${response.statusText || 'Lỗi không xác định.'}`;
-    try {
-        const errorData = await response.json();
-        if (errorData && errorData.message) {
-            errorMessage = errorData.message;
-        }
-    } catch (e) { /* Ignore if no JSON body */ }
-    throw new Error(errorMessage);
+
+// --- HELPER FUNCTIONS (HÀM HỖ TRỢ) ---
+
+function formatTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
 }
 
 function populateSelectOptions(selectId, data, valueField, textField, defaultOption) {
@@ -268,8 +377,55 @@ function showMessage(message) {
 }
 
 function closeMessageModal() {
-    const modal = document.getElementById('message-modal');
-    if (modal) {
-        modal.classList.remove('active');
+    document.getElementById('message-modal').classList.remove('active');
+}
+
+// --- HÀM GỌI API (LẤY TỪ FILE doctor.js CỦA BẠN) ---
+async function fetchAPI(endpoint, method = 'GET', body = null) {
+    const token = sessionStorage.getItem('jwt_token');
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
     }
+
+    const config = {
+        method,
+        headers,
+    };
+    if (body) {
+        config.body = JSON.stringify(body);
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+        if (!response.ok) {
+            await handleResponseError(response);
+        }
+        
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            return response.json();
+        } 
+        return { message: "Thao tác thành công (không có nội dung trả về)." }; // Trả về thông điệp mặc định nếu 200 OK nhưng không có JSON
+
+    } catch (error) {
+        console.error(`API Fetch Error (${method} ${endpoint}):`, error);
+        if (error.message.includes("Failed to fetch")) {
+            throw new Error("Lỗi kết nối: Không thể kết nối đến máy chủ.");
+        }
+        throw error;
+    }
+}
+
+async function handleResponseError(response) {
+    let errorMessage = `Lỗi ${response.status}: ${response.statusText || 'Lỗi không xác định.'}`;
+    try {
+        const errorData = await response.json();
+        if (errorData && errorData.message) {
+            errorMessage = errorData.message;
+        }
+    } catch (e) { /* Ignore if no JSON body */ }
+    throw new Error(errorMessage);
 }

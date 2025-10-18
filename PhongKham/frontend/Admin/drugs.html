@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Thuốc & Kho</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style> 
+        body { font-family: 'Inter', sans-serif; }
+        .modal { display: none; } 
+        .modal.active { display: flex; } 
+    </style>
+</head>
+<body id="admin-drugs-page" class="bg-gray-100">
+    <div class="min-h-screen flex flex-col">
+        <header class="bg-white shadow-md">
+             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-gray-800">Quản trị viên</h1>
+                <div class="flex items-center">
+                    <span id="username-display" class="text-gray-600 mr-4"></span>
+                    <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-150">Đăng xuất</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow container mx-auto px-6 py-8">
+            <nav class="mb-6"><a href="./dashboard.html" class="text-indigo-600 hover:underline transition-colors duration-150">&larr; Quay lại Dashboard</a></nav>
+             <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-800">Quản lý Thuốc & Tồn kho</h2>
+                <button id="open-drug-modal-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-150 inline-flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    Thêm Thuốc mới
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bg-white shadow-md rounded-lg overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên thuốc</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Đơn vị</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Giá (VNĐ)</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Tồn kho</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stock-table-body" class="bg-white divide-y divide-gray-200">
+                            </tbody>
+                    </table>
+                </div>
+
+                <div class="lg:col-span-1 bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4 border-b pb-2">Điều chỉnh Tồn kho</h3>
+                    <form id="stock-adjust-form" class="space-y-4">
+                        <div>
+                            <label for="adjust-drug-select" class="block text-sm font-bold mb-2">Chọn thuốc:</label>
+                            <select id="adjust-drug-select" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required></select>
+                        </div>
+                        <div>
+                             <label class="block text-sm font-bold mb-2">Loại điều chỉnh:</label>
+                             <div class="flex gap-4">
+                                 <label class="inline-flex items-center">
+                                     <input type="radio" name="adjustType" value="import" class="form-radio text-indigo-600 focus:ring-indigo-500" checked>
+                                     <span class="ml-2">Nhập kho</span>
+                                 </label>
+                                 <label class="inline-flex items-center">
+                                     <input type="radio" name="adjustType" value="export" class="form-radio text-red-600 focus:ring-red-500">
+                                     <span class="ml-2">Xuất kho</span>
+                                 </label>
+                             </div>
+                        </div>
+                        <div>
+                            <label for="adjust-quantity" class="block text-sm font-bold mb-2">Số lượng:</label>
+                            <input type="number" id="adjust-quantity" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" placeholder="Nhập số lượng (luôn dương)" required min="1">
+                        </div>
+                        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-150">Xác nhận Điều chỉnh</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="drug-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center">
+       <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+            <h2 id="drug-modal-title" class="text-xl font-bold mb-6">Thêm Thuốc mới</h2>
+            <form id="drug-form" class="space-y-4">
+                <input type="hidden" id="drug-id">
+                <div>
+                    <label for="drug-name" class="block text-sm font-bold mb-2">Tên thuốc:</label>
+                    <input type="text" id="drug-name" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required>
+                </div>
+                 <div>
+                    <label for="drug-unit" class="block text-sm font-bold mb-2">Đơn vị tính:</label>
+                    <input type="text" id="drug-unit" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" placeholder="Viên, Hộp, Chai,...">
+                </div>
+                 <div>
+                    <label for="drug-price" class="block text-sm font-bold mb-2">Đơn giá (VNĐ):</label>
+                    <input type="number" id="drug-price" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" min="0" required>
+                </div>
+                <div class="flex items-center justify-end gap-4 pt-6">
+                    <button id="close-drug-modal-btn" type="button" class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors duration-150">Hủy</button>
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-150">Lưu Thuốc</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="message-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center">
+         <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-sm text-center">
+            <p id="message-text" class="text-lg mb-6"></p>
+            <button id="close-message-modal-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-150">Đã hiểu</button>
+        </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>

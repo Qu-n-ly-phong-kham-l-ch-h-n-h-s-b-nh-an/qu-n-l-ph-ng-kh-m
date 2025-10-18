@@ -5,44 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Ký Tài Khoản Bệnh Nhân</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- SỬA LẠI ĐƯỜNG DẪN -->
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
-        <div>
-            <h2 class="text-center text-3xl font-extrabold text-gray-900">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-md p-8 md:p-10 space-y-6 bg-white rounded-lg shadow-xl">
+        <div class="text-center">
+            <span class="text-5xl">🧑‍🤝‍🧑</span>
+            <h2 class="mt-4 text-center text-3xl font-extrabold text-gray-900">
                 Tạo tài khoản Bệnh nhân
             </h2>
         </div>
         <form id="register-form" class="space-y-6">
             <div>
                 <label for="register-username" class="sr-only">Tên đăng nhập</label>
-                <input id="register-username" name="username" type="text" required class="input-field" placeholder="Tên đăng nhập">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input id="register-username" name="username" type="text" required
+                           class="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition duration-150 ease-in-out"
+                           placeholder="Tên đăng nhập">
+                </div>
             </div>
             <div>
                 <label for="register-password" class="sr-only">Mật khẩu</label>
-                <input id="register-password" name="password" type="password" required class="input-field" placeholder="Mật khẩu (ít nhất 6 ký tự)">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input id="register-password" name="password" type="password" required
+                           class="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition duration-150 ease-in-out"
+                           placeholder="Mật khẩu (ít nhất 6 ký tự)">
+                </div>
             </div>
             <div>
                 <label for="register-confirm-password" class="sr-only">Nhập lại mật khẩu</label>
-                <input id="register-confirm-password" name="confirm-password" type="password" required class="input-field" placeholder="Nhập lại mật khẩu">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                           <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM9 13a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm1-3a1 1 0 00-1 1v1a1 1 0 102 0v-1a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input id="register-confirm-password" name="confirm-password" type="password" required
+                           class="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition duration-150 ease-in-out"
+                           placeholder="Nhập lại mật khẩu">
+                </div>
             </div>
             <div>
-                <button type="submit" class="button-primary">
+                <button type="submit"
+                        class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                     Đăng ký
                 </button>
             </div>
             <p id="register-message" class="text-center font-medium"></p>
         </form>
-        <div class="text-center">
-             <a href="login.html?role=Patient&roleName=Bệnh nhân" class="font-medium text-gray-500 hover:text-gray-700">
+        <div class="text-center text-sm">
+            <a href="login.html?role=Patient&roleName=Bệnh nhân" class="font-medium text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out">
                 &larr; Quay lại đăng nhập
             </a>
         </div>
     </div>
-    <!-- SỬA LẠI ĐƯỜNG DẪN -->
     <script src="../js/app.js" defer></script>
 </body>
 </html>
-

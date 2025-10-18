@@ -1,0 +1,564 @@
+2025-10-19 05:35:51.823 +07:00 [INF] Bắt đầu khởi tạo ứng dụng...
+2025-10-19 05:35:53.694 +07:00 [INF] User profile is available. Using 'C:\Users\duyen\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-10-19 05:35:53.728 +07:00 [INF] Dịch vụ Nhắc lịch hẹn đang khởi động.
+2025-10-19 05:35:54.312 +07:00 [INF] Now listening on: https://localhost:7220
+2025-10-19 05:35:54.314 +07:00 [INF] Now listening on: http://localhost:5219
+2025-10-19 05:35:54.440 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-19 05:35:54.444 +07:00 [INF] Hosting environment: Development
+2025-10-19 05:35:54.447 +07:00 [INF] Content root path: C:\Users\duyen\Videos\QuanLyPhongKham\QuanLyPhongKham\QuanLyPhongKham
+2025-10-19 05:36:03.729 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:36:03.7279337+07:00"
+2025-10-19 05:36:05.641 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:36:05.643 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:36:27.669 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger - null null
+2025-10-19 05:36:27.874 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger - 301 0 null 220.3536ms
+2025-10-19 05:36:27.883 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/index.html - null null
+2025-10-19 05:36:28.022 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/index.html - 200 null text/html;charset=utf-8 139.1264ms
+2025-10-19 05:36:28.036 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/swagger-ui.css - null null
+2025-10-19 05:36:28.040 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/swagger-ui-bundle.js - null null
+2025-10-19 05:36:28.049 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/swagger-ui-standalone-preset.js - null null
+2025-10-19 05:36:28.069 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/_vs/browserLink - null null
+2025-10-19 05:36:28.069 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/_framework/aspnetcore-browser-refresh.js - null null
+2025-10-19 05:36:28.120 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/_framework/aspnetcore-browser-refresh.js - 200 16515 application/javascript; charset=utf-8 70.7984ms
+2025-10-19 05:36:28.139 +07:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-10-19 05:36:28.140 +07:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-10-19 05:36:28.148 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/swagger-ui-standalone-preset.js - 200 230280 text/javascript 105.66ms
+2025-10-19 05:36:28.148 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/swagger-ui.css - 200 152034 text/css 112.1799ms
+2025-10-19 05:36:28.179 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/_vs/browserLink - 200 null text/javascript; charset=UTF-8 128.4834ms
+2025-10-19 05:36:28.195 +07:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-10-19 05:36:28.199 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/swagger-ui-bundle.js - 200 1456926 text/javascript 162.8063ms
+2025-10-19 05:36:28.318 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/v1/swagger.json - null null
+2025-10-19 05:36:28.329 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/favicon-32x32.png - null null
+2025-10-19 05:36:28.335 +07:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2025-10-19 05:36:28.337 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/favicon-32x32.png - 200 628 image/png 9.3837ms
+2025-10-19 05:36:28.359 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 45.4106ms
+2025-10-19 05:36:45.501 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-19 05:36:45.572 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:36:45.590 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 65.3211 ms
+2025-10-19 05:36:45.599 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 98.3866ms
+2025-10-19 05:36:45.608 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 58
+2025-10-19 05:36:45.620 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:36:45.755 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:36:45.831 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:36:46.490 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-19 05:36:46.530 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 682.9232ms
+2025-10-19 05:36:46.538 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:36:46.545 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 929.2144 ms
+2025-10-19 05:36:46.553 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 944.3963ms
+2025-10-19 05:36:46.837 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Patients/1 - null null
+2025-10-19 05:36:46.837 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Appointments - null null
+2025-10-19 05:36:46.852 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:36:46.852 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:36:46.857 +07:00 [INF] HTTP OPTIONS /api/Patients/1 responded 204 in 5.5832 ms
+2025-10-19 05:36:46.858 +07:00 [INF] HTTP OPTIONS /api/Appointments responded 204 in 5.5899 ms
+2025-10-19 05:36:46.866 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Appointments - 204 null null 29.574ms
+2025-10-19 05:36:46.866 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Patients/1 - 204 null null 25.314ms
+2025-10-19 05:36:46.879 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Patients/1 - application/json null
+2025-10-19 05:36:46.886 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Appointments - application/json null
+2025-10-19 05:36:46.893 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:36:46.893 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:36:46.969 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetById (QuanLyPhongKham)'
+2025-10-19 05:36:46.969 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:36:46.977 +07:00 [INF] Route matched with {action = "GetById", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetById(Int32) on controller QuanLyPhongKhamApi.Controllers.PatientsController (QuanLyPhongKham).
+2025-10-19 05:36:46.981 +07:00 [INF] Route matched with {action = "GetAll", controller = "Appointments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], System.Nullable`1[System.DateTime], System.String) on controller QuanLyPhongKhamApi.Controllers.AppointmentsController (QuanLyPhongKham).
+2025-10-19 05:36:47.020 +07:00 [INF] Executing OkObjectResult, writing value of type 'QuanLyPhongKhamApi.Models.Patient'.
+2025-10-19 05:36:47.030 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.AppointmentDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:36:47.041 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham) in 55.5747ms
+2025-10-19 05:36:47.046 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:36:47.048 +07:00 [INF] HTTP GET /api/Appointments responded 200 in 155.2827 ms
+2025-10-19 05:36:47.053 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Appointments - 200 null application/json; charset=utf-8 173.264ms
+2025-10-19 05:36:47.065 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.PatientsController.GetById (QuanLyPhongKham) in 64.7751ms
+2025-10-19 05:36:47.069 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetById (QuanLyPhongKham)'
+2025-10-19 05:36:47.073 +07:00 [INF] HTTP GET /api/Patients/1 responded 200 in 180.4016 ms
+2025-10-19 05:36:47.079 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Patients/1 - 200 null application/json; charset=utf-8 199.3256ms
+2025-10-19 05:37:02.849 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-19 05:37:02.856 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:37:02.858 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 2.4699 ms
+2025-10-19 05:37:02.864 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 15.4154ms
+2025-10-19 05:37:02.873 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 69
+2025-10-19 05:37:02.880 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:37:02.886 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:37:02.889 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:37:03.181 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-19 05:37:03.189 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 292.8669ms
+2025-10-19 05:37:03.193 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:37:03.195 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 315.2105 ms
+2025-10-19 05:37:03.200 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 326.738ms
+2025-10-19 05:37:05.657 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:37:05.6572851+07:00"
+2025-10-19 05:37:05.669 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:37:05.671 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:38:05.681 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:38:05.6809656+07:00"
+2025-10-19 05:38:05.701 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:38:05.705 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:39:05.724 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:39:05.7242414+07:00"
+2025-10-19 05:39:05.742 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:39:05.744 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:39:10.166 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-19 05:39:10.182 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:10.185 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 3.0310 ms
+2025-10-19 05:39:10.189 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 27.1602ms
+2025-10-19 05:39:10.201 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 69
+2025-10-19 05:39:10.207 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:10.209 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:39:10.213 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:39:10.384 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-19 05:39:10.391 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 167.3721ms
+2025-10-19 05:39:10.395 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:39:10.398 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 191.2311 ms
+2025-10-19 05:39:10.403 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 202.8336ms
+2025-10-19 05:39:11.707 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Doctors - null null
+2025-10-19 05:39:11.712 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Patients - null null
+2025-10-19 05:39:11.718 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Appointments - null null
+2025-10-19 05:39:11.725 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:11.725 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:11.730 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:11.731 +07:00 [INF] HTTP OPTIONS /api/Patients responded 204 in 5.3237 ms
+2025-10-19 05:39:11.731 +07:00 [INF] HTTP OPTIONS /api/Doctors responded 204 in 13.2415 ms
+2025-10-19 05:39:11.731 +07:00 [INF] HTTP OPTIONS /api/Appointments responded 204 in 6.8287 ms
+2025-10-19 05:39:11.743 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Patients - 204 null null 26.8028ms
+2025-10-19 05:39:11.743 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Doctors - 204 null null 32.1153ms
+2025-10-19 05:39:11.743 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Appointments - 204 null null 35.2027ms
+2025-10-19 05:39:11.770 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Patients - application/json null
+2025-10-19 05:39:11.775 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Doctors - application/json null
+2025-10-19 05:39:11.780 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:11.783 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Appointments - application/json null
+2025-10-19 05:39:11.791 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:11.794 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:11.798 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:11.798 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:11.804 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:11.807 +07:00 [INF] Route matched with {action = "GetAll", controller = "Appointments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], System.Nullable`1[System.DateTime], System.String) on controller QuanLyPhongKhamApi.Controllers.AppointmentsController (QuanLyPhongKham).
+2025-10-19 05:39:11.807 +07:00 [INF] Route matched with {action = "GetAll", controller = "Doctors"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.DoctorsController (QuanLyPhongKham).
+2025-10-19 05:39:11.814 +07:00 [INF] Route matched with {action = "GetAll", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.PatientsController (QuanLyPhongKham).
+2025-10-19 05:39:11.835 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.AppointmentDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:39:11.841 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham) in 26.9196ms
+2025-10-19 05:39:11.845 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:11.848 +07:00 [INF] HTTP GET /api/Appointments responded 200 in 53.8752 ms
+2025-10-19 05:39:11.853 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.DoctorDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:39:11.853 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Appointments - 200 null application/json; charset=utf-8 72.4539ms
+2025-10-19 05:39:11.853 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Patient, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:39:11.871 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham) in 48.7248ms
+2025-10-19 05:39:11.874 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:11.877 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham) in 45.8636ms
+2025-10-19 05:39:11.877 +07:00 [INF] HTTP GET /api/Doctors responded 200 in 93.8924 ms
+2025-10-19 05:39:11.885 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:11.888 +07:00 [INF] HTTP GET /api/Patients responded 200 in 113.3810 ms
+2025-10-19 05:39:11.888 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Doctors - 200 null application/json; charset=utf-8 110.2715ms
+2025-10-19 05:39:11.901 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Patients - 200 null application/json; charset=utf-8 129.2691ms
+2025-10-19 05:39:16.649 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Accounts - null null
+2025-10-19 05:39:16.649 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Patients - null null
+2025-10-19 05:39:16.660 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:16.663 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:16.666 +07:00 [INF] HTTP OPTIONS /api/Accounts responded 204 in 6.3248 ms
+2025-10-19 05:39:16.666 +07:00 [INF] HTTP OPTIONS /api/Patients responded 204 in 6.3312 ms
+2025-10-19 05:39:16.675 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Accounts - 204 null null 21.2082ms
+2025-10-19 05:39:16.675 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Patients - 204 null null 26.3492ms
+2025-10-19 05:39:16.691 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Accounts - application/json null
+2025-10-19 05:39:16.698 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Patients - application/json null
+2025-10-19 05:39:16.709 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:16.715 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:16.718 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:16.724 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:16.728 +07:00 [INF] Route matched with {action = "GetAll", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.PatientsController (QuanLyPhongKham).
+2025-10-19 05:39:16.737 +07:00 [INF] Route matched with {action = "GetAll", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:39:16.751 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Patient, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:39:16.759 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Account, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:39:16.767 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham) in 30.4835ms
+2025-10-19 05:39:16.773 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:16.778 +07:00 [INF] HTTP GET /api/Patients responded 200 in 63.3874 ms
+2025-10-19 05:39:16.785 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham) in 24.8356ms
+2025-10-19 05:39:16.791 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:16.791 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Patients - 200 null application/json; charset=utf-8 87.1261ms
+2025-10-19 05:39:16.804 +07:00 [INF] HTTP GET /api/Accounts responded 200 in 95.9129 ms
+2025-10-19 05:39:16.814 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Accounts - 200 null application/json; charset=utf-8 122.853ms
+2025-10-19 05:39:24.608 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Invoices?status=Ch%C6%B0a%20thanh%20to%C3%A1n - null null
+2025-10-19 05:39:24.608 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Invoices?status=%C4%90%C3%A3%20thanh%20to%C3%A1n - null null
+2025-10-19 05:39:24.619 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:24.619 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:24.623 +07:00 [INF] HTTP OPTIONS /api/Invoices responded 204 in 3.3571 ms
+2025-10-19 05:39:24.623 +07:00 [INF] HTTP OPTIONS /api/Invoices responded 204 in 3.3573 ms
+2025-10-19 05:39:24.631 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Invoices?status=Ch%C6%B0a%20thanh%20to%C3%A1n - 204 null null 18.7776ms
+2025-10-19 05:39:24.631 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Invoices?status=%C4%90%C3%A3%20thanh%20to%C3%A1n - 204 null null 22.4635ms
+2025-10-19 05:39:24.642 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Invoices?status=Ch%C6%B0a%20thanh%20to%C3%A1n - application/json null
+2025-10-19 05:39:24.648 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Invoices?status=%C4%90%C3%A3%20thanh%20to%C3%A1n - application/json null
+2025-10-19 05:39:24.652 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:24.652 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:24.655 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:24.655 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:24.661 +07:00 [INF] Route matched with {action = "GetAll", controller = "Invoices"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.String) on controller QuanLyPhongKhamApi.Controllers.InvoicesController (QuanLyPhongKham).
+2025-10-19 05:39:24.665 +07:00 [INF] Route matched with {action = "GetAll", controller = "Invoices"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.String) on controller QuanLyPhongKhamApi.Controllers.InvoicesController (QuanLyPhongKham).
+2025-10-19 05:39:24.684 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.InvoiceDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:39:24.684 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.InvoiceDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:39:24.695 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham) in 27.0554ms
+2025-10-19 05:39:24.695 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham) in 30.4892ms
+2025-10-19 05:39:24.701 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:24.711 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.InvoicesController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:39:24.711 +07:00 [INF] HTTP GET /api/Invoices responded 200 in 59.0543 ms
+2025-10-19 05:39:24.721 +07:00 [INF] HTTP GET /api/Invoices responded 200 in 63.2057 ms
+2025-10-19 05:39:24.726 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Invoices?status=%C4%90%C3%A3%20thanh%20to%C3%A1n - 200 null application/json; charset=utf-8 78.4643ms
+2025-10-19 05:39:24.726 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Invoices?status=Ch%C6%B0a%20thanh%20to%C3%A1n - 200 null application/json; charset=utf-8 83.0767ms
+2025-10-19 05:39:27.150 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Invoices/3 - null null
+2025-10-19 05:39:27.155 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:27.156 +07:00 [INF] HTTP OPTIONS /api/Invoices/3 responded 204 in 1.4547 ms
+2025-10-19 05:39:27.159 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Invoices/3 - 204 null null 10.4763ms
+2025-10-19 05:39:27.166 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Invoices/3 - application/json null
+2025-10-19 05:39:27.172 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:39:27.175 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.InvoicesController.GetById (QuanLyPhongKham)'
+2025-10-19 05:39:27.178 +07:00 [INF] Route matched with {action = "GetById", controller = "Invoices"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetById(Int32) on controller QuanLyPhongKhamApi.Controllers.InvoicesController (QuanLyPhongKham).
+2025-10-19 05:39:27.201 +07:00 [INF] Executing OkObjectResult, writing value of type 'QuanLyPhongKhamApi.Models.InvoiceDetailDTO'.
+2025-10-19 05:39:27.209 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.InvoicesController.GetById (QuanLyPhongKham) in 26.3062ms
+2025-10-19 05:39:27.212 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.InvoicesController.GetById (QuanLyPhongKham)'
+2025-10-19 05:39:27.214 +07:00 [INF] HTTP GET /api/Invoices/3 responded 200 in 42.0713 ms
+2025-10-19 05:39:27.217 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Invoices/3 - 200 null application/json; charset=utf-8 51.2524ms
+2025-10-19 05:40:05.749 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:40:05.7498962+07:00"
+2025-10-19 05:40:05.753 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:40:05.755 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:40:47.185 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-19 05:40:47.198 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:40:47.201 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 2.3908 ms
+2025-10-19 05:40:47.205 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 20.5316ms
+2025-10-19 05:40:47.217 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 69
+2025-10-19 05:40:47.223 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:40:47.225 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:40:47.227 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:40:47.407 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-19 05:40:47.431 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 202.0076ms
+2025-10-19 05:40:47.434 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:40:47.437 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 213.5055 ms
+2025-10-19 05:40:47.438 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 221.0682ms
+2025-10-19 05:40:48.438 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Doctors - null null
+2025-10-19 05:40:48.438 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Patients - null null
+2025-10-19 05:40:48.446 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Appointments - null null
+2025-10-19 05:40:48.451 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:40:48.451 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:40:48.451 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:40:48.455 +07:00 [INF] HTTP OPTIONS /api/Patients responded 204 in 4.3395 ms
+2025-10-19 05:40:48.455 +07:00 [INF] HTTP OPTIONS /api/Doctors responded 204 in 4.3369 ms
+2025-10-19 05:40:48.455 +07:00 [INF] HTTP OPTIONS /api/Appointments responded 204 in 4.3395 ms
+2025-10-19 05:40:48.464 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Appointments - 204 null null 26.087ms
+2025-10-19 05:40:48.469 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Doctors - 204 null null 23.6767ms
+2025-10-19 05:40:48.464 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Patients - 204 null null 20.4068ms
+2025-10-19 05:40:48.478 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Patients - application/json null
+2025-10-19 05:40:48.478 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Doctors - application/json null
+2025-10-19 05:40:48.485 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Appointments - application/json null
+2025-10-19 05:40:48.489 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:40:48.489 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:40:48.493 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:40:48.495 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:40:48.495 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:40:48.500 +07:00 [INF] Route matched with {action = "GetAll", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.PatientsController (QuanLyPhongKham).
+2025-10-19 05:40:48.500 +07:00 [INF] Route matched with {action = "GetAll", controller = "Doctors"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.DoctorsController (QuanLyPhongKham).
+2025-10-19 05:40:48.508 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:40:48.512 +07:00 [INF] Route matched with {action = "GetAll", controller = "Appointments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], System.Nullable`1[System.DateTime], System.String) on controller QuanLyPhongKhamApi.Controllers.AppointmentsController (QuanLyPhongKham).
+2025-10-19 05:40:48.516 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Patient, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:40:48.520 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.DoctorDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:40:48.522 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham) in 18.8304ms
+2025-10-19 05:40:48.534 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:40:48.538 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham) in 26.3437ms
+2025-10-19 05:40:48.541 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:40:48.538 +07:00 [INF] HTTP GET /api/Patients responded 200 in 52.6772 ms
+2025-10-19 05:40:48.549 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Patients - 200 null application/json; charset=utf-8 71.3047ms
+2025-10-19 05:40:48.549 +07:00 [INF] HTTP GET /api/Doctors responded 200 in 60.3392 ms
+2025-10-19 05:40:48.556 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Doctors - 200 null application/json; charset=utf-8 78.6396ms
+2025-10-19 05:40:48.563 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.AppointmentDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:40:48.567 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham) in 50.4001ms
+2025-10-19 05:40:48.569 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:40:48.571 +07:00 [INF] HTTP GET /api/Appointments responded 200 in 78.1689 ms
+2025-10-19 05:40:48.573 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Appointments - 200 null application/json; charset=utf-8 87.7784ms
+2025-10-19 05:40:55.324 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-19 05:40:55.334 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:40:55.336 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 2.7037 ms
+2025-10-19 05:40:55.340 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 15.8243ms
+2025-10-19 05:40:55.347 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 58
+2025-10-19 05:40:55.353 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:40:55.354 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:40:55.356 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:40:55.565 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-19 05:40:55.570 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 208.4509ms
+2025-10-19 05:40:55.578 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:40:55.581 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 228.0567 ms
+2025-10-19 05:40:55.586 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 238.346ms
+2025-10-19 05:41:00.835 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Reports/doctor-revenue?startDate=2025-09-30&endDate=2025-10-18 - null null
+2025-10-19 05:41:00.845 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:00.848 +07:00 [INF] HTTP OPTIONS /api/Reports/doctor-revenue responded 204 in 3.3133 ms
+2025-10-19 05:41:00.851 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Reports/doctor-revenue?startDate=2025-09-30&endDate=2025-10-18 - 204 null null 17.7188ms
+2025-10-19 05:41:00.860 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Reports/doctor-revenue?startDate=2025-09-30&endDate=2025-10-18 - application/json null
+2025-10-19 05:41:00.865 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:00.866 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.ReportsController.GetDoctorRevenue (QuanLyPhongKham)'
+2025-10-19 05:41:00.870 +07:00 [INF] Route matched with {action = "GetDoctorRevenue", controller = "Reports"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetDoctorRevenue(System.DateTime, System.DateTime) on controller QuanLyPhongKhamApi.Controllers.ReportsController (QuanLyPhongKham).
+2025-10-19 05:41:00.910 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.DoctorRevenueReport, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:41:00.919 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.ReportsController.GetDoctorRevenue (QuanLyPhongKham) in 45.1461ms
+2025-10-19 05:41:00.924 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.ReportsController.GetDoctorRevenue (QuanLyPhongKham)'
+2025-10-19 05:41:00.925 +07:00 [INF] HTTP GET /api/Reports/doctor-revenue responded 200 in 60.1323 ms
+2025-10-19 05:41:00.930 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Reports/doctor-revenue?startDate=2025-09-30&endDate=2025-10-18 - 200 null application/json; charset=utf-8 70.7106ms
+2025-10-19 05:41:05.765 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:41:05.7649767+07:00"
+2025-10-19 05:41:05.772 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:41:05.774 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:41:07.560 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-19 05:41:07.566 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:07.568 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 1.3659 ms
+2025-10-19 05:41:07.570 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 11.2381ms
+2025-10-19 05:41:07.576 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 58
+2025-10-19 05:41:07.581 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:07.583 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:41:07.585 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:41:07.745 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-19 05:41:07.749 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 161.7548ms
+2025-10-19 05:41:07.753 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:41:07.756 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 174.9098 ms
+2025-10-19 05:41:07.758 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 182.7776ms
+2025-10-19 05:41:07.854 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Appointments - null null
+2025-10-19 05:41:07.860 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/drugs - null null
+2025-10-19 05:41:07.864 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:07.864 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:07.866 +07:00 [INF] HTTP OPTIONS /api/Appointments responded 204 in 2.1877 ms
+2025-10-19 05:41:07.866 +07:00 [INF] HTTP OPTIONS /api/drugs responded 204 in 2.1717 ms
+2025-10-19 05:41:07.873 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Appointments - 204 null null 15.0095ms
+2025-10-19 05:41:07.873 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/drugs - 204 null null 18.7005ms
+2025-10-19 05:41:07.883 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Appointments - application/json null
+2025-10-19 05:41:07.887 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/drugs - application/json null
+2025-10-19 05:41:07.892 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:07.893 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:07.894 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:41:07.897 +07:00 [INF] Route matched with {action = "GetAll", controller = "Appointments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], System.Nullable`1[System.DateTime], System.String) on controller QuanLyPhongKhamApi.Controllers.AppointmentsController (QuanLyPhongKham).
+2025-10-19 05:41:07.902 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham)'
+2025-10-19 05:41:07.906 +07:00 [INF] Route matched with {action = "GetAllDrugs", controller = "Drugs"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAllDrugs() on controller QuanLyPhongKhamApi.Controllers.DrugsController (QuanLyPhongKham).
+2025-10-19 05:41:07.914 +07:00 [INF] Executing ForbidResult with authentication schemes ([]).
+2025-10-19 05:41:07.920 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Drug, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:41:07.924 +07:00 [INF] AuthenticationScheme: Bearer was forbidden.
+2025-10-19 05:41:07.927 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham) in 25.3137ms
+2025-10-19 05:41:07.932 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:41:07.932 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham) in 20.0491ms
+2025-10-19 05:41:07.934 +07:00 [INF] HTTP GET /api/Appointments responded 403 in 41.9917 ms
+2025-10-19 05:41:07.940 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham)'
+2025-10-19 05:41:07.942 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Appointments - 403 0 null 57.4275ms
+2025-10-19 05:41:07.942 +07:00 [INF] HTTP GET /api/drugs responded 200 in 48.8617 ms
+2025-10-19 05:41:07.951 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/drugs - 200 null application/json; charset=utf-8 64.3811ms
+2025-10-19 05:41:16.392 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-19 05:41:16.397 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:16.399 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 1.3795 ms
+2025-10-19 05:41:16.401 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 9.9871ms
+2025-10-19 05:41:16.407 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 63
+2025-10-19 05:41:16.412 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:16.413 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:41:16.414 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:41:16.602 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-19 05:41:16.606 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 187.8062ms
+2025-10-19 05:41:16.608 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:41:16.611 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 198.7444 ms
+2025-10-19 05:41:16.613 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 206.5815ms
+2025-10-19 05:41:16.717 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/drugs - null null
+2025-10-19 05:41:16.717 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Appointments - null null
+2025-10-19 05:41:16.732 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:16.732 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:16.734 +07:00 [INF] HTTP OPTIONS /api/Appointments responded 204 in 2.7981 ms
+2025-10-19 05:41:16.734 +07:00 [INF] HTTP OPTIONS /api/drugs responded 204 in 2.8417 ms
+2025-10-19 05:41:16.740 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Appointments - 204 null null 24.3702ms
+2025-10-19 05:41:16.740 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/drugs - 204 null null 27.3402ms
+2025-10-19 05:41:16.752 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Appointments - application/json null
+2025-10-19 05:41:16.756 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/drugs - application/json null
+2025-10-19 05:41:16.758 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:16.761 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:16.763 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:41:16.765 +07:00 [INF] Route matched with {action = "GetAll", controller = "Appointments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], System.Nullable`1[System.DateTime], System.String) on controller QuanLyPhongKhamApi.Controllers.AppointmentsController (QuanLyPhongKham).
+2025-10-19 05:41:16.771 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham)'
+2025-10-19 05:41:16.773 +07:00 [INF] Route matched with {action = "GetAllDrugs", controller = "Drugs"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAllDrugs() on controller QuanLyPhongKhamApi.Controllers.DrugsController (QuanLyPhongKham).
+2025-10-19 05:41:16.780 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Drug, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:41:16.783 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham) in 4.7896ms
+2025-10-19 05:41:16.786 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham)'
+2025-10-19 05:41:16.788 +07:00 [INF] HTTP GET /api/drugs responded 200 in 27.0754 ms
+2025-10-19 05:41:16.791 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/drugs - 200 null application/json; charset=utf-8 35.3849ms
+2025-10-19 05:41:16.795 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.AppointmentDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:41:16.797 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham) in 26.6022ms
+2025-10-19 05:41:16.799 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:41:16.801 +07:00 [INF] HTTP GET /api/Appointments responded 200 in 45.3530 ms
+2025-10-19 05:41:16.804 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Appointments - 200 null application/json; charset=utf-8 51.6932ms
+2025-10-19 05:41:33.779 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-19 05:41:33.792 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:33.793 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 1.0834 ms
+2025-10-19 05:41:33.796 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 16.5654ms
+2025-10-19 05:41:33.810 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 58
+2025-10-19 05:41:33.816 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:33.817 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:41:33.818 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:41:34.015 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-19 05:41:34.018 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 196.7416ms
+2025-10-19 05:41:34.020 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:41:34.021 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 205.2464 ms
+2025-10-19 05:41:34.022 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 213.244ms
+2025-10-19 05:41:34.102 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Patients/1 - null null
+2025-10-19 05:41:34.112 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Appointments - null null
+2025-10-19 05:41:34.117 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:34.119 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:34.119 +07:00 [INF] HTTP OPTIONS /api/Patients/1 responded 204 in 7.1303 ms
+2025-10-19 05:41:34.127 +07:00 [INF] HTTP OPTIONS /api/Appointments responded 204 in 10.1471 ms
+2025-10-19 05:41:34.127 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Patients/1 - 204 null null 24.9496ms
+2025-10-19 05:41:34.140 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Appointments - 204 null null 30.3002ms
+2025-10-19 05:41:34.149 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Patients/1 - application/json null
+2025-10-19 05:41:34.158 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Appointments - application/json null
+2025-10-19 05:41:34.164 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:34.164 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:41:34.169 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:41:34.169 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetById (QuanLyPhongKham)'
+2025-10-19 05:41:34.176 +07:00 [INF] Route matched with {action = "GetById", controller = "Patients"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetById(Int32) on controller QuanLyPhongKhamApi.Controllers.PatientsController (QuanLyPhongKham).
+2025-10-19 05:41:34.176 +07:00 [INF] Route matched with {action = "GetAll", controller = "Appointments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], System.Nullable`1[System.DateTime], System.String) on controller QuanLyPhongKhamApi.Controllers.AppointmentsController (QuanLyPhongKham).
+2025-10-19 05:41:34.194 +07:00 [INF] Executing OkObjectResult, writing value of type 'QuanLyPhongKhamApi.Models.Patient'.
+2025-10-19 05:41:34.201 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.AppointmentDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:41:34.206 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.PatientsController.GetById (QuanLyPhongKham) in 22.759ms
+2025-10-19 05:41:34.206 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham) in 16.7057ms
+2025-10-19 05:41:34.215 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:41:34.215 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.PatientsController.GetById (QuanLyPhongKham)'
+2025-10-19 05:41:34.220 +07:00 [INF] HTTP GET /api/Appointments responded 200 in 53.5475 ms
+2025-10-19 05:41:34.225 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Appointments - 200 null application/json; charset=utf-8 76.239ms
+2025-10-19 05:41:34.220 +07:00 [INF] HTTP GET /api/Patients/1 responded 200 in 55.7529 ms
+2025-10-19 05:41:34.238 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Patients/1 - 200 null application/json; charset=utf-8 89.2245ms
+2025-10-19 05:42:05.788 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:42:05.7879597+07:00"
+2025-10-19 05:42:05.793 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:42:05.796 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:43:05.795 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:43:05.7952152+07:00"
+2025-10-19 05:43:05.799 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:43:05.803 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:44:05.807 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:44:05.8070019+07:00"
+2025-10-19 05:44:05.817 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:44:05.821 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:45:05.827 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:45:05.8278483+07:00"
+2025-10-19 05:45:05.840 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:45:05.842 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:46:05.849 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:46:05.8498287+07:00"
+2025-10-19 05:46:05.852 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:46:05.854 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:47:05.859 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:47:05.8597222+07:00"
+2025-10-19 05:47:05.867 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:47:05.870 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:47:58.763 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-19 05:47:58.776 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:47:58.777 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 1.1790 ms
+2025-10-19 05:47:58.780 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 17.1503ms
+2025-10-19 05:47:58.788 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 58
+2025-10-19 05:47:58.793 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:47:58.796 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:47:58.803 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:47:58.976 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-19 05:47:58.980 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 171.3772ms
+2025-10-19 05:47:58.983 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:47:58.986 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 192.9752 ms
+2025-10-19 05:47:58.988 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 200.3672ms
+2025-10-19 05:48:01.621 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Accounts - null null
+2025-10-19 05:48:01.626 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:01.628 +07:00 [INF] HTTP OPTIONS /api/Accounts responded 204 in 1.7380 ms
+2025-10-19 05:48:01.631 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Accounts - 204 null null 10.0612ms
+2025-10-19 05:48:01.637 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Accounts - application/json null
+2025-10-19 05:48:01.640 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:01.643 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:48:01.644 +07:00 [INF] Route matched with {action = "GetAll", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:48:01.649 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Account, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:48:01.652 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham) in 4.2523ms
+2025-10-19 05:48:01.657 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:48:01.659 +07:00 [INF] HTTP GET /api/Accounts responded 200 in 18.5791 ms
+2025-10-19 05:48:01.661 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Accounts - 200 null application/json; charset=utf-8 24.2659ms
+2025-10-19 05:48:03.985 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Doctors - null null
+2025-10-19 05:48:03.995 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:03.996 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Specialties - null null
+2025-10-19 05:48:03.996 +07:00 [INF] HTTP OPTIONS /api/Doctors responded 204 in 1.6514 ms
+2025-10-19 05:48:04.006 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Doctors - 204 null null 21.1381ms
+2025-10-19 05:48:04.006 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:04.016 +07:00 [INF] HTTP OPTIONS /api/Specialties responded 204 in 9.4467 ms
+2025-10-19 05:48:04.018 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Specialties - 204 null null 23.0767ms
+2025-10-19 05:48:04.023 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Doctors - application/json null
+2025-10-19 05:48:04.034 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:04.034 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Specialties - application/json null
+2025-10-19 05:48:04.046 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:04.049 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:48:04.056 +07:00 [INF] Route matched with {action = "GetAll", controller = "Doctors"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.DoctorsController (QuanLyPhongKham).
+2025-10-19 05:48:04.063 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.SpecialtiesController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:48:04.069 +07:00 [INF] Route matched with {action = "GetAll", controller = "Specialties"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.SpecialtiesController (QuanLyPhongKham).
+2025-10-19 05:48:04.078 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.DoctorDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:48:04.084 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham) in 20.9969ms
+2025-10-19 05:48:04.089 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:48:04.093 +07:00 [INF] HTTP GET /api/Doctors responded 200 in 60.0921 ms
+2025-10-19 05:48:04.098 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Doctors - 200 null application/json; charset=utf-8 79.6828ms
+2025-10-19 05:48:04.106 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Specialty, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:48:04.111 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.SpecialtiesController.GetAll (QuanLyPhongKham) in 33.3194ms
+2025-10-19 05:48:04.114 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.SpecialtiesController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:48:04.117 +07:00 [INF] HTTP GET /api/Specialties responded 200 in 71.0622 ms
+2025-10-19 05:48:04.120 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Specialties - 200 null application/json; charset=utf-8 87.0204ms
+2025-10-19 05:48:05.874 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-10-19T05:48:05.8743853+07:00"
+2025-10-19 05:48:05.882 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-10-19 05:48:05.887 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-10-19 05:48:05.987 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/drugs - null null
+2025-10-19 05:48:05.992 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/stock - null null
+2025-10-19 05:48:05.996 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:05.996 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:05.999 +07:00 [INF] HTTP OPTIONS /api/drugs responded 204 in 2.8494 ms
+2025-10-19 05:48:05.999 +07:00 [INF] HTTP OPTIONS /api/stock responded 204 in 2.8578 ms
+2025-10-19 05:48:06.004 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/drugs - 204 null null 14.8305ms
+2025-10-19 05:48:06.014 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/stock - 204 null null 17.5274ms
+2025-10-19 05:48:06.019 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/drugs - application/json null
+2025-10-19 05:48:06.023 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/stock - application/json null
+2025-10-19 05:48:06.027 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:06.027 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:06.030 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.DrugsController.GetStockReport (QuanLyPhongKham)'
+2025-10-19 05:48:06.030 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham)'
+2025-10-19 05:48:06.033 +07:00 [INF] Route matched with {action = "GetAllDrugs", controller = "Drugs"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAllDrugs() on controller QuanLyPhongKhamApi.Controllers.DrugsController (QuanLyPhongKham).
+2025-10-19 05:48:06.037 +07:00 [INF] Route matched with {action = "GetStockReport", controller = "Drugs"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetStockReport() on controller QuanLyPhongKhamApi.Controllers.DrugsController (QuanLyPhongKham).
+2025-10-19 05:48:06.041 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Drug, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:48:06.044 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham) in 7.2425ms
+2025-10-19 05:48:06.046 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham)'
+2025-10-19 05:48:06.047 +07:00 [INF] HTTP GET /api/drugs responded 200 in 24.4117 ms
+2025-10-19 05:48:06.050 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/drugs - 200 null application/json; charset=utf-8 35.6253ms
+2025-10-19 05:48:06.055 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.DrugStockDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:48:06.059 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.DrugsController.GetStockReport (QuanLyPhongKham) in 19.8128ms
+2025-10-19 05:48:06.061 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.DrugsController.GetStockReport (QuanLyPhongKham)'
+2025-10-19 05:48:06.062 +07:00 [INF] HTTP GET /api/stock responded 200 in 35.7929 ms
+2025-10-19 05:48:06.066 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/stock - 200 null application/json; charset=utf-8 42.7773ms
+2025-10-19 05:48:09.164 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Reports/doctor-revenue?startDate=2025-09-30&endDate=2025-10-18 - null null
+2025-10-19 05:48:09.172 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:09.175 +07:00 [INF] HTTP OPTIONS /api/Reports/doctor-revenue responded 204 in 3.0596 ms
+2025-10-19 05:48:09.179 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Reports/doctor-revenue?startDate=2025-09-30&endDate=2025-10-18 - 204 null null 16.7117ms
+2025-10-19 05:48:09.188 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Reports/doctor-revenue?startDate=2025-09-30&endDate=2025-10-18 - application/json null
+2025-10-19 05:48:09.193 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:09.195 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.ReportsController.GetDoctorRevenue (QuanLyPhongKham)'
+2025-10-19 05:48:09.198 +07:00 [INF] Route matched with {action = "GetDoctorRevenue", controller = "Reports"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetDoctorRevenue(System.DateTime, System.DateTime) on controller QuanLyPhongKhamApi.Controllers.ReportsController (QuanLyPhongKham).
+2025-10-19 05:48:09.211 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.DoctorRevenueReport, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:48:09.215 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.ReportsController.GetDoctorRevenue (QuanLyPhongKham) in 13.8703ms
+2025-10-19 05:48:09.217 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.ReportsController.GetDoctorRevenue (QuanLyPhongKham)'
+2025-10-19 05:48:09.219 +07:00 [INF] HTTP GET /api/Reports/doctor-revenue responded 200 in 26.5644 ms
+2025-10-19 05:48:09.223 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Reports/doctor-revenue?startDate=2025-09-30&endDate=2025-10-18 - 200 null application/json; charset=utf-8 35.1ms
+2025-10-19 05:48:27.083 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-10-19 05:48:27.093 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:27.095 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 1.5594 ms
+2025-10-19 05:48:27.099 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 16.0617ms
+2025-10-19 05:48:27.105 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 63
+2025-10-19 05:48:27.110 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:27.112 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:48:27.113 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-10-19 05:48:27.303 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-19 05:48:27.309 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 192.7927ms
+2025-10-19 05:48:27.311 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-10-19 05:48:27.312 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 201.7405 ms
+2025-10-19 05:48:27.314 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 209.3139ms
+2025-10-19 05:48:27.388 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Appointments - null null
+2025-10-19 05:48:27.393 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/drugs - null null
+2025-10-19 05:48:27.397 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:27.397 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:27.400 +07:00 [INF] HTTP OPTIONS /api/drugs responded 204 in 2.8408 ms
+2025-10-19 05:48:27.400 +07:00 [INF] HTTP OPTIONS /api/Appointments responded 204 in 2.8460 ms
+2025-10-19 05:48:27.406 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Appointments - 204 null null 17.6184ms
+2025-10-19 05:48:27.406 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/drugs - 204 null null 14.2643ms
+2025-10-19 05:48:27.415 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/drugs - application/json null
+2025-10-19 05:48:27.420 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Appointments - application/json null
+2025-10-19 05:48:27.424 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:27.425 +07:00 [INF] CORS policy execution successful.
+2025-10-19 05:48:27.427 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham)'
+2025-10-19 05:48:27.427 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:48:27.431 +07:00 [INF] Route matched with {action = "GetAll", controller = "Appointments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll(System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], System.Nullable`1[System.DateTime], System.String) on controller QuanLyPhongKhamApi.Controllers.AppointmentsController (QuanLyPhongKham).
+2025-10-19 05:48:27.436 +07:00 [INF] Route matched with {action = "GetAllDrugs", controller = "Drugs"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAllDrugs() on controller QuanLyPhongKhamApi.Controllers.DrugsController (QuanLyPhongKham).
+2025-10-19 05:48:27.439 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Drug, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:48:27.442 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham) in 3.9322ms
+2025-10-19 05:48:27.444 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.DrugsController.GetAllDrugs (QuanLyPhongKham)'
+2025-10-19 05:48:27.446 +07:00 [INF] HTTP GET /api/drugs responded 200 in 22.4691 ms
+2025-10-19 05:48:27.448 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.AppointmentDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-10-19 05:48:27.448 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/drugs - 200 null application/json; charset=utf-8 33.2902ms
+2025-10-19 05:48:27.454 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham) in 18.5891ms
+2025-10-19 05:48:27.456 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AppointmentsController.GetAll (QuanLyPhongKham)'
+2025-10-19 05:48:27.458 +07:00 [INF] HTTP GET /api/Appointments responded 200 in 34.0316 ms
+2025-10-19 05:48:27.460 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Appointments - 200 null application/json; charset=utf-8 45.204ms

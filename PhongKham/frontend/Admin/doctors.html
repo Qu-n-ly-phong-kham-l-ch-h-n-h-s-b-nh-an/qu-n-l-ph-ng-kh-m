@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Bác sĩ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style> 
+        body { font-family: 'Inter', sans-serif; }
+        .modal { display: none; } 
+        .modal.active { display: flex; } 
+        .doctor-row { cursor: pointer; }
+    </style>
+</head>
+<body id="admin-doctors-page" class="bg-gray-100">
+    <div class="min-h-screen flex flex-col">
+        <header class="bg-white shadow-md">
+             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-gray-800">Quản trị viên</h1>
+                <div class="flex items-center">
+                    <span id="username-display" class="text-gray-600 mr-4"></span>
+                    <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-150">Đăng xuất</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow container mx-auto px-6 py-8">
+            <nav class="mb-6"><a href="./dashboard.html" class="text-indigo-600 hover:underline transition-colors duration-150">&larr; Quay lại Dashboard</a></nav>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-800">Danh sách Bác sĩ</h2>
+                <div class="space-x-4">
+                     <button id="open-doctor-update-modal-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-150 inline-flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        Cập nhật Bác sĩ
+                     </button>
+                    <button id="open-doctor-create-modal-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors duration-150 inline-flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                        Thêm Bác sĩ mới
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Họ tên</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Chuyên khoa</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Điện thoại</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tài khoản</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctors-table-body" class="bg-white divide-y divide-gray-200">
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div id="doctor-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-lg">
+            <h2 id="doctor-modal-title" class="text-xl font-bold mb-6">Thêm Bác sĩ mới</h2>
+            <form id="doctor-form" class="space-y-4">
+                 <input type="hidden" id="doctor-id"> 
+                 <div id="doctor-select-container" class="hidden">
+                     <label for="doctor-select" class="block text-sm font-bold mb-2">Chọn bác sĩ để cập nhật:</label>
+                     <select id="doctor-select" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"></select>
+                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="doctor-fullname" class="block text-sm font-bold mb-2">Họ tên:</label>
+                        <input type="text" id="doctor-fullname" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required>
+                    </div>
+                     <div>
+                        <label for="doctor-specialty" class="block text-sm font-bold mb-2">Chuyên khoa:</label>
+                        <select id="doctor-specialty" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"></select>
+                    </div>
+                    <div>
+                        <label for="doctor-phone" class="block text-sm font-bold mb-2">Điện thoại:</label>
+                        <input type="tel" id="doctor-phone" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    </div>
+                    <div>
+                        <label for="doctor-email" class="block text-sm font-bold mb-2">Email:</label>
+                        <input type="email" id="doctor-email" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    </div>
+
+                     <div id="account-create-fields" class="md:col-span-2 border-t pt-4 mt-2">
+                         <h3 class="text-md font-semibold text-gray-700 mb-2">Thông tin tài khoản</h3>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="doctor-username" class="block text-sm font-bold mb-2">Tên đăng nhập:</label>
+                                <input type="text" id="doctor-username" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required>
+                            </div>
+                             <div>
+                                <label for="doctor-password" class="block text-sm font-bold mb-2">Mật khẩu:</label>
+                                <input type="password" id="doctor-password" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required minlength="6">
+                            </div>
+                         </div>
+                     </div>
+                </div>
+                <div class="flex items-center justify-end gap-4 pt-6">
+                    <button id="close-doctor-modal-btn" type="button" class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors duration-150">Hủy</button>
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-150">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="doctor-detail-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-lg">
+             <div class="flex justify-between items-start mb-4 border-b pb-3">
+                 <h2 class="text-xl font-bold text-gray-800">Thông tin chi tiết Bác sĩ</h2>
+                 <button id="close-doctor-detail-modal-btn" class="text-gray-400 hover:text-gray-600 transition-colors duration-150">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                 </button>
+             </div>
+             <div id="doctor-detail-content" class="space-y-4">
+                <div class="grid grid-cols-2 gap-x-4 gap-y-2">
+                    <span class="text-sm font-medium text-gray-500">Họ tên:</span>
+                    <span id="detail-doctor-name" class="text-sm text-gray-900 font-semibold">-</span>
+                    
+                    <span class="text-sm font-medium text-gray-500">Chuyên khoa:</span>
+                    <span id="detail-doctor-specialty" class="text-sm text-gray-900">-</span>
+
+                    <span class="text-sm font-medium text-gray-500">Điện thoại:</span>
+                    <span id="detail-doctor-phone" class="text-sm text-gray-900">-</span>
+
+                    <span class="text-sm font-medium text-gray-500">Email:</span>
+                    <span id="detail-doctor-email" class="text-sm text-gray-900">-</span>
+                    
+                    <span class="text-sm font-medium text-gray-500">Tài khoản liên kết:</span>
+                    <span id="detail-doctor-account" class="text-sm text-gray-900">-</span>
+                    
+                    <span class="text-sm font-medium text-gray-500">Ngày tạo:</span>
+                    <span id="detail-doctor-created" class="text-sm text-gray-900">-</span>
+                </div>
+             </div>
+             <div class="mt-6 text-right">
+                 <button id="close-doctor-detail-modal-btn-alt" type="button" class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors duration-150">Đóng</button>
+             </div>
+        </div>
+    </div>
+
+    <div id="message-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center">
+         <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-sm text-center">
+            <p id="message-text" class="text-lg mb-6"></p>
+            <button id="close-message-modal-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-150">Đã hiểu</button>
+        </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>

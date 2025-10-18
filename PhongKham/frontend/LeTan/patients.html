@@ -6,6 +6,7 @@
     <title>Quản lý Bệnh nhân</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
 <body id="patients-page" class="bg-gray-100">
@@ -15,7 +16,7 @@
                 <h1 class="text-2xl font-bold text-gray-800">Hệ Thống Quản Lý Phòng Khám</h1>
                 <div class="flex items-center">
                     <span id="username-display" class="text-gray-600 mr-4"></span>
-                    <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow">Đăng xuất</button>
+                    <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-150">Đăng xuất</button>
                 </div>
             </div>
         </header>
@@ -25,11 +26,12 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-bold text-gray-800">Quản lý Bệnh nhân</h2>
                 <div class="flex gap-4">
-                      <button id="open-patient-update-modal-btn" class="bg-white hover:bg-gray-100 text-gray-800 font-bold py-2 px-6 rounded-lg shadow-md border border-gray-300">
+                      <button id="open-patient-update-modal-btn" class="bg-white hover:bg-gray-100 text-gray-800 font-bold py-2 px-6 rounded-lg shadow-md border border-gray-300 transition-all duration-150">
                           Cập nhật Hồ sơ
                       </button>
-                    <button id="open-patient-create-modal-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-md">
-                          &#43; Thêm Bệnh nhân mới
+                    <button id="open-patient-create-modal-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-colors duration-150 flex items-center justify-center gap-2">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                          Thêm Bệnh nhân mới
                     </button>
                 </div>
             </div>
@@ -44,7 +46,8 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Điện thoại</th>
                         </tr>
                     </thead>
-                    <tbody id="patients-table-body" class="bg-white divide-y divide-gray-200"></tbody>
+                    <tbody id="patients-table-body" class="bg-white divide-y divide-gray-200">
+                        </tbody>
                 </table>
             </div>
         </main>
@@ -58,21 +61,21 @@
                 
                 <div id="patient-select-container" class="mb-4 hidden">
                     <label for="patient-select" class="block text-sm font-bold mb-2">Chọn Bệnh nhân để Cập nhật:</label>
-                    <select id="patient-select" class="shadow border rounded w-full py-2 px-3"></select>
+                    <select id="patient-select" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"></select>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label for="patient-fullname" class="block text-sm font-bold mb-2">Họ và Tên:</label>
-                        <input type="text" id="patient-fullname" class="shadow border rounded w-full py-2 px-3" required>
+                        <input type="text" id="patient-fullname" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required>
                     </div>
                     <div>
                         <label for="patient-dob" class="block text-sm font-bold mb-2">Ngày sinh:</label>
-                        <input type="date" id="patient-dob" class="shadow border rounded w-full py-2 px-3">
+                        <input type="date" id="patient-dob" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
                     </div>
                     <div>
                         <label for="patient-gender" class="block text-sm font-bold mb-2">Giới tính:</label>
-                        <select id="patient-gender" class="shadow border rounded w-full py-2 px-3">
+                        <select id="patient-gender" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
                             <option value="Nam">Nam</option>
                             <option value="Nữ">Nữ</option>
                             <option value="Khác">Khác</option>
@@ -80,21 +83,21 @@
                     </div>
                     <div>
                         <label for="patient-phone" class="block text-sm font-bold mb-2">Số điện thoại:</label>
-                        <input type="tel" id="patient-phone" class="shadow border rounded w-full py-2 px-3">
+                        <input type="tel" id="patient-phone" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
                     </div>
                     <div>
                         <label for="patient-email" class="block text-sm font-bold mb-2">Email:</label>
-                        <input type="email" id="patient-email" class="shadow border rounded w-full py-2 px-3">
+                        <input type="email" id="patient-email" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
                     </div>
                     <div>
                         <label for="patient-address" class="block text-sm font-bold mb-2">Địa chỉ:</label>
-                        <input type="text" id="patient-address" class="shadow border rounded w-full py-2 px-3">
+                        <input type="text" id="patient-address" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
                     </div>
                 </div>
 
                 <div class="mt-4">
                     <label for="patient-medical-history" class="block text-sm font-bold mb-2">Tiền sử bệnh án:</label>
-                    <textarea id="patient-medical-history" rows="3" class="shadow border rounded w-full py-2 px-3"></textarea>
+                    <textarea id="patient-medical-history" rows="3" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"></textarea>
                 </div>
 
                 <div id="account-section" class="mt-6 border-t pt-6">
@@ -103,25 +106,25 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label for="patient-username" class="block text-sm font-bold mb-2">Tên đăng nhập:</label>
-                                <input type="text" id="patient-username" class="shadow border rounded w-full py-2 px-3">
+                                <input type="text" id="patient-username" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
                             </div>
                             <div>
                                 <label for="patient-password" class="block text-sm font-bold mb-2">Mật khẩu:</label>
-                                <input type="password" id="patient-password" class="shadow border rounded w-full py-2 px-3">
+                                <input type="password" id="patient-password" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
                             </div>
                         </div>
                           <p class="text-xs text-gray-500 mt-2">Để trống nếu không muốn tạo tài khoản mới.</p>
                     </div>
                     <div id="account-link-fields" class="hidden">
                         <label for="account-select" class="block text-sm font-bold mb-2">Liên kết với tài khoản có sẵn:</label>
-                        <select id="account-select" class="shadow border rounded w-full py-2 px-3"></select>
+                        <select id="account-select" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"></select>
                           <p class="text-xs text-gray-500 mt-2">Chỉ hiển thị các tài khoản chưa được gán.</p>
                     </div>
                 </div>
 
                 <div class="flex items-center justify-end gap-4 mt-8">
-                    <button id="close-patient-modal-btn" type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg">Hủy</button>
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg">Lưu</button>
+                    <button id="close-patient-modal-btn" type="button" class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors duration-150">Hủy</button>
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-150">Lưu</button>
                 </div>
             </form>
         </div>
@@ -129,40 +132,42 @@
     
     <div id="patient-detail-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center hidden">
         <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-lg">
-            <div class="flex justify-between items-start">
-                <h2 id="detail-patient-name" class="text-2xl font-bold mb-6 text-gray-800">Chi tiết Bệnh nhân</h2>
-                <button id="close-patient-detail-modal-btn" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            <div class="flex justify-between items-start mb-4">
+                <h2 id="detail-patient-name" class="text-2xl font-bold text-gray-800">Chi tiết Bệnh nhân</h2>
+                <button id="close-patient-detail-modal-btn" class="text-gray-400 hover:text-gray-600 transition-colors duration-150">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
             </div>
             <div id="patient-detail-content" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4">
                     <div>
                         <p class="text-sm font-medium text-gray-500">Ngày sinh</p>
-                        <p id="detail-patient-dob" class="text-gray-900"></p>
+                        <p id="detail-patient-dob" class="text-md text-gray-900"></p>
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-500">Giới tính</p>
-                        <p id="detail-patient-gender" class="text-gray-900"></p>
+                        <p id="detail-patient-gender" class="text-md text-gray-900"></p>
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-500">Số điện thoại</p>
-                        <p id="detail-patient-phone" class="text-gray-900"></p>
+                        <p id="detail-patient-phone" class="text-md text-gray-900"></p>
                     </div>
                 </div>
                 <div class="border-t pt-4">
                     <p class="text-sm font-medium text-gray-500">Email</p>
-                    <p id="detail-patient-email" class="text-gray-900"></p>
+                    <p id="detail-patient-email" class="text-md text-gray-900"></p>
                 </div>
                 <div class="border-t pt-4">
                     <p class="text-sm font-medium text-gray-500">Địa chỉ</p>
-                    <p id="detail-patient-address" class="text-gray-900"></p>
+                    <p id="detail-patient-address" class="text-md text-gray-900"></p>
                 </div>
                 <div class="border-t pt-4">
                     <p class="text-sm font-medium text-gray-500">Tiền sử bệnh án</p>
-                    <p id="detail-patient-medical-history" class="text-gray-900 whitespace-pre-wrap"></p>
+                    <p id="detail-patient-medical-history" class="text-md text-gray-900 whitespace-pre-wrap"></p>
                 </div>
                  <div class="border-t pt-4">
                     <p class="text-sm font-medium text-gray-500">Tài khoản liên kết</p>
-                    <p id="detail-patient-account" class="text-gray-900"></p>
+                    <p id="detail-patient-account" class="text-md text-gray-900"></p>
                 </div>
             </div>
         </div>
@@ -171,7 +176,7 @@
     <div id="message-modal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center hidden">
         <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-sm text-center">
             <p id="message-text" class="text-lg mb-6"></p>
-            <button id="close-message-modal-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg">OK</button>
+            <button id="close-message-modal-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors duration-150">OK</button>
         </div>
     </div>
 
