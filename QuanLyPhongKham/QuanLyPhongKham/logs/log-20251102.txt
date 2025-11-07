@@ -1,0 +1,144 @@
+2025-11-02 11:22:05.038 +07:00 [INF] Bắt đầu khởi tạo ứng dụng...
+2025-11-02 11:22:09.109 +07:00 [INF] User profile is available. Using 'C:\Users\duyen\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-02 11:22:09.133 +07:00 [INF] Dịch vụ Nhắc lịch hẹn đang khởi động.
+2025-11-02 11:22:09.835 +07:00 [INF] Now listening on: https://localhost:7220
+2025-11-02 11:22:09.840 +07:00 [INF] Now listening on: http://localhost:5219
+2025-11-02 11:22:10.002 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 11:22:10.006 +07:00 [INF] Hosting environment: Development
+2025-11-02 11:22:10.009 +07:00 [INF] Content root path: C:\Users\duyen\Videos\QuanLyPhongKham\QuanLyPhongKham\QuanLyPhongKham
+2025-11-02 11:22:13.554 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger - null null
+2025-11-02 11:22:13.867 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger - 301 0 null 327.4406ms
+2025-11-02 11:22:13.882 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/index.html - null null
+2025-11-02 11:22:14.081 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/index.html - 200 null text/html;charset=utf-8 198.9148ms
+2025-11-02 11:22:14.104 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/swagger-ui.css - null null
+2025-11-02 11:22:14.119 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/swagger-ui-bundle.js - null null
+2025-11-02 11:22:14.136 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/swagger-ui-standalone-preset.js - null null
+2025-11-02 11:22:14.153 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-02 11:22:14.153 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/_vs/browserLink - null null
+2025-11-02 11:22:14.238 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/_framework/aspnetcore-browser-refresh.js - 200 16515 application/javascript; charset=utf-8 102.0057ms
+2025-11-02 11:22:14.289 +07:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-11-02 11:22:14.289 +07:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-11-02 11:22:14.301 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/swagger-ui-standalone-preset.js - 200 230280 text/javascript 179.1767ms
+2025-11-02 11:22:14.311 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/swagger-ui.css - 200 152034 text/css 197.2789ms
+2025-11-02 11:22:14.362 +07:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-11-02 11:22:14.365 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/swagger-ui-bundle.js - 200 1456926 text/javascript 261.2083ms
+2025-11-02 11:22:14.387 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/_vs/browserLink - 200 null text/javascript; charset=UTF-8 250.4091ms
+2025-11-02 11:22:14.470 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/v1/swagger.json - null null
+2025-11-02 11:22:14.482 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/favicon-32x32.png - null null
+2025-11-02 11:22:14.491 +07:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2025-11-02 11:22:14.496 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/favicon-32x32.png - 200 628 image/png 14.773ms
+2025-11-02 11:22:14.516 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 46.0203ms
+2025-11-02 11:22:19.147 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T11:22:19.1468220+07:00"
+2025-11-02 11:22:22.161 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 11:22:22.163 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-11-02 11:22:39.628 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-11-02 11:22:39.699 +07:00 [INF] CORS policy execution successful.
+2025-11-02 11:22:39.713 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 54.9497 ms
+2025-11-02 11:22:39.723 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 95.1626ms
+2025-11-02 11:22:39.744 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 58
+2025-11-02 11:22:39.771 +07:00 [INF] CORS policy execution successful.
+2025-11-02 11:22:39.936 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-11-02 11:22:39.982 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-11-02 11:22:40.881 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-02 11:22:40.914 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 924.6544ms
+2025-11-02 11:22:40.919 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-11-02 11:22:40.922 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 1159.5442 ms
+2025-11-02 11:22:40.925 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 1180.558ms
+2025-11-02 11:22:44.714 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Doctors - null null
+2025-11-02 11:22:44.720 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Specialties - null null
+2025-11-02 11:22:44.728 +07:00 [INF] CORS policy execution successful.
+2025-11-02 11:22:44.728 +07:00 [INF] CORS policy execution successful.
+2025-11-02 11:22:44.733 +07:00 [INF] HTTP OPTIONS /api/Doctors responded 204 in 12.0449 ms
+2025-11-02 11:22:44.733 +07:00 [INF] HTTP OPTIONS /api/Specialties responded 204 in 4.9166 ms
+2025-11-02 11:22:44.740 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Doctors - 204 null null 23.1841ms
+2025-11-02 11:22:44.740 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Specialties - 204 null null 20.9443ms
+2025-11-02 11:22:44.750 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Doctors - application/json null
+2025-11-02 11:22:44.755 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Specialties - application/json null
+2025-11-02 11:22:44.760 +07:00 [INF] CORS policy execution successful.
+2025-11-02 11:22:44.760 +07:00 [INF] CORS policy execution successful.
+2025-11-02 11:22:44.844 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.SpecialtiesController.GetAll (QuanLyPhongKham)'
+2025-11-02 11:22:44.847 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham)'
+2025-11-02 11:22:44.855 +07:00 [INF] Route matched with {action = "GetAll", controller = "Specialties"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.SpecialtiesController (QuanLyPhongKham).
+2025-11-02 11:22:44.855 +07:00 [INF] Route matched with {action = "GetAll", controller = "Doctors"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.DoctorsController (QuanLyPhongKham).
+2025-11-02 11:22:44.881 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.DoctorDTO, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-02 11:22:44.889 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Specialty, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-02 11:22:44.907 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.SpecialtiesController.GetAll (QuanLyPhongKham) in 44.3653ms
+2025-11-02 11:22:44.912 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.SpecialtiesController.GetAll (QuanLyPhongKham)'
+2025-11-02 11:22:44.916 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham) in 44.6506ms
+2025-11-02 11:22:44.916 +07:00 [INF] HTTP GET /api/Specialties responded 200 in 155.8672 ms
+2025-11-02 11:22:44.921 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.DoctorsController.GetAll (QuanLyPhongKham)'
+2025-11-02 11:22:44.923 +07:00 [INF] HTTP GET /api/Doctors responded 200 in 163.4023 ms
+2025-11-02 11:22:44.926 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Specialties - 200 null application/json; charset=utf-8 165.9463ms
+2025-11-02 11:22:44.933 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Doctors - 200 null application/json; charset=utf-8 177.1373ms
+2025-11-02 20:15:15.096 +07:00 [INF] Bắt đầu khởi tạo ứng dụng...
+2025-11-02 20:15:16.668 +07:00 [INF] User profile is available. Using 'C:\Users\duyen\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-02 20:15:16.714 +07:00 [INF] Dịch vụ Nhắc lịch hẹn đang khởi động.
+2025-11-02 20:15:17.161 +07:00 [INF] Now listening on: https://localhost:7220
+2025-11-02 20:15:17.164 +07:00 [INF] Now listening on: http://localhost:5219
+2025-11-02 20:15:17.296 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 20:15:17.299 +07:00 [INF] Hosting environment: Development
+2025-11-02 20:15:17.302 +07:00 [INF] Content root path: C:\Users\duyen\Videos\QuanLyPhongKham\QuanLyPhongKham\QuanLyPhongKham
+2025-11-02 20:15:21.040 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/index.html - null null
+2025-11-02 20:15:21.356 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/index.html - 200 null text/html;charset=utf-8 325.5256ms
+2025-11-02 20:15:21.375 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-02 20:15:21.383 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/_vs/browserLink - null null
+2025-11-02 20:15:21.395 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/_framework/aspnetcore-browser-refresh.js - 200 16515 application/javascript; charset=utf-8 20.1548ms
+2025-11-02 20:15:21.511 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/_vs/browserLink - 200 null text/javascript; charset=UTF-8 134.9008ms
+2025-11-02 20:15:21.563 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/swagger/v1/swagger.json - null null
+2025-11-02 20:15:21.624 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 61.3752ms
+2025-11-02 20:15:26.726 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T20:15:26.7265621+07:00"
+2025-11-02 20:15:29.820 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 20:15:29.824 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-11-02 20:15:30.166 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - null null
+2025-11-02 20:15:30.227 +07:00 [INF] CORS policy execution successful.
+2025-11-02 20:15:30.244 +07:00 [INF] HTTP OPTIONS /api/accounts/role-login responded 204 in 46.5941 ms
+2025-11-02 20:15:30.253 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/accounts/role-login - 204 null null 86.8963ms
+2025-11-02 20:15:30.262 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7220/api/accounts/role-login - application/json 58
+2025-11-02 20:15:30.275 +07:00 [INF] CORS policy execution successful.
+2025-11-02 20:15:30.431 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-11-02 20:15:30.486 +07:00 [INF] Route matched with {action = "RoleLogin", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RoleLogin(QuanLyPhongKhamApi.Models.RoleLoginRequest) on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-11-02 20:15:31.138 +07:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-11-02 20:15:31.177 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham) in 677.2219ms
+2025-11-02 20:15:31.183 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.RoleLogin (QuanLyPhongKham)'
+2025-11-02 20:15:31.185 +07:00 [INF] HTTP POST /api/accounts/role-login responded 200 in 915.3117 ms
+2025-11-02 20:15:31.189 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7220/api/accounts/role-login - 200 null application/json; charset=utf-8 927.0668ms
+2025-11-02 20:15:33.091 +07:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7220/api/Accounts - null null
+2025-11-02 20:15:33.098 +07:00 [INF] CORS policy execution successful.
+2025-11-02 20:15:33.101 +07:00 [INF] HTTP OPTIONS /api/Accounts responded 204 in 3.4981 ms
+2025-11-02 20:15:33.106 +07:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7220/api/Accounts - 204 null null 15.3562ms
+2025-11-02 20:15:33.119 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7220/api/Accounts - application/json null
+2025-11-02 20:15:33.126 +07:00 [INF] CORS policy execution successful.
+2025-11-02 20:15:33.218 +07:00 [INF] Executing endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham)'
+2025-11-02 20:15:33.226 +07:00 [INF] Route matched with {action = "GetAll", controller = "Accounts"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller QuanLyPhongKhamApi.Controllers.AccountsController (QuanLyPhongKham).
+2025-11-02 20:15:33.240 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuanLyPhongKhamApi.Models.Account, QuanLyPhongKham, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-11-02 20:15:33.261 +07:00 [INF] Executed action QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham) in 27.0225ms
+2025-11-02 20:15:33.283 +07:00 [INF] Executed endpoint 'QuanLyPhongKhamApi.Controllers.AccountsController.GetAll (QuanLyPhongKham)'
+2025-11-02 20:15:33.291 +07:00 [INF] HTTP GET /api/Accounts responded 200 in 164.3190 ms
+2025-11-02 20:15:33.297 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7220/api/Accounts - 200 null application/json; charset=utf-8 178.7941ms
+2025-11-02 20:16:29.828 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T20:16:29.8281496+07:00"
+2025-11-02 20:16:29.833 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 20:16:29.835 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-11-02 20:17:29.856 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T20:17:29.8546612+07:00"
+2025-11-02 20:17:29.900 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 20:17:29.903 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-11-02 20:18:29.934 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T20:18:29.9343107+07:00"
+2025-11-02 20:18:29.957 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 20:18:29.959 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-11-02 20:19:29.965 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T20:19:29.9651947+07:00"
+2025-11-02 20:19:29.989 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 20:19:29.992 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-11-02 20:20:30.012 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T20:20:30.0122775+07:00"
+2025-11-02 20:20:30.031 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 20:20:30.034 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-11-02 20:21:30.041 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T20:21:30.0416236+07:00"
+2025-11-02 20:21:30.054 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 20:21:30.058 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-11-02 20:22:30.073 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T20:22:30.0735589+07:00"
+2025-11-02 20:22:30.082 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 20:22:30.084 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-11-02 20:23:30.098 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T20:23:30.0987377+07:00"
+2025-11-02 20:23:30.115 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 20:23:30.118 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
+2025-11-02 20:24:30.125 +07:00 [INF] Bắt đầu chu kỳ kiểm tra lịch hẹn lúc: "2025-11-02T20:24:30.1252969+07:00"
+2025-11-02 20:24:30.136 +07:00 [INF] Không có lịch hẹn nào sắp tới cần nhắc nhở.
+2025-11-02 20:24:30.138 +07:00 [INF] Đã hoàn tất chu kỳ. Chờ 1 phút trước khi chạy lại.
